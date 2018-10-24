@@ -1,0 +1,15 @@
+---
+
+- name: Install additional software via apt
+  become: yes
+  apt: name={{ item }} force=yes state=present
+  with_items: additional_packages
+
+- name: Reboot server
+  become: yes
+  shell: reboot -h now
+  when: reboot_system
+
+- name: Wait server to reboot
+  local_action: wait_for port=22 host="{{ ansible_ssh_host | default(inventory_hostname) }}" search_regex=OpenSSH delay=10
+  when: reboot_system

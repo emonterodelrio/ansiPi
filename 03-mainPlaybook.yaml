@@ -1,0 +1,6 @@
+---
+
+- hosts: raspi
+  remote_user: pi
+  roles:
+    - common
