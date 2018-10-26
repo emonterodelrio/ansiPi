@@ -1,5 +1,4 @@
 ---
-
 - name: Install additional software via apt
   become: yes
   apt: name={{ item }} force=yes state=present
