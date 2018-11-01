@@ -1,10 +1,12 @@
 ---
 
 additional_packages:
-  - telnet
-  - wget
-  - git
-  - vim
+  - monit
+  - ssmtp
+  - mailutils
+  - openssh-server
   
+monitTimeout: 10
+
 #By default system is not rebooted, change this var in group_vars file if you want to do that.
-reboot_system: true
+reboot_system: false

@@ -1,0 +1,59 @@
+---
+- name: Create temp folder
+  local_action:
+    module: file
+    path: ./temp
+    mode: 0755
+    state: directory
+
+- name: Install additional software via apt
+  become: yes
+  local_action: command apt-get install -y --no-install-recommends {{ local_additional_packages }} 
+
+- name: Download last pass
+  local_action:
+    module: get_url
+    url: "{{ lpass.url }}"
+    dest: ./temp
+    mode: 0777
+
+- name: Extract lplinux.tar.bz2
+  local_action: command tar -C ./temp/ -xvf ./temp/lastpass-cli-{{ lpass.version }}.tar.gz
+
+- name: Make lpass
+  become: yes
+  local_action: 
+    module: make
+    chdir: ./temp/lastpass-cli-{{ lpass.version }}
+
+- name: Make install lpass
+  become: yes
+  local_action: 
+    module: make
+    target: install
+    chdir: ./temp/lastpass-cli-{{ lpass.version }}
+
+- name: Create credentials
+  local_action: command lpass generate --no-symbols --username {{ pi.user }} {{ lpass.piId }} 40
+  register: pass
+
+- name: Encrypt password
+  local_action: command mkpasswd --method=sha-512 {{ pass.stdout }}
+  register: pass512
+
+- name: Change pi password
+  become: yes
+  become_user: root
+  user: name=pi password={{ pass512.stdout }} update_password=always
+
+- name: Change pi password at /etc/ansible/hosts
+  become: yes
+  become_user: root
+  local_action: command sed -i 's/\(.*\)ansible_user=\(.*\) ansible_ssh_pass=\(.*\)/\1ansible_user=\2 ansible_ssh_pass={{ pass.stdout }}/g' /etc/ansible/hosts
+
+- name: Delete temp folder
+  become: yes
+  local_action:
+    module: file
+    path: ./temp
+    state: absent

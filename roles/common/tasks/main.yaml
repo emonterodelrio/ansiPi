@@ -1,14 +1,48 @@
 ---
 - name: Install additional software via apt
   become: yes
-  apt: name={{ item }} force=yes state=present
-  with_items: additional_packages
+  apt: name={{ additional_packages }} force=yes state=present
+
+- name: Setup fixed ip
+  become: yes
+  blockinfile:
+    path: /etc/dhcpcd.conf
+    block: |
+      interface eth0
+
+      static ip_address={{ pi.network.ip }}/{{ pi.network.maskLength }}
+      static routers={{ pi.network.prefix }}.1
+      static domain_name_servers=8.8.8.8 8.8.4.4
+
+      interface wlan0
+
+      static ip_address={{ pi.network.ip }}/{{ pi.network.maskLength }}
+      static routers={{ pi.network.prefix }}.1
+      static domain_name_servers=8.8.8.8 8.8.4.4
+
+- name: Setup dns
+  become: yes
+  blockinfile:
+    path: /etc/resolv.conf
+    block: |
+      nameserver 8.8.8.8
+      nameserver 8.8.4.4
+
+- name: Change pi ip at /etc/ansible/hosts
+  become: yes
+  become_user: root
+  local_action: command sed 's/\(.*\) ansible_user=\(.*\)/{{ pi.network.ip }} ansible_user=\2/g' /etc/ansible/hosts
 
 - name: Reboot server
-  become: yes
-  shell: reboot -h now
+  shell: "sleep 5 && reboot"
+  async: 1
+  poll: 0
   when: reboot_system
 
 - name: Wait server to reboot
-  local_action: wait_for port=22 host="{{ ansible_ssh_host | default(inventory_hostname) }}" search_regex=OpenSSH delay=10
+  wait_for_connection:
+    connect_timeout: 5
+    sleep: 1
+    delay: 1
+    timeout: 300
   when: reboot_system

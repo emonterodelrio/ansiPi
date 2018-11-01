@@ -1,6 +1,4 @@
-variables
-ipfija
-Monit email accesos ssh
-letemp rol
+handlers para reiniciar la raspi  
 Grafana Influx
+letemp rol
 

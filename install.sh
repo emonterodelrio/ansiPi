@@ -6,7 +6,7 @@ if ! [ $(id -u) = 0 ]; then
    exit 1
 fi
 
-if [ $# -ne 2 ];then
+if [ $# -ne 1 ];then
   printf "\033[1;31m\n\n You have to pass RaspberryPi Ip , like:\nsudo ./install.sh 192.1681.39\033[0m\n"
   exit 1
 else
