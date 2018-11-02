@@ -1,0 +1,30 @@
+---
+- name: Make sure fail2ban is enabled and restarted
+  become: yes
+  service:
+    name: fail2ban
+    state: restarted 
+    enabled: yes 
+  when: production_mode
+
+- name: Disable and stop fail2ban if no production mode
+  become: yes
+  service:
+    name: fail2ban
+    state: stopped 
+    enabled: no
+  when: not production_mode
+
+- name: Reboot server
+  shell: "sleep 5 && reboot"
+  async: 1
+  poll: 0
+  when: reboot_system
+
+- name: Wait for reboot
+  wait_for_connection:
+    connect_timeout: 10
+    sleep: 2
+    delay: 3
+    timeout: 300
+  when: reboot_system

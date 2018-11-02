@@ -5,7 +5,7 @@
   gather_facts: false
   vars_prompt:
   - name: gmailUser
-    prompt: "\n\nValid gmail user"
+    prompt: "\n\nValid gmail account"
     private: no
 
   - name: gmailPass
@@ -18,3 +18,4 @@
   roles:
     - common
     - security
+    - finalStuff

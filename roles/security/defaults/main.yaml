@@ -5,8 +5,16 @@ additional_packages:
   - ssmtp
   - mailutils
   - openssh-server
+  - fail2ban
   
+fail2ban:
+  bantime: 600
+  findtime: 60
+  maxretry: 6
+
 monitTimeout: 10
 
 #By default system is not rebooted, change this var in group_vars file if you want to do that.
-reboot_system: false
+reboot_system: true
+
+production_mode: false
