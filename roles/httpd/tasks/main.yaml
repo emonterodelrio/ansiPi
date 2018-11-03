@@ -1,0 +1,30 @@
+---
+
+- name: Install additional software via apt
+  become: yes
+  apt:
+    name: "{{ additional_packages }}"
+    force: yes
+    update_cache: yes
+    state: latest
+
+- name: Make sure apache2 is enabled and restarted
+  become: yes
+  service:
+    name: apache2
+    state: restarted 
+    enabled: yes 
+
+- name: Reboot server
+  shell: "sleep 5 && reboot"
+  async: 1
+  poll: 0
+  when: reboot_system
+
+- name: Wait for reboot
+  wait_for_connection:
+    connect_timeout: 10
+    sleep: 2
+    delay: 3
+    timeout: 300
+  when: reboot_system

@@ -34,7 +34,7 @@
     chdir: ./temp/lastpass-cli-{{ lpass.version }}
 
 - name: Create credentials
-  local_action: command lpass generate --no-symbols --username {{ pi.user }} {{ lpass.piId }} 40
+  local_action: command lpass generate --no-symbols --username {{ pi.user }} {{ lpass.piId }} 50
   register: pass
 
 - name: Encrypt password

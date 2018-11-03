@@ -63,6 +63,20 @@
         using TLSV1 with timeout 30 seconds
       set alert emonterodelrio@gmail.com
 
+- name: Copy conf to jail.conf
+  shell: awk '{ printf "# "; print; }' /etc/fail2ban/jail.conf | sudo tee /etc/fail2ban/jail.local
+ 
+- name: Configure fail2ban
+  become: yes
+  blockinfile:
+    path: /etc/fail2ban/jail.local
+    block: |
+      [DEFAULT]
+      ignoreip = 127.0.0.1/8
+      bantime = {{ fail2ban.bantime }}
+      findtime = {{ fail2ban.findtime }}
+      maxretry = {{ fail2ban.maxretry }}
+
 - name: Add ssh login monit alert
   become: yes
   blockinfile:
@@ -79,20 +93,6 @@
     name: monit
     state: restarted 
     enabled: yes 
-
-- name: Copy conf to jail.conf
-  shell: awk '{ printf "# "; print; }' /etc/fail2ban/jail.conf | sudo tee /etc/fail2ban/jail.local
- 
-- name: Configure fail2ban
-  become: yes
-  blockinfile:
-    path: /etc/fail2ban/jail.local
-    block: |
-      [DEFAULT]
-      ignoreip = 127.0.0.1/8
-      bantime = {{ fail2ban.bantime }}
-      findtime = {{ fail2ban.findtime }}600
-      maxretry = {{ fail2ban.maxretry }}
 
 - name: Reboot server
   shell: "sleep 5 && reboot"
