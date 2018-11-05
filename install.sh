@@ -43,7 +43,8 @@ ansible raspi -m ping --extra-vars "ansible_user=${DEFAULT_USER} ansible_passwor
 
 
 printf "\033[1;32m\n\nNow exec this\033[0m\n"
-printf "\033[1;32m\n\nansible-playbook 01-firstPlaybook.yaml\033[0m\n"
-printf "\033[1;32m\n\nansible-playbook 03-mainPlaybook.yaml\033[0m\n"
+printf "\033[1;32m\n\nansible-playbook 01-setCredentials.yaml\033[0m\n"
+printf "\033[1;32m\n\nansible-playbook 02-secure.yaml\033[0m\n"
+printf "\033[1;32m\n\nansible-playbook 03-installDashboard.yaml.yaml\033[0m\n"
 
 
