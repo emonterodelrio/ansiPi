@@ -1,9 +1,10 @@
+compilar grafana para raspi
 
 nginx
 ddos protection nginx
 
 monit con mensajes de fail2ban, demasiado verboso ahora
-handlers para reiniciar la raspi  
+handlers para reiniciar la raspi y los procesos
 Grafana Influx
 letemp rol
 
