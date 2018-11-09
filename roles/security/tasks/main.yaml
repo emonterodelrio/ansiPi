@@ -1,12 +1,9 @@
 ---
-
-- name: Install additional software via apt
+- name: Install software via apt
   become: yes
   apt:
     name: "{{ additional_packages }}"
     force: yes
-    update_cache: yes
-    state: latest
 
 - name: Add gmail account to ssmtp.conf
   become: yes
@@ -63,6 +60,15 @@
         using TLSV1 with timeout 30 seconds
       set alert emonterodelrio@gmail.com
 
+- name: Disable conf-enabled folder configurations
+  become: yes
+  lineinfile:
+    path: /etc/monit/monitrc
+    state: absent
+    line: 'include /etc/monit/conf-enabled/*'
+
+
+
 - name: Copy conf to jail.conf
   shell: awk '{ printf "# "; print; }' /etc/fail2ban/jail.conf | sudo tee /etc/fail2ban/jail.local
  
@@ -87,20 +93,27 @@
         if match "session opened" then alert
         if match "authentication failures" then alert
 
-- name: Make sure monit is enabled and restarted
+- name: Make sure monit is enabled and stopped
   become: yes
   service:
     name: monit
-    state: restarted 
+    state: stopped
     enabled: yes 
 
-- name: Reboot server
+- name: Make sure fail2ban is enabled and stopped
+  become: yes
+  service:
+    name: fail2ban
+    state: stopped
+    enabled: yes 
+
+- name: Security - Reboot server
   shell: "sleep 5 && reboot"
   async: 1
   poll: 0
   when: reboot_system
 
-- name: Wait for reboot
+- name: Security - Wait for reboot
   wait_for_connection:
     connect_timeout: 10
     sleep: 2

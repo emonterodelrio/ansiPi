@@ -1,0 +1,14 @@
+---
+
+- hosts: raspi
+  remote_user: pi
+  gather_facts: false
+  vars_files:
+  - vars/piStuff.yaml
+  - vars/03-setupDashboards.yaml
+
+  roles:
+    - nginx
+    - influxdb
+    - metricsCollector
+    - grafana

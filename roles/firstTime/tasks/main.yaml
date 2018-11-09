@@ -10,21 +10,29 @@
   become: yes
   local_action: command apt-get install -y --no-install-recommends {{ local_additional_packages }} 
 
+- name: Check lastpass installed
+  local_action: command lpass -h
+  register: lpassInstalled 
+    
+
 - name: Download last pass
   local_action:
     module: get_url
     url: "{{ lpass.url }}"
     dest: ./temp
     mode: 0777
+  when: lpassInstalled.rc != 0
 
 - name: Extract lplinux.tar.bz2
   local_action: command tar -C ./temp/ -xvf ./temp/lastpass-cli-{{ lpass.version }}.tar.gz
+  when: lpassInstalled.rc != 0
 
 - name: Make lpass
   become: yes
   local_action: 
     module: make
     chdir: ./temp/lastpass-cli-{{ lpass.version }}
+  when: lpassInstalled.rc != 0
 
 - name: Make install lpass
   become: yes
@@ -32,9 +40,10 @@
     module: make
     target: install
     chdir: ./temp/lastpass-cli-{{ lpass.version }}
+  when: lpassInstalled.rc != 0
 
 - name: Create credentials
-  local_action: command lpass generate --no-symbols --username {{ pi.user }} {{ lpass.piId }} 50
+  local_action: command lpass generate --no-symbols --username {{ pi.user }} {{ lpass.piId }}/pi 50 a/a
   register: pass
 
 - name: Encrypt password
@@ -50,6 +59,23 @@
   become: yes
   become_user: root
   local_action: command sed -i 's/\(.*\)ansible_user=\(.*\) ansible_ssh_pass=\(.*\)/\1ansible_user=\2 ansible_ssh_pass={{ pass.stdout }}/g' /etc/ansible/hosts
+
+- name: Enable callback_whitelists
+  become: yes
+  become_user: root
+  local_action: command sed -i 's/#callback_whitelist\(.*\)/callback_whitelist\1/g' /etc/ansible/ansible.cfg
+
+- name: Enable timer and profile_tasks callbacks
+  become: yes
+  become_user: root
+  local_action: command sed -i 's/callback_whitelist\(.*\)/callback_whitelist= profile_tasks, timer/g' /etc/ansible/ansible.cfg
+
+- name: Enable pipelining
+  become: yes
+  become_user: root
+  local_action: command sed -i 's/#pipelining = False/pipelining = True/g' /etc/ansible/ansible.cfg
+
+
 
 - name: Delete temp folder
   become: yes

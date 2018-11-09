@@ -1,0 +1,11 @@
+---
+
+additional_packages:
+  - nginx
+  - openssl
+
+nginx:
+  version:
+
+#By default system is not rebooted, change this var in group_vars file if you want to do that.
+reboot_system: true

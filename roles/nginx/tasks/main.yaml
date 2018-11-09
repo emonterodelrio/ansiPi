@@ -1,27 +1,32 @@
 ---
+- name: Check existing nginx
+  become: yes
+  shell: nginx -v
+  register: existNginx
+  ignore_errors: yes
 
-- name: Install additional software via apt
+- name: Install software via apt
   become: yes
   apt:
     name: "{{ additional_packages }}"
     force: yes
-    update_cache: yes
     state: latest
+  when: existNginx.rc != 0
 
-- name: Make sure apache2 is enabled and restarted
+- name: Make sure nginx is enabled and restarted
   become: yes
   service:
-    name: apache2
+    name: nginx
     state: restarted 
     enabled: yes 
 
-- name: Reboot server
+- name: Nginx - Reboot server
   shell: "sleep 5 && reboot"
   async: 1
   poll: 0
   when: reboot_system
 
-- name: Wait for reboot
+- name: Nginx - Wait for reboot
   wait_for_connection:
     connect_timeout: 10
     sleep: 2

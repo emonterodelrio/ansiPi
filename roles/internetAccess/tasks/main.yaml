@@ -22,15 +22,15 @@
   cron:
     name: "Duckdns update ip"
     minute: "*/5"
-    job: "~/duckdns/duck.sh >/dev/null 2>&1"
+    job: "~/duckDns/duck.sh >/dev/null 2>&1"
 
-- name: Reboot server
+- name: InternetAcess - Reboot server
   shell: "sleep 5 && reboot"
   async: 1
   poll: 0
   when: reboot_system
 
-- name: Wait for reboot
+- name: InternetAcess - Wait for reboot
   wait_for_connection:
     connect_timeout: 10
     sleep: 2

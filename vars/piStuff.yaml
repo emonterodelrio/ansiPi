@@ -6,4 +6,12 @@ pi:
     prefix: 192.168.1
     maskLength: 24
 
+lpass:
+  piId: raspi
+
+influx:
+  db:
+    name: piMonitorDb
+
 production_mode: false
+reboot_system: true

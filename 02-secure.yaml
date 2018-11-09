@@ -12,16 +12,16 @@
     prompt: "\n\nType gmail password"
 
   - name: duckDnsToken
-    prompt: "\n\nDuckDns token"
+    prompt: "\n\nDuckDns token at http://www.duckdns.org"
     private: no
 
   vars_files:
   - vars/piStuff.yaml
-  - vars/03-mainPlaybook.yaml
+  - vars/02-secure.yaml
 
   roles:
     - common
     - security
     - internetAccess
     - finalStuff
-    - httpd
+

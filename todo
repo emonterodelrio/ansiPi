@@ -1,10 +1,17 @@
-compilar grafana para raspi
 
-nginx
+revisar reiniciar la raspi y los procesos, handlers?
+
+nginx rpeverse proxy grafana
 ddos protection nginx
 
 monit con mensajes de fail2ban, demasiado verboso ahora
-handlers para reiniciar la raspi y los procesos
-Grafana Influx
+
+servicio para leer info del sistema o de lo que sea en vez de crontabs
+
+cargar dashboards automaticamente
+
+cambiar pass a grafana
+
 letemp rol
 
+lanzar los playbooks desde el install.sh

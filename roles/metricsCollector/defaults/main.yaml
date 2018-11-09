@@ -1,0 +1,6 @@
+---
+tempCheck:
+  resultVariableName: PI_TEMP
+  measureName: piTemp
+  measureType: total
+  command: "/opt/vc/bin/vcgencmd measure_temp | cut -d= -f2 | cut -d\\' -f1"

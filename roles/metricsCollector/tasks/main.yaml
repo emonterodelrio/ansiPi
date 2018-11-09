@@ -1,0 +1,14 @@
+---
+- name: Add metrics collectors
+  become: yes
+  template:
+    src: collectMetrics.j2
+    dest: /home/pi/collectMetrics.sh
+    owner: pi
+    group: pi
+    mode: 0755
+
+- name: Crontab memory collectors as {{ metricsCollectors.crontab }}
+  cron:
+    name: "Metrics Collector"
+    job: "/home/pi/collectMetrics.sh >/dev/null 2>&1"
