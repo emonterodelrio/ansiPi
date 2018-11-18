@@ -42,8 +42,11 @@
     chdir: ./temp/lastpass-cli-{{ lpass.version }}
   when: lpassInstalled.rc != 0
 
+- name: Ensure login to lpass
+  local_action: command lpass ls
+
 - name: Create credentials
-  local_action: command lpass generate --no-symbols --username {{ pi.user }} {{ lpass.piId }}/pi 50 a/a
+  local_action: command lpass generate --no-symbols --username {{ pi.user }} {{ lpass.piId }}/pi 50
   register: pass
 
 - name: Encrypt password

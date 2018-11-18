@@ -6,11 +6,24 @@
   register: existGrafana
   ignore_errors: yes
 
-- name: Install software via apt
+- name: Download grafana deb
+  get_url:
+    url: "{{ grafana.url }}/{{ grafana.deb }}"
+    dest: /home/pi/{{ grafana.deb }}
+    mode: 0644
+    timeout: 60
+
+- name: Install grafana deb
   become: yes
   apt:
-    deb: "{{ grafana.url }}/{{ grafana.deb }}"
+    deb: /home/pi/{{ grafana.deb }}
   when: existGrafana.rc != 2
+
+- name: Delete grafana deb
+  become: yes
+  file:
+    path: /home/pi/{{ grafana.deb }}
+    state: absent
 
 - name: Make sure grafana-server is enabled and restarted
   become: yes
@@ -21,7 +34,7 @@
   when: existGrafana.rc != 2
 
 - name: Link influxdb datasource
-  shell: "sleep 10 && echo \"\" && curl 'http://admin:admin@localhost:3000/api/datasources' -X POST -H 'Content-Type: application/json;charset=UTF-8' --data-binary '{\"name\":\"{{ influx.db.name }}\",\"type\":\"influxdb\",\"url\":\"http://localhost:8086\",\"access\":\"proxy\",\"isDefault\":true,\"database\":\"{{ influx.db.name }}\"}'"
+  shell: "sleep 10 && echo \"\" && curl 'http://admin:admin@localhost:3000/api/datasources' -X POST -H 'Content-Type: application/json;charset=UTF-8' --data-binary '{\"name\":\"{{ influx.db.name }}\",\"type\":\"influxdb\",\"url\":\"http://{{ pi.network.ip }}:8086\",\"access\":\"proxy\",\"isDefault\":true,\"database\":\"{{ influx.db.name }}\"}'"
   when: existGrafana.rc != 2
 
 - name: Fill /usr/share/grafana/public/default.json with template
@@ -32,6 +45,28 @@
     owner: root
     group: root
     mode: 0644
+  when: existGrafana.rc != 2
+
+- name: Create grafana admin credentials at lpass
+  local_action: command lpass generate --no-symbols --username admin {{ lpass.piId }}/grafanaAdmin 50
+  register: grafanaPassAdmin
+  when: existGrafana.rc != 2
+
+- name: Change grafana admin password	
+  shell: "curl -X PUT -H 'Content-Type: application/json' -d '{\"oldPassword\":\"admin\",\"newPassword\":\"{{ grafanaPassAdmin.stdout }}\",\"confirmNew\":\"{{ grafanaPassAdmin.stdout }}\"}' 'http://admin:admin@192.168.1.11:3000/api/user/password'"
+  register: resultGrafanaPassAdmin
+  failed_when: '"password changed" not in resultGrafanaPassAdmin.stdout'
+  when: existGrafana.rc != 2
+
+- name: Create grafana user credentials at lpass
+  local_action: command lpass generate --no-symbols --username readUser {{ lpass.piId }}/grafanaUser 50
+  register: grafanaPassUser
+  when: existGrafana.rc != 2
+
+- name: Change grafana user password	
+  shell: "curl -XPOST -H 'Content-Type: application/json' -d '{\"name\":\"readUser\",\"email\":\"readUser@email.com\",\"login\":\"readUser\",\"password\":\"{{ grafanaPassUser.stdout }}\"}' 'http://admin:{{ grafanaPassAdmin.stdout }}@localhost:3000/api/admin/users'"
+  register: resultGrafanaPassUser
+  failed_when: '"ser created" not in resultGrafanaPassUser.stdout'
   when: existGrafana.rc != 2
 
 - name: Grafana - Reboot server

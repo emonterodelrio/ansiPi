@@ -24,8 +24,6 @@ apt-get install -y software-properties-common
 apt-add-repository --yes --update ppa:ansible/ansible
 apt-get install -y ansible
 
-
-
 printf "\033[1;32m\n\nSet ansible host ${IP}\033[0m\n"
 mkdir -p /etc/ansible/
 cat >/etc/ansible/hosts <<EOL
@@ -36,6 +34,9 @@ EOL
 printf "\033[1;32m\n\nDisable host key check\033[0m\n"
 sed -i "s/#host_key_checking = False/host_key_checking = False/g" /etc/ansible/ansible.cfg
 
+ssh-keygen -f "~/.ssh/known_hosts" -R ${IP}
+
+
 printf "\033[1;32m\n\nTest conection to raspberry\033[0m\n"
 
 #Use default raspibian password
@@ -45,6 +46,6 @@ ansible raspi -m ping --extra-vars "ansible_user=${DEFAULT_USER} ansible_passwor
 printf "\033[1;32m\n\nNow exec this\033[0m\n"
 printf "\033[1;32m\n\nansible-playbook 01-setCredentials.yaml\033[0m\n"
 printf "\033[1;32m\n\nansible-playbook 02-secure.yaml\033[0m\n"
-printf "\033[1;32m\n\nansible-playbook 03-installDashboard.yaml.yaml\033[0m\n"
+printf "\033[1;32m\n\nansible-playbook 03-installDashboard.yaml\033[0m\n"
 
 

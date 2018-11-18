@@ -1,4 +1,9 @@
 
+grafana: añadir ips a lastpass para el navegador:
+(none)
+    123.123.123. [id: 326541651684351351]
+    id.duckdns.org [id: 654316813513515 ]
+
 revisar reiniciar la raspi y los procesos, handlers?
 
 nginx rpeverse proxy grafana
@@ -6,11 +11,7 @@ ddos protection nginx
 
 monit con mensajes de fail2ban, demasiado verboso ahora
 
-servicio para leer info del sistema o de lo que sea en vez de crontabs
-
-cargar dashboards automaticamente
-
-cambiar pass a grafana
+grafana crear dashboards con api
 
 letemp rol
 
