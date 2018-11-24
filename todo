@@ -1,5 +1,11 @@
 
-grafana: añadir ips a lastpass para el navegador:
+
+
+
+grafana:
+crear dashboards por api desde roll de metricCollector
+
+añadir ips a lastpass para el navegador:
 (none)
     123.123.123. [id: 326541651684351351]
     id.duckdns.org [id: 654316813513515 ]
