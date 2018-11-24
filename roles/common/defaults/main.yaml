@@ -5,6 +5,7 @@ additional_packages:
   - wget
   - git
   - vim
+  - stress
   
 toCleanDirectories:
   - Documents

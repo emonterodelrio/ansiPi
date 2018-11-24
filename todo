@@ -1,6 +1,6 @@
 
-
-
+Metricas internas para raspi
+https://elinux.org/RPI_vcgencmd_usage
 
 grafana:
 crear dashboards por api desde roll de metricCollector

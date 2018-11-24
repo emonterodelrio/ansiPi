@@ -12,10 +12,28 @@ collectors:
     command: "/opt/vc/bin/vcgencmd measure_temp | cut -d= -f2 | cut -d\\' -f1"
     crontab: "* * * * *"
 
-  - measureName: cpuUsageCheck
-    resultVariableName: CPU
+  - measureName: piVoltsCheck
+    resultVariableName: VOLTS
     measureType: total
-    command: "grep 'cpu ' /proc/stat | awk '{usage=($2+$4)/($2+$4+$5)} END {print usage}' | awk -F '.' '{print $1 \".\" substr($2,1,2)}'"
+    command: "/opt/vc/bin/vcgencmd measure_volts | cut -d= -f2 | cut -d'V' -f1"
+    crontab: "* * * * *"
+
+  - measureName: cpuLoad1Check
+    resultVariableName: LOAD1
+    measureType: total
+    command: "cat /proc/loadavg | awk '{print $1}'"
+    crontab: "* * * * *"
+
+  - measureName: cpuLoad5Check
+    resultVariableName: LOAD5
+    measureType: total
+    command: "cat /proc/loadavg | awk '{print $2}'"
+    crontab: "* * * * *"
+
+  - measureName: cpuLoad15Check
+    resultVariableName: LOAD15
+    measureType: total
+    command: "cat /proc/loadavg | awk '{print $3}'"
     crontab: "* * * * *"
 
   - measureName: memUsageCheck
@@ -29,7 +47,6 @@ collectors:
     measureType: total
     command: "echo \"0.$(expr \"$(df -h | grep \"/dev/root\" | awk '{print $5}' | tr -d \"%\")\")\""
     crontab: "* * * * *"
-
 
 ##   Security   ############################################################
 
