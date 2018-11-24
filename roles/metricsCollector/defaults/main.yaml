@@ -36,7 +36,7 @@ collectors:
   - measureName: externalIpAccesesCheck
     resultVariableName: EXT_IPS_NUM
     measureType: total
-    command: "cat /var/log/nginx/access.log  | grep -v \"{{ pi.network.prefix }}\" | grep \"\ \ [$(date \"+%d\")\" | wc -l"
+    command: "cat /var/log/nginx/access.log  | grep -v \"{{ pi.network.prefix }}\" | grep \"\\ [$(date \"+%d\")\" | wc -l"
     crontab: "* * * * *"
 
   - measureName: internalIpAccesesCheck
