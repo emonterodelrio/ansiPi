@@ -45,7 +45,6 @@
     owner: root
     group: root
     mode: 0644
-  when: existGrafana.rc != 2
 
 - name: Create grafana admin credentials at lpass
   local_action: command lpass generate --no-symbols --username admin {{ lpass.piId }}/grafanaAdmin 50

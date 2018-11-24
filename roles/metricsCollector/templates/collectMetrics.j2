@@ -1,2 +1,3 @@
-{{ tempCheck.resultVariableName }}=$( {{ tempCheck.command }})
-echo "{{ tempCheck.measureName }},type={{ tempCheck.measureType }} value=${{ tempCheck.resultVariableName }}" | curl -s -i -XPOST 'http://{{ pi.network.ip }}:8086/write?db={{ influx.db.name }}' --data-binary @-
+{{ item.resultVariableName }}=$( {{ item.command }} )
+echo "{{ item.measureName }},type={{ item.measureType }} value=${{ item .resultVariableName }}" | curl -s -i -XPOST 'http://{{ pi.network.ip }}:8086/write?db={{ influx.db.name }}' --data-binary @-
+echo ${{ item.resultVariableName }}

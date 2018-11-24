@@ -1,6 +1,52 @@
 ---
-tempCheck:
-  resultVariableName: PI_TEMP
-  measureName: piTemp
-  measureType: total
-  command: "/opt/vc/bin/vcgencmd measure_temp | cut -d= -f2 | cut -d\\' -f1"
+metricsCollectors:
+  path: /home/pi/metricsCollectors
+
+
+collectors:
+##   Pi Internals   ############################################################
+
+  - measureName: piTempCheck
+    resultVariableName: PI_TEMP
+    measureType: total
+    command: "/opt/vc/bin/vcgencmd measure_temp | cut -d= -f2 | cut -d\\' -f1"
+    crontab: "* * * * *"
+
+  - measureName: cpuUsageCheck
+    resultVariableName: CPU
+    measureType: total
+    command: "grep 'cpu ' /proc/stat | awk '{usage=($2+$4)/($2+$4+$5)} END {print usage}' | awk -F '.' '{print $1 \".\" substr($2,1,2)}'"
+    crontab: "* * * * *"
+
+  - measureName: memUsageCheck
+    resultVariableName: MEM
+    measureType: total
+    command: "free -m | grep Mem | awk '{userPercent=$3/$2}; {split(userPercent,a,\".\"); print a[1]\".\"substr(a[2],1,2)}'"
+    crontab: "* * * * *"
+
+  - measureName: diskUsageCheck
+    resultVariableName: DISK
+    measureType: total
+    command: "echo \"0.$(expr \"$(df -h | grep \"/dev/root\" | awk '{print $5}' | tr -d \"%\")\")\""
+    crontab: "* * * * *"
+
+
+##   Security   ############################################################
+
+  - measureName: externalIpAccesesCheck
+    resultVariableName: EXT_IPS_NUM
+    measureType: total
+    command: "cat /var/log/nginx/access.log  | grep -v \"{{ pi.network.prefix }}\" | grep \"[$(date \"+%d\")\" | wc -l"
+    crontab: "* * * * *"
+
+  - measureName: internalIpAccesesCheck
+    resultVariableName: INT_IPS_NUM
+    measureType: total
+    command: "cat /var/log/nginx/access.log  | grep \"{{ pi.network.prefix }}\" | grep \"[$(date \"+%d\")\" | wc -l"
+    crontab: "* * * * *"
+
+  - measureName: openSessionsCheck
+    resultVariableName: SESSIONS
+    measureType: total
+    command: "who | wc -l"
+    crontab: "* * * * *"
