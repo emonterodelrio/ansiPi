@@ -54,13 +54,13 @@ collectors:
   - measureName: successSshLoginsCheck
     resultVariableName: SSH_LOGINS_OK
     measureType: total
-    command: "cat /var/log/auth.log | grep \" $(date \"+%d\") \" | grep \"session opened for user\" | wc -l"
+    command: "cat /var/log/auth.log | grep \" $(date \"+%d\") \" | grep ssh | grep \"session opened for user\" | wc -l"
     crontab: "* * * * *"
 
   - measureName: wrongSshLoginsCheck
     resultVariableName: SSH_LOGINS_KO
     measureType: total
-    command: "cat /var/log/auth.log | grep \" $(date \"+%d\") \" | grep \"ailed password for\" | wc -l"
+    command: "cat /var/log/auth.log | grep \" $(date \"+%d\") \" | grep ssh | grep \"authentication failure\" | wc -l"
     crontab: "* * * * *"
 
 

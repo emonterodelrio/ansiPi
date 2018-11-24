@@ -12,6 +12,7 @@
     dest: /home/pi/{{ grafana.deb }}
     mode: 0644
     timeout: 60
+  when: existGrafana.rc != 2
 
 - name: Install grafana deb
   become: yes
@@ -81,4 +82,3 @@
     delay: 3
     timeout: 300
   when: reboot_system
-

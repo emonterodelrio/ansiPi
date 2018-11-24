@@ -336,8 +336,8 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "alias": "Disk",
-          "color": "rgb(2, 255, 0)"
+          "alias": "Memory Usage %",
+          "color": "rgb(0, 152, 255)"
         }
       ],
       "spaceLength": 10,
@@ -345,7 +345,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "Disk",
+          "alias": "Memory Usage %",
           "groupBy": [
             {
               "params": [
@@ -360,7 +360,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "diskUsageCheck",
+          "measurement": "memUsageCheck",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -401,7 +401,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Disk Usage %",
+      "title": "Memory Usage %",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1159,5 +1159,5 @@
   "timezone": "",
   "title": "PiStatus",
   "uid": "6K_zx7zRk",
-  "version": 10
+  "version": 12
 }
