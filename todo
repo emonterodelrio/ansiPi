@@ -1,9 +1,14 @@
 
+Porque influx no arranca bien?
+
 Metricas internas para raspi
 https://elinux.org/RPI_vcgencmd_usage
 
 grafana:
 crear dashboards por api desde roll de metricCollector
+
+nginx rpeverse proxy grafana
+ddos protection nginx
 
 añadir ips a lastpass para el navegador:
 (none)
@@ -12,8 +17,6 @@ añadir ips a lastpass para el navegador:
 
 revisar reiniciar la raspi y los procesos, handlers?
 
-nginx rpeverse proxy grafana
-ddos protection nginx
 
 monit con mensajes de fail2ban, demasiado verboso ahora
 
