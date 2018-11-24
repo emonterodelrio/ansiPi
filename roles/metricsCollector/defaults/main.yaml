@@ -36,13 +36,13 @@ collectors:
   - measureName: externalIpAccesesCheck
     resultVariableName: EXT_IPS_NUM
     measureType: total
-    command: "cat /var/log/nginx/access.log  | grep -v \"{{ pi.network.prefix }}\" | grep \"\\ [$(date \"+%d\")\" | wc -l"
+    command: "cat /var/log/nginx/access.log  | grep -v \"{{ pi.network.prefix }}\" | grep \"\\[$(date \"+%d\")\" | wc -l"
     crontab: "* * * * *"
 
   - measureName: internalIpAccesesCheck
     resultVariableName: INT_IPS_NUM
     measureType: total
-    command: "cat /var/log/nginx/access.log  | grep \"{{ pi.network.prefix }}\" | grep \"[$(date \"+%d\")\" | wc -l"
+    command: "cat /var/log/nginx/access.log  | grep \"{{ pi.network.prefix }}\" | grep \"\\[$(date \"+%d\")\" | wc -l"
     crontab: "* * * * *"
 
   - measureName: openSessionsCheck
@@ -50,3 +50,18 @@ collectors:
     measureType: total
     command: "who | wc -l"
     crontab: "* * * * *"
+
+  - measureName: successSshLoginsCheck
+    resultVariableName: SSH_LOGINS_OK
+    measureType: total
+    command: "cat /var/log/auth.log | grep \" $(date \"+%d\") \" | grep \"session opened for user\" | wc -l"
+    crontab: "* * * * *"
+
+  - measureName: wrongSshLoginsCheck
+    resultVariableName: SSH_LOGINS_KO
+    measureType: total
+    command: "cat /var/log/auth.log | grep \" $(date \"+%d\") \" | grep \"ailed password for\" | wc -l"
+    crontab: "* * * * *"
+
+
+

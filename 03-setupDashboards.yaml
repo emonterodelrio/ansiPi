@@ -8,7 +8,7 @@
   - vars/03-setupDashboards.yaml
 
   roles:
-#    - nginx
-#    - influxdb
+    - nginx
+    - influxdb
     - metricsCollector
     - grafana
