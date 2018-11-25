@@ -26,13 +26,16 @@
     path: /home/pi/{{ grafana.deb }}
     state: absent
 
+- name: Fill /etc/grafana/grafana.ini with template
+  become: yes
+  template: src=grafana.ini dest=/etc/grafana/grafana.ini owner=root group=grafana mode=0640
+
 - name: Make sure grafana-server is enabled and restarted
   become: yes
   service:
     name: grafana-server
     state: restarted 
     enabled: yes
-  when: existGrafana.rc != 2
 
 - name: Link influxdb datasource
   shell: "sleep 10 && echo \"\" && curl 'http://admin:admin@localhost:3000/api/datasources' -X POST -H 'Content-Type: application/json;charset=UTF-8' --data-binary '{\"name\":\"{{ influx.db.name }}\",\"type\":\"influxdb\",\"url\":\"http://{{ pi.network.ip }}:8086\",\"access\":\"proxy\",\"isDefault\":true,\"database\":\"{{ influx.db.name }}\"}'"
@@ -69,16 +72,10 @@
   failed_when: '"ser created" not in resultGrafanaPassUser.stdout'
   when: existGrafana.rc != 2
 
-- name: Grafana - Reboot server
-  shell: "sleep 5 && reboot"
-  async: 1
-  poll: 0
-  when: reboot_system
+- name: Make sure grafana-server is enabled and restarted
+  become: yes
+  service:
+    name: grafana-server
+    state: restarted 
+    enabled: yes 
 
-- name: Grafana - Wait for reboot
-  wait_for_connection:
-    connect_timeout: 10
-    sleep: 2
-    delay: 3
-    timeout: 300
-  when: reboot_system
