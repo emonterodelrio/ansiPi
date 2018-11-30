@@ -33,6 +33,9 @@
     mode: 0644
   when: existInfluxdb.rc != 0
 
+- pause:
+    seconds: 2
+
 - name: Make sure influxdb is enabled and restarted
   become: yes
   service:
