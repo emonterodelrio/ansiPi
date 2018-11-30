@@ -1157,7 +1157,7 @@
     ]
   },
   "timezone": "",
-  "title": "Home",
+  "title": "PiStatus",
   "uid": "{{ lookup('pipe', 'date +%s') }}",
   "version": 10
 }
