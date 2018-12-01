@@ -5,14 +5,14 @@
   gather_facts: false
   vars_prompt:
   - name: gmailUser
-    prompt: "\n\nValid gmail account for monit email alerts"
+    prompt: "\n\nPlease type valid gmail account for emails sending from raspberry"
     private: no
 
   - name: gmailPass
-    prompt: "\n\nType gmail password"
+    prompt: "\n\nNow, that gmail password"
 
   - name: duckDnsToken
-    prompt: "\n\nDuckDns token at http://www.duckdns.org"
+    prompt: "\n\nInsert your DuckDns token present at http://www.duckdns.org"
     private: no
 
   vars_files:

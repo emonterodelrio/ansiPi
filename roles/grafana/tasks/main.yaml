@@ -92,6 +92,9 @@
   register: grafanaPassAdmin
   when: existGrafana.rc != 2
 
+- name: Add url to grafana admin credentials at lpass
+  local_action: shell echo {{duckDnsUrl}} | lpass edit --non-interactive --url {{ lpass.piId }}/grafanaAdmin
+
 - name: Change grafana admin password	
   shell: "curl -X PUT -H 'Content-Type: application/json' -d '{\"oldPassword\":\"admin\",\"newPassword\":\"{{ grafanaPassAdmin.stdout }}\",\"confirmNew\":\"{{ grafanaPassAdmin.stdout }}\"}' 'http://admin:admin@192.168.1.11:3000/api/user/password'"
   register: resultGrafanaPassAdmin
@@ -102,6 +105,12 @@
   local_action: command lpass generate --no-symbols --username readUser {{ lpass.piId }}/grafanaUser 50
   register: grafanaPassUser
   when: existGrafana.rc != 2
+
+- name: Add url to grafana user credentials at lpass
+  local_action: shell echo {{duckDnsUrl}} | lpass edit --non-interactive --url {{ lpass.piId }}/grafanaUser
+
+- name: Lpass logout
+  local_action: shell lpass logout -f
 
 - name: Change grafana user password	
   shell: "curl -XPOST -H 'Content-Type: application/json' -d '{\"name\":\"readUser\",\"email\":\"readUser@email.com\",\"login\":\"readUser\",\"password\":\"{{ grafanaPassUser.stdout }}\"}' 'http://admin:{{ grafanaPassAdmin.stdout }}@localhost:3000/api/admin/users'"

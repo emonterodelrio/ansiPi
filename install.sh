@@ -39,6 +39,7 @@ ssh-keygen -f "~/.ssh/known_hosts" -R ${IP}
 
 printf "\033[1;32m\n\nTest conection to raspberry\033[0m\n"
 
+sleep 3
 #Use default raspibian password
 ansible raspi -m ping --extra-vars "ansible_user=${DEFAULT_USER} ansible_password=${DEFAULT_PASS} host_key_checking=False"
 

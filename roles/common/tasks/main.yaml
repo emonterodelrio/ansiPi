@@ -55,7 +55,8 @@
   with_items: "{{ toCleanDirectories }}"
 
 - name: Common - Reboot server
-  shell: "sleep 5 && reboot"
+  become: yes
+  shell: "reboot -h now"
   async: 1
   poll: 0
 
