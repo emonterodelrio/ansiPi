@@ -6,14 +6,14 @@
     group: pi
     state: directory
 
-- name: Ansible template with_items example.
+- name: Setup scripts
   template:
     src: collectMetrics.j2
     dest: "{{ metricsCollectors.path }}/{{ item.measureName }}.sh"
     mode: 0777
   with_items: "{{ collectors }}"
 
-- name: Crontab memory collectors
+- name: Crontab scripts
   cron:
     name: "{{ item.measureName }}"
     minute: "{{ item.crontab.split(' ')[0] }}"

@@ -5,45 +5,57 @@ metricsCollectors:
 
 collectors:
 ##   Pi Internals   ############################################################
-
-  - measureName: piTempCheck
-    resultVariableName: PI_TEMP
+  - measureName: piCpuTempCheck
     measureType: total
-    command: "/opt/vc/bin/vcgencmd measure_temp | cut -d= -f2 | cut -d\\' -f1"
+    command: "cpuTemp0=$(cat /sys/class/thermal/thermal_zone0/temp);cpuTemp1=$(($cpuTemp0/1000));cpuTemp2=$(($cpuTemp0/100));cpuTempM=$(($cpuTemp2 % $cpuTemp1));echo $cpuTemp1\".\"$cpuTempM"
     crontab: "* * * * *"
 
-  - measureName: piVoltsCheck
-    resultVariableName: VOLTS
+  - measureName: piGpuTempCheck
     measureType: total
-    command: "/opt/vc/bin/vcgencmd measure_volts | cut -d= -f2 | cut -d'V' -f1"
+    command: "/opt/vc/bin/vcgencmd measure_temp | cut -d\"=\" -f2 | cut -d\"'\" -f1"
+    crontab: "* * * * *"
+
+  - measureName: piVoltsCoreCheck
+    measureType: total
+    command: "vcgencmd measure_volts core | cut -d\"=\" -f2 | cut -d'V' -f1"
+    crontab: "* * * * *"
+
+  - measureName: piVoltsSdramCCheck
+    measureType: total
+    command: "vcgencmd measure_volts sdram_c | cut -d\"=\" -f2 | cut -d'V' -f1"
+    crontab: "* * * * *"
+
+  - measureName: piVoltsSdramICheck
+    measureType: total
+    command: "vcgencmd measure_volts sdram_i | cut -d\"=\" -f2 | cut -d'V' -f1"
+    crontab: "* * * * *"
+
+  - measureName: piVoltsSdramPCheck
+    measureType: total
+    command: "vcgencmd measure_volts sdram_p | cut -d\"=\" -f2 | cut -d'V' -f1"
     crontab: "* * * * *"
 
   - measureName: cpuLoad1Check
-    resultVariableName: LOAD1
     measureType: total
     command: "cat /proc/loadavg | awk '{print $1}'"
     crontab: "* * * * *"
 
   - measureName: cpuLoad5Check
-    resultVariableName: LOAD5
     measureType: total
     command: "cat /proc/loadavg | awk '{print $2}'"
     crontab: "* * * * *"
 
   - measureName: cpuLoad15Check
-    resultVariableName: LOAD15
     measureType: total
     command: "cat /proc/loadavg | awk '{print $3}'"
     crontab: "* * * * *"
 
   - measureName: memUsageCheck
-    resultVariableName: MEM
     measureType: total
     command: "free -m | grep Mem | awk '{userPercent=$3/$2}; {split(userPercent,a,\".\"); print a[1]\".\"substr(a[2],1,2)}'"
     crontab: "* * * * *"
 
   - measureName: diskUsageCheck
-    resultVariableName: DISK
     measureType: total
     command: "echo \"0.$(expr \"$(df -h | grep \"/dev/root\" | awk '{print $5}' | tr -d \"%\")\")\""
     crontab: "* * * * *"
@@ -51,34 +63,26 @@ collectors:
 ##   Security   ############################################################
 
   - measureName: externalIpAccesesCheck
-    resultVariableName: EXT_IPS_NUM
     measureType: total
     command: "cat /var/log/nginx/access.log  | grep -v \"{{ pi.network.prefix }}\" | grep \"\\[$(date \"+%d\")\" | wc -l"
     crontab: "* * * * *"
 
   - measureName: internalIpAccesesCheck
-    resultVariableName: INT_IPS_NUM
     measureType: total
     command: "cat /var/log/nginx/access.log  | grep \"{{ pi.network.prefix }}\" | grep \"\\[$(date \"+%d\")\" | wc -l"
     crontab: "* * * * *"
 
   - measureName: openSessionsCheck
-    resultVariableName: SESSIONS
     measureType: total
     command: "who | wc -l"
     crontab: "* * * * *"
 
   - measureName: successSshLoginsCheck
-    resultVariableName: SSH_LOGINS_OK
     measureType: total
     command: "cat /var/log/auth.log | grep \" $(date \"+%d\") \" | grep ssh | grep \"session opened for user\" | wc -l"
     crontab: "* * * * *"
 
   - measureName: wrongSshLoginsCheck
-    resultVariableName: SSH_LOGINS_KO
     measureType: total
     command: "cat /var/log/auth.log | grep \" $(date \"+%d\") \" | grep ssh | grep \"authentication failure\" | wc -l"
     crontab: "* * * * *"
-
-
-

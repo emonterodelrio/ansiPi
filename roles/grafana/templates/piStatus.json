@@ -1,4 +1,40 @@
 {
+    "__inputs": [
+    {
+      "name": "{{ influx.db.name }}",
+      "label": "{{ influx.db.name }}",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "5.3.2"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": "5.0.0"
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "5.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "singlestat",
+      "name": "Singlestat",
+      "version": "5.0.0"
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -15,6 +51,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
+  "id": null,
   "links": [],
   "panels": [
     {
@@ -91,105 +128,12 @@
             },
             {
               "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "piTempCheck",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "median"
-              }
-            ]
-          ],
-          "tags": []
-        }
-      ],
-      "thresholds": "60,80",
-      "title": "Cpu Temp",
-      "transparent": true,
-      "type": "singlestat",
-      "valueFontSize": "70%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "{{ influx.db.name }}",
-      "fill": 3,
-      "gridPos": {
-        "h": 4,
-        "w": 9,
-        "x": 3,
-        "y": 0
-      },
-      "id": 15,
-      "legend": {
-        "avg": false,
-        "current": true,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 1,
-      "points": true,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "Cpu Temp",
-          "color": "rgb(0, 152, 255)"
-        }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "Cpu Temp",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
                 "none"
               ],
               "type": "fill"
             }
           ],
-          "measurement": "memUsageCheck",
+          "measurement": "piCpuTempCheck",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -217,47 +161,19 @@
           ]
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
+      "thresholds": "60,80",
       "title": "Cpu Temp",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
       "transparent": true,
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
+      "type": "singlestat",
+      "valueFontSize": "70%",
+      "valueMaps": [
         {
-          "decimals": 1,
-          "format": "percentunit",
-          "label": "",
-          "logBase": 1,
-          "max": "1",
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
         }
       ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "valueName": "current"
     },
     {
       "cacheTimeout": null,
@@ -283,10 +199,10 @@
       "gridPos": {
         "h": 4,
         "w": 3,
-        "x": 12,
+        "x": 3,
         "y": 0
       },
-      "id": 16,
+      "id": 25,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -333,105 +249,12 @@
             },
             {
               "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "piTempCheck",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "median"
-              }
-            ]
-          ],
-          "tags": []
-        }
-      ],
-      "thresholds": "60,80",
-      "title": "Gpu Temp",
-      "transparent": true,
-      "type": "singlestat",
-      "valueFontSize": "70%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "{{ influx.db.name }}",
-      "fill": 3,
-      "gridPos": {
-        "h": 4,
-        "w": 9,
-        "x": 15,
-        "y": 0
-      },
-      "id": 17,
-      "legend": {
-        "avg": false,
-        "current": true,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 1,
-      "points": true,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "Gpu Temp",
-          "color": "rgb(0, 152, 255)"
-        }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "Gpu Temp",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
                 "none"
               ],
               "type": "fill"
             }
           ],
-          "measurement": "memUsageCheck",
+          "measurement": "piGpuTempCheck",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -459,10 +282,167 @@
           ]
         }
       ],
-      "thresholds": [],
+      "thresholds": "60,80",
+      "title": "Gpu Temp",
+      "transparent": true,
+      "type": "singlestat",
+      "valueFontSize": "70%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "{{ influx.db.name }}",
+      "fill": 0,
+      "gridPos": {
+        "h": 4,
+        "w": 18,
+        "x": 6,
+        "y": 0
+      },
+      "id": 24,
+      "legend": {
+        "avg": false,
+        "current": true,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 1,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "gpu",
+          "color": "rgb(0, 255, 226)"
+        },
+        {
+          "alias": "cpu",
+          "color": "rgb(255, 125, 0)"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "gpu",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "piGpuTempCheck",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "median"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "type",
+              "operator": "=",
+              "value": "total"
+            }
+          ]
+        },
+        {
+          "alias": "cpu",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "piCpuTempCheck",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "median"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "warning",
+          "fill": true,
+          "line": false,
+          "op": "gt",
+          "value": 60,
+          "yaxis": "left"
+        },
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": false,
+          "op": "gt",
+          "value": 70,
+          "yaxis": "left"
+        }
+      ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Gpu Temp",
+      "title": "Temperatures",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -480,11 +460,11 @@
       "yaxes": [
         {
           "decimals": 1,
-          "format": "percentunit",
+          "format": "celsius",
           "label": "",
           "logBase": 1,
-          "max": "1",
-          "min": "0",
+          "max": null,
+          "min": null,
           "show": true
         },
         {
@@ -513,18 +493,18 @@
         "#d44a3a"
       ],
       "datasource": "{{ influx.db.name }}",
-      "decimals": 2,
+      "decimals": 3,
       "format": "volt",
       "gauge": {
-        "maxValue": 5,
-        "minValue": null,
+        "maxValue": 1.8,
+        "minValue": 0.4,
         "show": true,
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
       "gridPos": {
         "h": 4,
-        "w": 2,
+        "w": 3,
         "x": 0,
         "y": 4
       },
@@ -554,7 +534,7 @@
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": true,
         "lineColor": "rgb(31, 120, 193)",
-        "show": true
+        "show": false
       },
       "tableColumn": "",
       "targets": [
@@ -574,7 +554,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "piVoltsCheck",
+          "measurement": "piVoltsCoreCheck",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -602,8 +582,353 @@
           ]
         }
       ],
-      "thresholds": "0.7,3.3",
+      "thresholds": "0.7,1.4,2",
       "title": "Voltage core",
+      "transparent": true,
+      "type": "singlestat",
+      "valueFontSize": "70%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorPostfix": true,
+      "colorPrefix": false,
+      "colorValue": false,
+      "colors": [
+        "#d44a3a",
+        "rgba(13, 255, 0, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "{{ influx.db.name }}",
+      "decimals": 3,
+      "format": "volt",
+      "gauge": {
+        "maxValue": 1.8,
+        "minValue": 0.4,
+        "show": true,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 3,
+        "y": 4
+      },
+      "id": 27,
+      "interval": null,
+      "links": [],
+      "mappingType": 2,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": true,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "alias": "Voltage sdram_i",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "piVoltsSdramICheck",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "median"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "type",
+              "operator": "=",
+              "value": "total"
+            }
+          ]
+        }
+      ],
+      "thresholds": "0.7,1.4,2",
+      "title": "Voltage sdram_i",
+      "transparent": true,
+      "type": "singlestat",
+      "valueFontSize": "70%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorPostfix": true,
+      "colorPrefix": false,
+      "colorValue": false,
+      "colors": [
+        "#d44a3a",
+        "rgba(13, 255, 0, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "{{ influx.db.name }}",
+      "decimals": 3,
+      "format": "volt",
+      "gauge": {
+        "maxValue": 1.8,
+        "minValue": 0.4,
+        "show": true,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 6,
+        "y": 4
+      },
+      "id": 26,
+      "interval": null,
+      "links": [],
+      "mappingType": 2,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": true,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "alias": "Voltage sdram_p",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "piVoltsSdramPCheck",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "median"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "type",
+              "operator": "=",
+              "value": "total"
+            }
+          ]
+        }
+      ],
+      "thresholds": "0.7,1.4,2",
+      "title": "Voltage sdram_p",
+      "transparent": true,
+      "type": "singlestat",
+      "valueFontSize": "70%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorPostfix": true,
+      "colorPrefix": false,
+      "colorValue": false,
+      "colors": [
+        "#d44a3a",
+        "rgba(13, 255, 0, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "{{ influx.db.name }}",
+      "decimals": 3,
+      "format": "volt",
+      "gauge": {
+        "maxValue": 1.8,
+        "minValue": 0.4,
+        "show": true,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 9,
+        "y": 4
+      },
+      "id": 28,
+      "interval": null,
+      "links": [],
+      "mappingType": 2,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": true,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "alias": "Voltage sdram_i",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "piVoltsSdramICheck",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "median"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "type",
+              "operator": "=",
+              "value": "total"
+            }
+          ]
+        }
+      ],
+      "thresholds": "0.7,1.4,2",
+      "title": "Voltage sdram_i",
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "70%",
@@ -622,11 +947,11 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "{{ influx.db.name }}",
-      "fill": 3,
+      "fill": 0,
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 2,
+        "w": 12,
+        "x": 12,
         "y": 4
       },
       "id": 23,
@@ -645,12 +970,24 @@
       "nullPointMode": "null",
       "percentage": false,
       "pointradius": 1,
-      "points": true,
+      "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "alias": "Voltage core",
-          "color": "rgb(0, 152, 255)"
+          "alias": "core",
+          "color": "rgb(255, 41, 0)"
+        },
+        {
+          "alias": "sdram_c",
+          "color": "rgb(25, 255, 0)"
+        },
+        {
+          "alias": "sdram_i",
+          "color": "rgb(16, 0, 255)"
+        },
+        {
+          "alias": "sdram_p",
+          "color": "rgb(205, 255, 0)"
         }
       ],
       "spaceLength": 10,
@@ -658,7 +995,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "Voltage core",
+          "alias": "core",
           "groupBy": [
             {
               "params": [
@@ -673,7 +1010,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "memUsageCheck",
+          "measurement": "piVoltsCoreCheck",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -699,12 +1036,160 @@
               "value": "total"
             }
           ]
+        },
+        {
+          "alias": "sdram_c",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "piVoltsSdramCCheck",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "median"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "type",
+              "operator": "=",
+              "value": "total"
+            }
+          ]
+        },
+        {
+          "alias": "sdram_i",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "piVoltsSdramICheck",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "median"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "type",
+              "operator": "=",
+              "value": "total"
+            }
+          ]
+        },
+        {
+          "alias": "sdram_p",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "piVoltsSdramPCheck",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "median"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "type",
+              "operator": "=",
+              "value": "total"
+            }
+          ]
         }
       ],
-      "thresholds": [],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "fillColor": "rgba(191, 27, 0, 0.51)",
+          "line": false,
+          "op": "gt",
+          "value": 1.45,
+          "yaxis": "left"
+        },
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "fillColor": "rgba(191, 27, 0, 0.51)",
+          "line": false,
+          "op": "lt",
+          "value": 0.7,
+          "yaxis": "left"
+        }
+      ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Voltage core",
+      "title": "Voltages",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -721,738 +1206,12 @@
       },
       "yaxes": [
         {
-          "decimals": 1,
-          "format": "percentunit",
+          "decimals": 3,
+          "format": "volt",
           "label": "",
-          "logBase": 1,
-          "max": "1",
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
           "logBase": 1,
           "max": null,
           "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorPostfix": true,
-      "colorPrefix": false,
-      "colorValue": false,
-      "colors": [
-        "#d44a3a",
-        "rgba(13, 255, 0, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": "{{ influx.db.name }}",
-      "decimals": 2,
-      "format": "volt",
-      "gauge": {
-        "maxValue": 5,
-        "minValue": null,
-        "show": true,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 2,
-        "x": 6,
-        "y": 4
-      },
-      "id": 4,
-      "interval": null,
-      "links": [],
-      "mappingType": 2,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": true,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "alias": "Voltage sdram_c",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "piVoltsCheck",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "median"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "type",
-              "operator": "=",
-              "value": "total"
-            }
-          ]
-        }
-      ],
-      "thresholds": "0.7,3.3",
-      "title": "Voltage sdram_c",
-      "transparent": true,
-      "type": "singlestat",
-      "valueFontSize": "70%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "{{ influx.db.name }}",
-      "fill": 3,
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 8,
-        "y": 4
-      },
-      "id": 20,
-      "legend": {
-        "avg": false,
-        "current": true,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 1,
-      "points": true,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "Voltage sdram_c",
-          "color": "rgb(0, 152, 255)"
-        }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "Voltage sdram_c",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "none"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "memUsageCheck",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "median"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "type",
-              "operator": "=",
-              "value": "total"
-            }
-          ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Voltage sdram_c",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "transparent": true,
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "decimals": 1,
-          "format": "percentunit",
-          "label": "",
-          "logBase": 1,
-          "max": "1",
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorPostfix": true,
-      "colorPrefix": false,
-      "colorValue": false,
-      "colors": [
-        "#d44a3a",
-        "rgba(13, 255, 0, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": "{{ influx.db.name }}",
-      "decimals": 2,
-      "format": "volt",
-      "gauge": {
-        "maxValue": 5,
-        "minValue": null,
-        "show": true,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 2,
-        "x": 12,
-        "y": 4
-      },
-      "id": 18,
-      "interval": null,
-      "links": [],
-      "mappingType": 2,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": true,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "alias": "Voltage sdram_i",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "piVoltsCheck",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "median"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "type",
-              "operator": "=",
-              "value": "total"
-            }
-          ]
-        }
-      ],
-      "thresholds": "0.7,3.3",
-      "title": "Voltage sdram_i",
-      "transparent": true,
-      "type": "singlestat",
-      "valueFontSize": "70%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "{{ influx.db.name }}",
-      "fill": 3,
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 14,
-        "y": 4
-      },
-      "id": 21,
-      "legend": {
-        "avg": false,
-        "current": true,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 1,
-      "points": true,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "Voltage sdram_i",
-          "color": "rgb(0, 152, 255)"
-        }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "Voltage sdram_i",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "none"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "memUsageCheck",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "median"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "type",
-              "operator": "=",
-              "value": "total"
-            }
-          ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Voltage sdram_i",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "transparent": true,
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "decimals": 1,
-          "format": "percentunit",
-          "label": "",
-          "logBase": 1,
-          "max": "1",
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorPostfix": true,
-      "colorPrefix": false,
-      "colorValue": false,
-      "colors": [
-        "#d44a3a",
-        "rgba(13, 255, 0, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": "{{ influx.db.name }}",
-      "decimals": 2,
-      "format": "volt",
-      "gauge": {
-        "maxValue": 5,
-        "minValue": null,
-        "show": true,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 2,
-        "x": 18,
-        "y": 4
-      },
-      "id": 19,
-      "interval": null,
-      "links": [],
-      "mappingType": 2,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": true,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "alias": "Voltage sdram_p",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "piVoltsCheck",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "median"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "type",
-              "operator": "=",
-              "value": "total"
-            }
-          ]
-        }
-      ],
-      "thresholds": "0.7,3.3",
-      "title": "Voltage sdram_p",
-      "transparent": true,
-      "type": "singlestat",
-      "valueFontSize": "70%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "{{ influx.db.name }}",
-      "fill": 3,
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 20,
-        "y": 4
-      },
-      "id": 22,
-      "legend": {
-        "avg": false,
-        "current": true,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 1,
-      "points": true,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "Voltage sdram_p",
-          "color": "rgb(0, 152, 255)"
-        }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "Voltage sdram_p",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "none"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "memUsageCheck",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "median"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "type",
-              "operator": "=",
-              "value": "total"
-            }
-          ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Voltage sdram_p",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "transparent": true,
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "decimals": 1,
-          "format": "percentunit",
-          "label": "",
-          "logBase": 1,
-          "max": "1",
-          "min": "0",
           "show": true
         },
         {
@@ -1498,7 +1257,7 @@
       "nullPointMode": "null",
       "percentage": false,
       "pointradius": 1,
-      "points": true,
+      "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
@@ -1724,7 +1483,7 @@
       "nullPointMode": "null",
       "percentage": false,
       "pointradius": 1,
-      "points": true,
+      "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
@@ -1861,7 +1620,7 @@
       "nullPointMode": "null",
       "percentage": false,
       "pointradius": 1,
-      "points": true,
+      "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
@@ -1970,7 +1729,7 @@
       }
     }
   ],
-  "refresh": false,
+  "refresh": "5s",
   "schemaVersion": 16,
   "style": "dark",
   "tags": [],
@@ -1978,8 +1737,8 @@
     "list": []
   },
   "time": {
-    "from": "2018-11-29T12:01:28.405Z",
-    "to": "2018-11-30T12:01:28.405Z"
+    "from": "now-3h",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -1998,7 +1757,7 @@
     ]
   },
   "timezone": "",
-  "title": "PiStatus",
+  "title": "RasPi status",
   "uid": "{{ lookup('pipe', 'date +%s') }}",
-  "version": 4
+  "version": 10
 }

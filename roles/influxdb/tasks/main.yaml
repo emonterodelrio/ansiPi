@@ -1,5 +1,4 @@
 ---
-
 - name: Check existing influxdb
   become: yes
   shell: influxd -h
@@ -33,30 +32,22 @@
     mode: 0644
   when: existInfluxdb.rc != 0
 
-- pause:
-    seconds: 2
+  #TODO porque no reinicia?
+- name: Crontab influx ensure reboot
+  become: yes
+  cron:
+    name: "Influx ensure running"
+    minute: "*"
+    hour: "*"
+    day: "*"
+    month: "*"
+    weekday: "*"
+    job: "bash -c 'if [ -z $(ps aux | grep \"influxdb.conf\" | grep -v grep) ]; then systemctl start influxdb; fi >/dev/null 2>&1'"
 
 - name: Make sure influxdb is enabled and restarted
   become: yes
   service:
     name: influxdb
     state: restarted 
-    enabled: yes 
+    enabled: yes
   when: existInfluxdb.rc != 0
-
-- name: Insert some data example
-  shell: for i in `seq 1 10`;do echo "test,type=total value=${i}" | curl -s -i -XPOST 'http://localhost:8086/write?db={{ influx.db.name }}' --data-binary @-; sleep 1; done
-
-- name: Influxdb - Reboot server
-  shell: "sleep 5 && reboot"
-  async: 1
-  poll: 0
-  when: reboot_system
-
-- name: Influxdb - Wait for reboot
-  wait_for_connection:
-    connect_timeout: 10
-    sleep: 2
-    delay: 3
-    timeout: 300
-  when: reboot_system

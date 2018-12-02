@@ -30,17 +30,3 @@
     state: stopped 
     enabled: no
   when: not production_mode
-
-- name: FinalStuff - Reboot server
-  shell: "sleep 5 && reboot"
-  async: 1
-  poll: 0
-  when: reboot_system
-
-- name: FinalStuff - Wait for reboot
-  wait_for_connection:
-    connect_timeout: 10
-    sleep: 2
-    delay: 3
-    timeout: 300
-  when: reboot_system

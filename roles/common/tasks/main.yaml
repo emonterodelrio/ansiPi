@@ -26,6 +26,7 @@
       static ip_address={{ pi.network.ip }}/{{ pi.network.maskLength }}
       static routers={{ pi.network.prefix }}.1
       static domain_name_servers=8.8.8.8 8.8.4.4
+  register: changeIp
 
 - name: Setup dns
   become: yes
@@ -42,11 +43,13 @@
 
 - name: Delete previous known_hosts user
   local_action: command ssh-keygen -f "/home/emontero/.ssh/known_hosts" -R {{ pi.network.ip }}
+  ignore_errors: yes
 
 - name: Delete previous known_hosts root
   become: yes
   become_user: root
   local_action: command ssh-keygen -f "/home/emontero/.ssh/known_hosts" -R {{ pi.network.ip }}
+  ignore_errors: yes
 
 - name: Delete unused stuff
   file:
@@ -59,6 +62,7 @@
   shell: "reboot -h now"
   async: 1
   poll: 0
+  when: changeIp is changed
 
 - name: Common - Wait for reboot
   wait_for_connection:
@@ -66,3 +70,4 @@
     sleep: 2
     delay: 3
     timeout: 300
+  when: changeIp is changed

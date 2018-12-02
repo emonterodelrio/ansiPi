@@ -69,11 +69,20 @@
     mode: 0755
     state: directory
 
-- name: Fill piDashboard with template
+- name: Fill raspi status dashboard with template
   become: yes
   template:
-    src: PiStatus.json
-    dest: /var/lib/grafana/dashboards/PiStatus.json
+    src: piStatus.json
+    dest: /var/lib/grafana/dashboards/piStatus.json
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Fill network status dashboard with template
+  become: yes
+  template:
+    src: networkStatus.json
+    dest: /var/lib/grafana/dashboards/networkStatus.json
     owner: root
     group: root
     mode: 0644
@@ -94,6 +103,7 @@
 
 - name: Add url to grafana admin credentials at lpass
   local_action: shell echo {{duckDnsUrl}} | lpass edit --non-interactive --url {{ lpass.piId }}/grafanaAdmin
+  when: existGrafana.rc != 2
 
 - name: Change grafana admin password	
   shell: "curl -X PUT -H 'Content-Type: application/json' -d '{\"oldPassword\":\"admin\",\"newPassword\":\"{{ grafanaPassAdmin.stdout }}\",\"confirmNew\":\"{{ grafanaPassAdmin.stdout }}\"}' 'http://admin:admin@192.168.1.11:3000/api/user/password'"
@@ -108,9 +118,11 @@
 
 - name: Add url to grafana user credentials at lpass
   local_action: shell echo {{duckDnsUrl}} | lpass edit --non-interactive --url {{ lpass.piId }}/grafanaUser
+  when: existGrafana.rc != 2
 
 - name: Lpass logout
   local_action: shell lpass logout -f
+  ignore_errors: yes
 
 - name: Change grafana user password	
   shell: "curl -XPOST -H 'Content-Type: application/json' -d '{\"name\":\"readUser\",\"email\":\"readUser@email.com\",\"login\":\"readUser\",\"password\":\"{{ grafanaPassUser.stdout }}\"}' 'http://admin:{{ grafanaPassAdmin.stdout }}@localhost:3000/api/admin/users'"

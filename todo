@@ -1,3 +1,31 @@
+Metricas:
+
+1-.FORMATEAR HORA EN TRAZAS NGINX
+ 
+2-. Metricas:
+Métodos(GET 401 200 202,POST401 200 202...,OTHER) por ip del día de hoy
+echo "ip,type=metodo value=numAccesos"
+
+numero de códigos HTTP por hora e ip
+
+
+200=$(grep 200 access.log)
+others=$(grep -v "200\|201" access.log solo un día)
+CODE_NAMES=(200 a b c others)
+for i in (ip list)
+  for i in CODE_NAMES[].length
+      echo "ip,type=CODE_NAMES[i] value=$(grep code access.log)"
+  done
+done
+
+
+¿¿echo "HTTP_CODE,type=ip value=numAccesos"??
+
+
+curl -i -XPOST http://192.168.123.27:8086/write?db=HWDB --data-binary "HARDWARE,CPU="" value=91, CPU="GET" value="
+
+# Peticiones por SOs
+hora ip SO
 
 Porque influx no arranca bien?
 
