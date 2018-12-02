@@ -1,0 +1,16 @@
+#!/bin/bash
+METHODS=("GET" "PUT" "POST");
+
+C_ALL=en_EN.utf8;
+myDate=$(date "+%b");
+myDate="${myDate^}";
+
+for i in $(cat /var/log/nginx/access.log | grep $myDate | awk '{print $1 " " $6}' | cut -d" " -f1 | sort | uniq); do
+  for method in "${METHODS[@]}";do
+    num=$(cat /var/log/nginx/access.log | grep $myDate | awk '{print $1 " " $6}' |  grep $i | grep -v $method | wc -l);
+    if [ "$num" -gt 0 ]; then
+      echo "$i,type=$method value=$num"
+# | curl -s -i -XPOST 'http://{{ pi.network.ip }}:8086/write?db={{ influx.db.name }}' --data-binary @-
+    fi;
+  done;
+done

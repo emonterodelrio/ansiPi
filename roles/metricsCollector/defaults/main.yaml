@@ -79,10 +79,10 @@ collectors:
 
   - measureName: successSshLoginsCheck
     measureType: total
-    command: "cat /var/log/auth.log | grep \" $(date \"+%d\") \" | grep ssh | grep \"session opened for user\" | wc -l"
+    command: "LC_ALL=de_DE.utf8; myDate=$(date \"+%b\");myDate=\"${myDate^}\"; cat /var/log/auth.log | grep $myDate | grep ssh | grep \"session opened for user\" | wc -l"
     crontab: "* * * * *"
 
   - measureName: wrongSshLoginsCheck
     measureType: total
-    command: "cat /var/log/auth.log | grep \" $(date \"+%d\") \" | grep ssh | grep \"authentication failure\" | wc -l"
+    command: "LC_ALL=de_DE.utf8; myDate=$(date \"+%b\");myDate=\"${myDate^}\"; cat /var/log/auth.log | grep $myDate | grep ssh | grep \"authentication failure\" | wc -l"
     crontab: "* * * * *"

@@ -13,6 +13,12 @@
     mode: 0777
   with_items: "{{ collectors }}"
 
+- name: Setup specials scripts
+  template:
+    src: specials.j2
+    dest: "{{ metricsCollectors.path }}/specials.j2"
+    mode: 0777
+
 - name: Crontab scripts
   cron:
     name: "{{ item.measureName }}"

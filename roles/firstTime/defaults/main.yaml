@@ -1,5 +1,6 @@
 ---
 local_additional_packages:
+  - stress
   - whois
   - cmake
   - libcurl4-openssl-dev
