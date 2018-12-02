@@ -1,6 +1,13 @@
 Metricas:
 
-1-.FORMATEAR HORA EN TRAZAS NGINX
+
+date "+%d" --> 02
+
+
+1-.FORMATEAR HORA EN TRAZAS NGINX XX/XX/XXXXT12:12:12,123
+1-.FORMATEAR HORA EN TRAZAS AUTH.log XX/XX/XXXXT12:12:12,123
+
+date "+%d" --> 02 en log saca 2 solamente
  
 2-. Metricas:
 Métodos(GET 401 200 202,POST401 200 202...,OTHER) por ip del día de hoy
