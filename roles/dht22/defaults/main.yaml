@@ -1,0 +1,12 @@
+---
+
+additional_packages:
+ - build-essential
+ - python-dev
+ - python-openssl
+ - git
+
+DHT22:
+  present: true
+  pin: 23
+  path: /home/pi/dht22  

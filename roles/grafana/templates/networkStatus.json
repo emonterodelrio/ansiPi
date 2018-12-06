@@ -59,8 +59,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "piMonitorDb",
-      "fill": 5,
+      "datasource": "{{ influx.db.name }}",
+      "fill": 2,
       "gridPos": {
         "h": 4,
         "w": 8,
@@ -83,7 +83,7 @@
       "nullPointMode": "null",
       "percentage": false,
       "pointradius": 1,
-      "points": true,
+      "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
@@ -126,7 +126,7 @@
               },
               {
                 "params": [],
-                "type": "median"
+                "type": "last"
               }
             ]
           ],
@@ -186,8 +186,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "piMonitorDb",
-      "fill": 5,
+      "datasource": "{{ influx.db.name }}",
+      "fill": 2,
       "gridPos": {
         "h": 4,
         "w": 8,
@@ -210,7 +210,7 @@
       "nullPointMode": "null",
       "percentage": false,
       "pointradius": 1,
-      "points": true,
+      "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
@@ -253,7 +253,7 @@
               },
               {
                 "params": [],
-                "type": "median"
+                "type": "last"
               }
             ]
           ],
@@ -313,8 +313,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "piMonitorDb",
-      "fill": 5,
+      "datasource": "{{ influx.db.name }}",
+      "fill": 2,
       "gridPos": {
         "h": 4,
         "w": 8,
@@ -337,7 +337,7 @@
       "nullPointMode": "null",
       "percentage": false,
       "pointradius": 1,
-      "points": true,
+      "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
@@ -380,7 +380,7 @@
               },
               {
                 "params": [],
-                "type": "median"
+                "type": "last"
               }
             ]
           ],
@@ -440,7 +440,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "piMonitorDb",
+      "datasource": "{{ influx.db.name }}",
       "fill": 2,
       "gridPos": {
         "h": 4,
@@ -466,7 +466,7 @@
       "nullPointMode": "null",
       "percentage": false,
       "pointradius": 1,
-      "points": true,
+      "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
@@ -513,7 +513,7 @@
               },
               {
                 "params": [],
-                "type": "median"
+                "type": "last"
               }
             ]
           ],
@@ -556,7 +556,7 @@
               },
               {
                 "params": [],
-                "type": "median"
+                "type": "last"
               }
             ]
           ],
@@ -566,7 +566,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Nginx Access Atempts",
+      "title": "Nginx access atempts",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -598,6 +598,339 @@
           "max": null,
           "min": null,
           "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "{{ influx.db.name }}",
+      "fill": 2,
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 4
+      },
+      "id": 12,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": true,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 1,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "Get",
+          "color": "rgb(0, 255, 35)"
+        },
+        {
+          "alias": "Post",
+          "color": "rgb(0, 248, 255)"
+        },
+        {
+          "alias": "Put",
+          "color": "rgb(255, 209, 0)"
+        },
+        {
+          "alias": "Other",
+          "color": "rgb(255, 0, 0)"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "Get",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "nginxGetCountCheck",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "type",
+              "operator": "=",
+              "value": "total"
+            }
+          ]
+        },
+        {
+          "alias": "Post",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "nginxPostCountCheck",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Put",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "nginxPutCountCheck",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Other",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "nginxOtherCountCheck",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Nginx access atempts",
+      "tooltip": {
+        "shared": false,
+        "sort": 1,
+        "value_type": "individual"
+      },
+      "transparent": true,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 0,
+          "format": "none",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fill": 2,
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "hideTimeOverride": true,
+      "id": 13,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 1,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "tooltip": {
+        "shared": false,
+        "sort": 1,
+        "value_type": "individual"
+      },
+      "transparent": true,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": false,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 0,
+          "format": "none",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": false
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
         }
       ],
       "yaxis": {

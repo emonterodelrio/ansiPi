@@ -5,7 +5,8 @@
   gather_facts: false
   vars_prompt:
     - name: duckDnsUrl
-      prompt: "\n\nWhat url have you chosen at duckdns? Type something like meteopi.duckdns.org"
+      prompt: "\n\nWhat url have you chosen at duckdns? Type something like"
+      default: "meteopi.duckdns.org"
       private: no
 
   vars_files:
@@ -16,4 +17,6 @@
     - nginx
     - influxdb
     - metricsCollector
+    - dht22
     - grafana
+

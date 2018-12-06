@@ -1,0 +1,50 @@
+---
+- name: Create DHT22 folder
+  file:
+    path: "{{ DHT22.path }}"
+    owner: pi
+    group: pi
+    state: directory
+  when: DHT22.present
+
+- name: Install software via apt
+  become: yes
+  apt:
+    name: "{{ additional_packages }}"
+    force: yes
+  when: DHT22.present
+
+- name: Download adafruit library
+  git:
+    repo: 'https://github.com/adafruit/Adafruit_Python_DHT.git'
+    dest: "{{ DHT22.path }}/Adafruit_Python_DHT"
+  when: DHT22.present
+
+- name: Install adafruit library
+  become: yes
+  shell: cd {{ DHT22.path }}/Adafruit_Python_DHT && python setup.py install
+  when: DHT22.present
+
+- name: Setup DHT22 scripts
+  template:
+    src: dht22_{{ item }}.j2
+    dest: "{{ DHT22.path }}/dht22_{{ item }}.py"
+    mode: 0777
+  with_items:
+    - temp
+    - hum
+  when: DHT22.present
+  
+- name: Crontab DHT22 scripts
+  cron:
+    name: "{{ item }}"
+    minute: "*"
+    hour: "*"
+    day: "*"
+    month: "*"
+    weekday: "*"  
+    job: "{{ DHT22.path }}/dht22_{{ item }}.py >/dev/null 2>&1"
+  with_items:
+    - temp
+    - hum
+  when: DHT22.present
