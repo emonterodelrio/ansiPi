@@ -97,12 +97,8 @@
     mode: 0644
 
 - name: Create grafana admin credentials at lpass
-  local_action: command lpass generate --no-symbols --username admin {{ lpass.piId }}/grafanaAdmin 50
+  local_action: shell lpass generate --no-symbols --username admin --url={{duckDnsUrl}} {{ lpass.piId }}/grafanaAdmin 50
   register: grafanaPassAdmin
-  when: existGrafana.rc != 2
-
-- name: Add url to grafana admin credentials at lpass
-  local_action: shell echo {{duckDnsUrl}} | lpass edit --non-interactive --url {{ lpass.piId }}/grafanaAdmin
   when: existGrafana.rc != 2
 
 - name: Change grafana admin password	
@@ -112,23 +108,19 @@
   when: existGrafana.rc != 2
 
 - name: Create grafana user credentials at lpass
-  local_action: command lpass generate --no-symbols --username readUser {{ lpass.piId }}/grafanaUser 50
+  local_action: shell lpass generate --no-symbols --username read --url={{duckDnsUrl}} {{ lpass.piId }}/grafanaUser 50
   register: grafanaPassUser
   when: existGrafana.rc != 2
 
-- name: Add url to grafana user credentials at lpass
-  local_action: shell echo {{duckDnsUrl}} | lpass edit --non-interactive --url {{ lpass.piId }}/grafanaUser
+- name: Change grafana user password	
+  shell: "curl -XPOST -H 'Content-Type: application/json' -d '{\"name\":\"read\",\"email\":\"{{ lookup('pipe', 'date +%s') }}@email.com\",\"login\":\"read\",\"password\":\"{{ grafanaPassUser.stdout }}\"}' 'http://admin:{{ grafanaPassAdmin.stdout }}@localhost:3000/api/admin/users'"
+  register: resultGrafanaPassUser
+  failed_when: '"ser created" not in resultGrafanaPassUser.stdout'
   when: existGrafana.rc != 2
 
 - name: Lpass logout
   local_action: shell lpass logout -f
   ignore_errors: yes
-
-- name: Change grafana user password	
-  shell: "curl -XPOST -H 'Content-Type: application/json' -d '{\"name\":\"readUser\",\"email\":\"readUser@email.com\",\"login\":\"readUser\",\"password\":\"{{ grafanaPassUser.stdout }}\"}' 'http://admin:{{ grafanaPassAdmin.stdout }}@localhost:3000/api/admin/users'"
-  register: resultGrafanaPassUser
-  failed_when: '"ser created" not in resultGrafanaPassUser.stdout'
-  when: existGrafana.rc != 2
 
 - name: Make sure grafana-server is enabled and restarted
   become: yes

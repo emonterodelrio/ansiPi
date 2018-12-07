@@ -566,7 +566,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Nginx access atempts",
+      "title": "Today's nginx access atempts",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -618,7 +618,7 @@
         "x": 12,
         "y": 4
       },
-      "id": 12,
+      "id": 14,
       "legend": {
         "alignAsTable": true,
         "avg": false,
@@ -641,15 +641,15 @@
       "seriesOverrides": [
         {
           "alias": "Get",
-          "color": "rgb(0, 255, 35)"
+          "color": "rgb(1, 255, 0)"
         },
         {
           "alias": "Post",
-          "color": "rgb(0, 248, 255)"
+          "color": "rgb(0, 236, 255)"
         },
         {
           "alias": "Put",
-          "color": "rgb(255, 209, 0)"
+          "color": "rgb(229, 255, 0)"
         },
         {
           "alias": "Other",
@@ -818,10 +818,10 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Nginx access atempts",
+      "title": "Today's nginx access methods",
       "tooltip": {
-        "shared": false,
-        "sort": 1,
+        "shared": true,
+        "sort": 0,
         "value_type": "individual"
       },
       "transparent": true,
@@ -836,7 +836,7 @@
       "yaxes": [
         {
           "decimals": 0,
-          "format": "none",
+          "format": "short",
           "label": "",
           "logBase": 1,
           "max": null,

@@ -15,9 +15,6 @@ fi
 
 printf "\033[1;31m\n\nBefore use this script you must enable ssh at raspberry pi\033[0m\n"
 
-cd ~
-
-
 apt-get update -y 
 apt-get install -y software-properties-common
 
@@ -34,15 +31,15 @@ EOL
 printf "\033[1;32m\n\nDisable host key check\033[0m\n"
 sed -i "s/#host_key_checking = False/host_key_checking = False/g" /etc/ansible/ansible.cfg
 
-ssh-keygen -f "~/.ssh/known_hosts" -R ${IP}
-
+ssh-keygen -f "~/.ssh/known_hosts" -R ${IP} || true
 
 printf "\033[1;32m\n\nTest conection to raspberry\033[0m\n"
 
-sleep 3
 #Use default raspibian password
-ansible raspi -m ping --extra-vars "ansible_user=${DEFAULT_USER} ansible_password=${DEFAULT_PASS} host_key_checking=False"
-
+until ansible raspi -m ping --extra-vars "ansible_user=${DEFAULT_USER} ansible_password=${DEFAULT_PASS} host_key_checking=False"; do
+  echo "Wait for raspberry connection"
+  sleep 3
+done
 
 printf "\033[1;32m\n\nNow exec this\033[0m\n"
 printf "\033[1;32m\n\nansible-playbook 01-setCredentials.yaml\033[0m\n"

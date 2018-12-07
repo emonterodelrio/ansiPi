@@ -7,7 +7,7 @@ pi:
     maskLength: 24
 
 lpass:
-  piId: raspi
+  piId: meteopi
 
 influx:
   db:

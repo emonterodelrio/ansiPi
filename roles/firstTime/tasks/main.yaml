@@ -44,14 +44,14 @@
   when: lpassInstalled.rc != 0
 
 - name: Lastpass - Ensure user loged in
-  local_action: command lpass ls
+  local_action: shell lpass ls
 
 - name: Lastpass - Create pi credentials
-  local_action: command lpass generate --no-symbols --username {{ pi.user }} {{ lpass.piId }}/pi 50
+  local_action: shell lpass generate --no-symbols --username {{ pi.user }} {{ lpass.piId }}/pi 50
   register: pass
 
 - name: Lastpass - Encrypt pi password
-  local_action: command mkpasswd --method=sha-512 {{ pass.stdout }}
+  local_action: shell mkpasswd --method=sha-512 {{ pass.stdout }}
   register: pass512
 
 - name: Lastpass - Change pi password
@@ -62,22 +62,22 @@
 - name: Ansible - Change pi password at /etc/ansible/hosts
   become: yes
   become_user: root
-  local_action: command sed -i 's/\(.*\)ansible_user=\(.*\) ansible_ssh_pass=\(.*\)/\1ansible_user=\2 ansible_ssh_pass={{ pass.stdout }}/g' /etc/ansible/hosts
+  local_action: shell sed -i 's/\(.*\)ansible_user=\(.*\) ansible_ssh_pass=\(.*\)/\1ansible_user=\2 ansible_ssh_pass={{ pass.stdout }}/g' /etc/ansible/hosts
 
 - name: Ansible - Enable callback_whitelists
   become: yes
   become_user: root
-  local_action: command sed -i 's/#callback_whitelist\(.*\)/callback_whitelist\1/g' /etc/ansible/ansible.cfg
+  local_action: shell sed -i 's/#callback_whitelist\(.*\)/callback_whitelist\1/g' /etc/ansible/ansible.cfg
 
 - name: Ansible - Enable timer and profile_tasks callbacks
   become: yes
   become_user: root
-  local_action: command sed -i 's/callback_whitelist\(.*\)/callback_whitelist= profile_tasks, timer/g' /etc/ansible/ansible.cfg
+  local_action: shell sed -i 's/callback_whitelist\(.*\)/callback_whitelist= profile_tasks, timer/g' /etc/ansible/ansible.cfg
 
 - name: Ansible - Enable pipelining
   become: yes
   become_user: root
-  local_action: command sed -i 's/#pipelining = False/pipelining = True/g' /etc/ansible/ansible.cfg
+  local_action: shell sed -i 's/#pipelining = False/pipelining = True/g' /etc/ansible/ansible.cfg
 
 - name: Install - Delete temp folder
   become: yes
