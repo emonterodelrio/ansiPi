@@ -1,11 +1,15 @@
 ---
 
 additional_packages:
-  - nginx
+  - nginx=1.10.3-1+deb9u2
   - openssl
 
 nginx:
-  version:
-
-#By default system is not rebooted, change this var in group_vars file if you want to do that.
-reboot_system: true
+  worker_processes: 2
+  worker_connections: 1024
+  keepalive_timeout: 65
+  noSSLport: 80
+  antiddos:
+    zonesizemb: 10  #Tamaño máximo de zona
+    maxreqsec: 30   #Máximo peticiones por segundo
+    maxburst: 15    #Máximo de ráfagas

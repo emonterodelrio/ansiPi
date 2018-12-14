@@ -1,4 +1,10 @@
 ---
+- name: Install - Install software via apt
+  become: yes
+  apt:
+    name: "{{ additional_packages }}"
+    force: yes
+
 - name: Update all packages to the latest version
   become: yes
   apt:
@@ -9,6 +15,60 @@
   apt:
     name: "*"
     state: latest
+
+- name: Setup alias at bash_profile
+  become: yes
+  lineinfile:
+    path: /etc/bash.bashrc
+    line: "{{ item }}"
+  with_items:
+    - alias ll='ls -larth'
+
+- name: Delete history stuff from pi user
+  become: yes
+  lineinfile:
+    path: /home/pi/.bashrc
+    state: absent
+    regexp: '^HIST'
+
+- name: Setup history at /etc/bash.bashrc
+  become: yes
+  lineinfile:
+    path: /etc/bash.bashrc
+    line: "{{ item }}"
+  with_items:
+    - HISTCONTROL=ignoreboth:erasedups
+    - HISTSIZE=100000
+    - HISTFILESIZE=200000
+
+- name: Swappiness to {{ pi.swappiness }} at /etc/sysctl.conf
+  become: yes
+  lineinfile:
+    path: /etc/sysctl.conf
+    line: "vm.swappiness = {{ pi.swappiness }}"
+    state: present
+    regexp: '^vm.swappiness'
+
+- name: Enable bluetooth at /boot/config.txt
+  become: yes
+  lineinfile:
+    path: /boot/config.txt
+    line: "dtoverlay=pi3-disable-bt"
+    regexp: '^dtoverlay'
+    state: present
+  when: pi.bluetoothEnabled
+
+- name: Disable bluetooth at /boot/config.txt
+  become: yes
+  lineinfile:
+    path: /boot/config.txt
+    regexp: '^dtoverlay'
+    state: absent
+  when: not pi.bluetoothEnabled
+
+- name: Change hostname
+  become: yes
+  shell: echo {{ pi.hostname }} > /etc/hostname
 
 - name: Setup fixed ip
   become: yes
@@ -59,15 +119,5 @@
 
 - name: Common - Reboot server
   become: yes
-  shell: "reboot -h now"
-  async: 1
-  poll: 0
-  when: changeIp is changed
-
-- name: Common - Wait for reboot
-  wait_for_connection:
-    connect_timeout: 10
-    sleep: 2
-    delay: 3
-    timeout: 300
-  when: changeIp is changed
+  command: "reboot -h now"
+  ignore_errors: yes

@@ -3,6 +3,3 @@
 grafana:
   deb: grafana_5.3.2_armhf.deb
   url: https://s3-us-west-2.amazonaws.com/grafana-releases/release
- 
-#By default system is not rebooted, change this var in group_vars file if you want to do that.
-reboot_system: true

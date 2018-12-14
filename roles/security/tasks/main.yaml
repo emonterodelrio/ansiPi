@@ -67,8 +67,6 @@
     state: absent
     line: 'include /etc/monit/conf-enabled/*'
 
-
-
 - name: Copy conf to jail.conf
   shell: awk '{ printf "# "; print; }' /etc/fail2ban/jail.conf | sudo tee /etc/fail2ban/jail.local
  

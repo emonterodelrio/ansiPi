@@ -1,51 +1,11 @@
-
-
-ll en profile
-history a 300K
-sin repetidos.
-
-
-Grafana:
-Revisar permisos para poder guardar.
-
 Influx:
 Habilitar log
 
-
-Metricas:
-
-
-date "+%d" --> 02
-
-
-1-.FORMATEAR HORA EN TRAZAS NGINX XX/XX/XXXXT12:12:12,123
-1-.FORMATEAR HORA EN TRAZAS AUTH.log XX/XX/XXXXT12:12:12,123
-
-date "+%d" --> 02 en log saca 2 solamente
  
 2-. Metricas:
 
-Metricas internas para raspi
-https://elinux.org/RPI_vcgencmd_usage
-
-grafana:
-crear dashboards por api desde roll de metricCollector
-
-nginx rpeverse proxy grafana
-ddos protection nginx
-
-añadir ips a lastpass para el navegador:
-(none)
-    123.123.123. [id: 326541651684351351]
-    id.duckdns.org [id: 654316813513515 ]
-
 revisar reiniciar la raspi y los procesos, handlers?
-
 
 monit con mensajes de fail2ban, demasiado verboso ahora
 
-grafana crear dashboards con api
-
-letemp rol
-
-lanzar los playbooks desde el install.sh
+lanzar los playbooks desde el install.shfor src in arm core h264 isp v3d uart pwm emmc pixel vec hdmi dpi ; do

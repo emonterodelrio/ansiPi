@@ -8,5 +8,5 @@ additional_packages:
 
 DHT22:
   present: true
-  pin: 23
+  pin: 23 #GPIO, not pin number
   path: /home/pi/dht22  

@@ -18,7 +18,6 @@
   apt:
     name: "{{ additional_packages }}"
     force: yes
-    state: latest
   when: existNginx.rc != 0
 
 - name: Delete default sites-available
@@ -43,4 +42,3 @@
     name: nginx
     state: restarted 
     enabled: yes 
-
