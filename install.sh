@@ -1,6 +1,6 @@
 DEFAULT_USER=pi
 DEFAULT_PASS=raspberry
-
+NAME=meteopi
 if ! [ $(id -u) = 0 ]; then
    printf "\033[1;31m\n\nMust be run as:\nsudo ./install.sh 192.168.1.39\033[0m\n"
    exit 1
@@ -24,7 +24,7 @@ apt-get install -y ansible
 printf "\033[1;32m\n\nSet ansible host ${IP}\033[0m\n"
 mkdir -p /etc/ansible/
 cat >>/etc/ansible/hosts <<EOL
-[meteopi]
+[${NAME}]
 ${IP} ansible_user=${DEFAULT_USER} ansible_ssh_pass=${DEFAULT_PASS}
 EOL
 
@@ -36,7 +36,7 @@ ssh-keygen -f "~/.ssh/known_hosts" -R ${IP} || true
 printf "\033[1;32m\n\nTest conection to raspberry\033[0m\n"
 
 #Use default raspibian password
-until ansible raspi -m ping --extra-vars "ansible_user=${DEFAULT_USER} ansible_password=${DEFAULT_PASS} host_key_checking=False"; do
+until ansible ${NAME} -m ping --extra-vars "ansible_user=${DEFAULT_USER} ansible_password=${DEFAULT_PASS} host_key_checking=False"; do
   echo "Wait for raspberry connection"
   sleep 3
 done

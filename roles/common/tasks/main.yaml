@@ -8,11 +8,6 @@
 - name: Update all packages to the latest version
   become: yes
   apt:
-    upgrade: dist
-
-- name: Update all packages to the latest version
-  become: yes
-  apt:
     name: "*"
     state: latest
 
@@ -116,8 +111,3 @@
    path: "{{item}}"
    state: absent
   with_items: "{{ toCleanDirectories }}"
-
-- name: Common - Reboot server
-  become: yes
-  command: "reboot -h now"
-  ignore_errors: yes
