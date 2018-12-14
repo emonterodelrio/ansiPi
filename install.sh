@@ -23,8 +23,8 @@ apt-get install -y ansible
 
 printf "\033[1;32m\n\nSet ansible host ${IP}\033[0m\n"
 mkdir -p /etc/ansible/
-cat >/etc/ansible/hosts <<EOL
-[raspi]
+cat >>/etc/ansible/hosts <<EOL
+[meteopi]
 ${IP} ansible_user=${DEFAULT_USER} ansible_ssh_pass=${DEFAULT_PASS}
 EOL
 

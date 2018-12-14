@@ -2,7 +2,7 @@
 pi:
   user: pi
   network:
-    ip: 192.168.1.11
+    ip: 192.168.1.12
     prefix: 192.168.1
     maskLength: 24
 
