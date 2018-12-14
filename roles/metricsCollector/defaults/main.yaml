@@ -8,109 +8,109 @@ collectors:
   - measureName: piCpuTempCheck
     measureType: total
     command: "cpuTemp0=$(cat /sys/class/thermal/thermal_zone0/temp);cpuTemp1=$(($cpuTemp0/1000));cpuTemp2=$(($cpuTemp0/100));cpuTempM=$(($cpuTemp2 % $cpuTemp1));echo $cpuTemp1\".\"$cpuTempM"
-    crontab: "* * * * *"
+    delay: "1"
 
   - measureName: piGpuTempCheck
     measureType: total
     command: "/opt/vc/bin/vcgencmd measure_temp | cut -d\"=\" -f2 | cut -d\"'\" -f1"
-    crontab: "* * * * *"
+    delay: "1"
 
   - measureName: piVoltsCoreCheck
     measureType: total
     command: "vcgencmd measure_volts core | cut -d\"=\" -f2 | cut -d'V' -f1"
-    crontab: "* * * * *"
+    delay: "1"
 
   - measureName: piVoltsSdramCCheck
     measureType: total
     command: "vcgencmd measure_volts sdram_c | cut -d\"=\" -f2 | cut -d'V' -f1"
-    crontab: "* * * * *"
+    delay: "1"
 
   - measureName: piVoltsSdramICheck
     measureType: total
     command: "vcgencmd measure_volts sdram_i | cut -d\"=\" -f2 | cut -d'V' -f1"
-    crontab: "* * * * *"
+    delay: "1"
 
   - measureName: piVoltsSdramPCheck
     measureType: total
     command: "vcgencmd measure_volts sdram_p | cut -d\"=\" -f2 | cut -d'V' -f1"
-    crontab: "* * * * *"
+    delay: "1"
 
   - measureName: cpuLoad1Check
     measureType: total
     command: "cat /proc/loadavg | awk '{print $1}'"
-    crontab: "* * * * *"
+    delay: "60"
 
   - measureName: cpuLoad5Check
     measureType: total
     command: "cat /proc/loadavg | awk '{print $2}'"
-    crontab: "* * * * *"
+    delay: "60"
 
   - measureName: cpuLoad15Check
     measureType: total
     command: "cat /proc/loadavg | awk '{print $3}'"
-    crontab: "* * * * *"
+    delay: "60"
 
   - measureName: memUsageCheck
     measureType: total
     command: "free -m | grep Mem | awk '{userPercent=$3/$2}; {split(userPercent,a,\".\"); print a[1]\".\"substr(a[2],1,2)}'"
-    crontab: "* * * * *"
+    delay: "60"
 
   - measureName: diskUsageCheck
     measureType: total
     command: "echo \"0.$(expr \"$(df -h | grep \"/dev/root\" | awk '{print $5}' | tr -d \"%\")\")\""
-    crontab: "* * * * *"
+    delay: "60"
 
 ##   Network   ############################################################
 
   - measureName: externalIpAccesesCheck
     measureType: total
-    command: "cat /var/log/nginx/access.log  | grep -v \"{{ pi.network.prefix }}\" | grep \"\\[$(date \"+%d\")\" | wc -l"
-    crontab: "* * * * *"
+    command: "cat /var/log/nginx/access.log  | grep -v \"{{ pi.network.prefix }}\" | grep \"$(date \"+%d\")\" | wc -l"
+    delay: "60"
 
   - measureName: internalIpAccesesCheck
     measureType: total
-    command: "cat /var/log/nginx/access.log  | grep \"{{ pi.network.prefix }}\" | grep \"\\[$(date \"+%d\")\" | wc -l"
-    crontab: "* * * * *"
+    command: "cat /var/log/nginx/access.log  | grep \"{{ pi.network.prefix }}\" | grep \"$(date \"+%d\")\" | wc -l"
+    delay: "60"
 
   - measureName: openSessionsCheck
     measureType: total
     command: "who | wc -l"
-    crontab: "* * * * *"
+    delay: "60"
 
   - measureName: successSshLoginsCheck
     measureType: total
     command: "LC_ALL=en_EN.utf8; month=$(date \"+%b\");month=\"${month^}\"; day=$(date \"+%-d\"); grep -e \"$month[[:blank:]]\\+$day\" /var/log/auth.log | grep ssh | grep \"session opened for user\" | wc -l"
-    crontab: "* * * * *"
+    delay: "60"
 
   - measureName: wrongSshLoginsCheck
     measureType: total
     command: "LC_ALL=en_EN.utf8; month=$(date \"+%b\");month=\"${month^}\"; day=$(date \"+%-d\"); grep -e \"$month[[:blank:]]\\+$day\" /var/log/auth.log | grep ssh | grep \"authentication failure\" | wc -l"
-    crontab: "* * * * *"
+    delay: "60"
 
   - measureName: wrongSshLoginsCheck
     measureType: total
     command: "LC_ALL=en_EN.utf8; month=$(date \"+%b\");month=\"${month^}\"; day=$(date \"+%-d\"); grep -e \"$month[[:blank:]]\\+$day\" /var/log/auth.log | grep ssh | grep \"authentication failure\" | wc -l"
-    crontab: "* * * * *"
+    delay: "60"
 
 ##   Nginx   ############################################################
 
   - measureName: nginxGetCountCheck
     measureType: total
-    command: "LC_ALL=en_EN.utf8; grep -e \"$(date \"+%d/%b\")\" /var/log/nginx/access.log | awk '{print $1 \" \" $6}' | tr -d \"\\\"\" | grep GET | wc -l"
-    crontab: "* * * * *"
+    command: "LC_ALL=en_EN.utf8; grep -e \"$(date \"+%d/%b\")\" /var/log/nginx/access.log | awk '{print $ \" \" $6}' | tr -d \"\\\"\" | grep GET | wc -l"
+    delay: "60"
 
   - measureName: nginxPostCountCheck
     measureType: total
     command: "LC_ALL=en_EN.utf8; grep -e \"$(date \"+%d/%b\")\" /var/log/nginx/access.log | awk '{print $1 \" \" $6}' | tr -d \"\\\"\" | grep POST | wc -l"
-    crontab: "* * * * *"
+    delay: "60"
 
   - measureName: nginxPutCountCheck
     measureType: total
     command: "LC_ALL=en_EN.utf8; grep -e \"$(date \"+%d/%b\")\" /var/log/nginx/access.log | awk '{print $1 \" \" $6}' | tr -d \"\\\"\" | grep PUT | wc -l"
-    crontab: "* * * * *"
+    delay: "60"
 
   - measureName: nginxOtherCountCheck
     measureType: total
     command: "LC_ALL=en_EN.utf8; grep -e \"$(date \"+%d/%b\")\" /var/log/nginx/access.log | awk '{print $1 \" \" $6}' | tr -d \"\\\"\" | grep -v \"POST\\|GET\\|PUT\" | wc -l"
-    crontab: "* * * * *"
+    delay: "60"
 
