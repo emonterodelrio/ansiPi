@@ -8,5 +8,6 @@ additional_packages:
 
 DHT22:
   present: true
-  pin: 23 #GPIO, not pin number
-  path: /home/pi/dht22  
+  pin: 23
+  path: /home/pi/dht22
+  delay: 120

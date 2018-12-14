@@ -1,6 +1,6 @@
 ---
 
-- hosts: raspi
+- hosts: meteopi
   remote_user: pi
   gather_facts: false
   vars_prompt:
@@ -11,7 +11,6 @@
 
   vars_files:
   - vars/piStuff.yaml
-  - vars/03-setupDashboards.yaml
 
   roles:
     - nginx

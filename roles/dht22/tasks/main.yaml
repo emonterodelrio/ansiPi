@@ -42,8 +42,8 @@
     hour: "*"
     day: "*"
     month: "*"
-    weekday: "*"  
-    job: "{{ DHT22.path }}/dht22_{{ item }}.py >/dev/null 2>&1"
+    weekday: "*" 
+    job: "bash -c 'if [ ! \"$(ps aux | grep dht22_{{ item }}.py | grep -v grep)\" ]; then cd {{ DHT22.path }} && nohup ./dht22_{{ item }}.py &>> {{ DHT22.path }}/{{ item }}.log& fi'"
   with_items:
     - temp
     - hum

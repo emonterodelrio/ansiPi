@@ -1,18 +1,24 @@
 #!/usr/bin/python
 import Adafruit_DHT
 import subprocess
+import time
 
-humidity, temperature = Adafruit_DHT.read_retry( Adafruit_DHT.DHT22 , {{ DHT22.pin }} )
+delay = ({{ DHT22.delay }})
 
-if humidity is not None and temperature is not None:
-  print '%.2f' % (temperature)
-else:
-  print '0'
+while True:
+  humidity, temperature = Adafruit_DHT.read_retry( Adafruit_DHT.DHT22 , {{ DHT22.pin }} )
 
-command = "echo 'dht22_{{ item }},type=total value=%.2f' | curl -s -i -XPOST 'http://{{ pi.network.ip }}:8086/write?db={{ influx.db.name }}' --data-binary @-" % (temperature)
-print command
+  if humidity is not None and temperature is not None:
+    print '%.2f' % (temperature)
+  else:
+    print '0'
 
-res = subprocess.check_output(['bash','-c', command])
+  command = "echo 'dht22_{{ item }},type=total value=%.2f' | curl -s -i -XPOST 'http://{{ pi.network.ip }}:8086/write?db={{ influx.db.name }}' --data-binary @-" % (temperature)
+  print command
 
-for line in res.splitlines():
-  print line
+  res = subprocess.check_output(['bash','-c', command])
+
+  for line in res.splitlines():
+    print line
+
+  time.sleep(delay)

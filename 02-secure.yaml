@@ -1,6 +1,6 @@
 ---
 
-- hosts: raspi
+- hosts: meteopi
   remote_user: pi
   gather_facts: false
   vars_prompt:
@@ -17,7 +17,6 @@
 
   vars_files:
   - vars/piStuff.yaml
-  - vars/02-secure.yaml
 
   roles:
     - common

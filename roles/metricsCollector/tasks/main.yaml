@@ -6,6 +6,13 @@
     group: pi
     state: directory
 
+- name: Create metric collectors log folder
+  file:
+    path: "{{ metricsCollectors.path }}/logs"
+    owner: pi
+    group: pi
+    state: directory
+
 - name: Setup scripts
   template:
     src: collectMetrics.j2
@@ -13,13 +20,17 @@
     mode: 0777
   with_items: "{{ collectors }}"
 
+- name: Stop all scripts
+  shell: "for i in $(ps aux | grep \"{{ metricsCollectors.path }}\" | grep -v \"color=auto\" | awk '{print $2}');do sudo kill -9 $i; done"
+  ignore_errors: yes
+
 - name: Crontab scripts
   cron:
     name: "{{ item.measureName }}"
-    minute: "{{ item.crontab.split(' ')[0] }}"
-    hour: "{{ item.crontab.split(' ')[1] }}"
-    day: "{{ item.crontab.split(' ')[2] }}"
-    month: "{{ item.crontab.split(' ')[3] }}"
-    weekday: "{{ item.crontab.split(' ')[4] }}"  
-    job: "{{ metricsCollectors.path }}/{{ item.measureName }}.sh >/dev/null 2>&1"
+    minute: "*"
+    hour: "*"
+    day: "*"
+    month: "*"
+    weekday: "*"
+    job: "bash -c 'if [ ! \"$(ps aux | grep {{ item.measureName }}.sh | grep -v grep)\" ]; then nohup {{ metricsCollectors.path }}/{{ item.measureName }}.sh &>> {{ metricsCollectors.path }}/logs/{{ item.measureName }}.log& fi'"
   with_items: "{{ collectors }}"
