@@ -1,9 +1,8 @@
 ---
-#- name: Install software via apt
-#  become: yes
-#  apt:
-#    name: "{{ additional_packages }}"
-#    force: yes
+- name: Install software via apt
+  become: yes
+  shell: apt-get install -y {{ item }}
+  with_items: "{{ additional_packages }}"
 
 - name: Add gmail account to ssmtp.conf
   become: yes
@@ -19,53 +18,53 @@
       FromLineOverride=YES
       UseSTARTTLS=YES
 
-#- name: Clean monit conf-enabled
-#  become: yes
-#  file:
-#    state: absent
-#    path: /etc/monit/conf-enabled
+- name: Clean monit conf-enabled
+  become: yes
+  file:
+    state: absent
+    path: /etc/monit/conf-enabled
 
-#- name: Clean monit conf-available
-#  become: yes
-#  file:
-#    state: absent
-#    path: /etc/monit/conf-available
+- name: Clean monit conf-available
+  become: yes
+  file:
+    state: absent
+    path: /etc/monit/conf-available
 
-#- name: Configure monit timeout
-#  become: yes
-#  lineinfile:
-#    path: /etc/monit/monitrc
-#    regexp: '^  set daemon'
-#    line: '  set daemon {{ monitTimeout}}'
+- name: Configure monit timeout
+  become: yes
+  lineinfile:
+    path: /etc/monit/monitrc
+    regexp: '^  set daemon'
+    line: '  set daemon {{ monitTimeout}}'
 
-#- name: Setup monit conf
-#  become: yes
-#  blockinfile:
-#    path: /etc/monit/monitrc
-#    create: yes
-#    block: |
-#      #Mail settings
-#      set mail-format {
-#        from: monit@raspberry.pi
-#        subject: Monit Alert - $SERVICE
-#        message:
-#        Date:        $DATE
-#        Host:        $HOST
-#        $DESCRIPTION
+- name: Setup monit conf
+  become: yes
+  blockinfile:
+    path: /etc/monit/monitrc
+    create: yes
+    block: |
+      #Mail settings
+      set mail-format {
+        from: monit@raspberry.pi
+        subject: Monit Alert - $SERVICE
+        message:
+        Date:        $DATE
+        Host:        $HOST
+        $DESCRIPTION
 
-#                 Your faithful employee,
-#                 Monit }
-#      set mailserver smtp.gmail.com port 587
-#        username {{ gmailUser }} password "{{ gmailPass}}"
-#        using TLSV1 with timeout 30 seconds
-#      set alert emonterodelrio@gmail.com
+                 Your faithful employee,
+                 Monit }
+      set mailserver smtp.gmail.com port 587
+        username {{ gmailUser }} password "{{ gmailPass}}"
+        using TLSV1 with timeout 30 seconds
+      set alert emonterodelrio@gmail.com
 
-#- name: Disable conf-enabled folder configurations
-#  become: yes
-#  lineinfile:
-#    path: /etc/monit/monitrc
-#    state: absent
-#    line: 'include /etc/monit/conf-enabled/*'
+- name: Disable conf-enabled folder configurations
+  become: yes
+  lineinfile:
+    path: /etc/monit/monitrc
+    state: absent
+    line: 'include /etc/monit/conf-enabled/*'
 
 - name: Copy conf to jail.conf
   shell: awk '{ printf "# "; print; }' /etc/fail2ban/jail.conf | sudo tee /etc/fail2ban/jail.local
