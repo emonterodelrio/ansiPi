@@ -1,12 +1,12 @@
 ---
 
-- hosts: meteopi
+- hosts: veopi
   remote_user: pi
   gather_facts: false
   vars_prompt:
     - name: duckDnsUrl
       prompt: "\n\nWhat url have you chosen at duckdns? Type something like"
-      default: "meteopi.duckdns.org"
+      default: "veopi.duckdns.org"
       private: no
 
   vars_files:
