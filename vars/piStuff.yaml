@@ -1,16 +1,16 @@
 ---
 pi:
   user: pi
-  hostname: veopi
+  hostname: meteopi
   network:
-    ip: 192.168.1.12
+    ip: 192.168.1.11
     prefix: 192.168.1
     maskLength: 24
   swappiness: 10
   bluetoothEnabled: false
 
 lpass:
-  piId: veopi
+  piId: meteopi
 
 influx:
   db:

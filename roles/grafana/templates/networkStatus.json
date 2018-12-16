@@ -111,7 +111,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "openSessionsCheck",
+          "measurement": "sessions",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -132,9 +132,15 @@
           ],
           "tags": [
             {
-              "key": "type",
+              "key": "host",
               "operator": "=",
-              "value": "total"
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "current_sessions"
             }
           ]
         }
@@ -238,7 +244,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "wrongSshLoginsCheck",
+          "measurement": "ssh",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -259,9 +265,15 @@
           ],
           "tags": [
             {
-              "key": "type",
+              "key": "host",
               "operator": "=",
-              "value": "total"
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "login_ko"
             }
           ]
         }
@@ -365,7 +377,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "successSshLoginsCheck",
+          "measurement": "ssh",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -386,9 +398,15 @@
           ],
           "tags": [
             {
-              "key": "type",
+              "key": "host",
               "operator": "=",
-              "value": "total"
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "login_ok"
             }
           ]
         }
@@ -474,7 +492,7 @@
           "color": "rgb(229, 255, 0)"
         },
         {
-          "alias": "Internal",
+          "alias": "Local",
           "color": "rgb(0, 200, 255)"
         }
       ],
@@ -498,7 +516,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "externalIpAccesesCheck",
+          "measurement": "nginx",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -519,14 +537,20 @@
           ],
           "tags": [
             {
-              "key": "type",
+              "key": "host",
               "operator": "=",
-              "value": "total"
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "external_acceses"
             }
           ]
         },
         {
-          "alias": "Internal",
+          "alias": "Local",
           "groupBy": [
             {
               "params": [
@@ -541,7 +565,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "internalIpAccesesCheck",
+          "measurement": "nginx",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "B",
@@ -560,7 +584,19 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "local_acceses"
+            }
+          ]
         }
       ],
       "thresholds": [],
@@ -676,7 +712,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "nginxGetCountCheck",
+          "measurement": "nginx",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -697,9 +733,15 @@
           ],
           "tags": [
             {
-              "key": "type",
+              "key": "host",
               "operator": "=",
-              "value": "total"
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "get"
             }
           ]
         },
@@ -719,7 +761,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "nginxPostCountCheck",
+          "measurement": "nginx",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "B",
@@ -738,7 +780,19 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "post"
+            }
+          ]
         },
         {
           "alias": "Put",
@@ -756,7 +810,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "nginxPutCountCheck",
+          "measurement": "nginx",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "C",
@@ -775,7 +829,19 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "put"
+            }
+          ]
         },
         {
           "alias": "Other",
@@ -793,7 +859,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "nginxOtherCountCheck",
+          "measurement": "nginx",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "D",
@@ -812,7 +878,19 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "other"
+            }
+          ]
         }
       ],
       "thresholds": [],

@@ -1,6 +1,6 @@
 DEFAULT_USER=pi
 DEFAULT_PASS=raspberry
-NAME=veopi
+NAME=meteopi
 if ! [ $(id -u) = 0 ]; then
    printf "\033[1;31m\n\nMust be run as:\nsudo ./install.sh 192.168.1.39\033[0m\n"
    exit 1

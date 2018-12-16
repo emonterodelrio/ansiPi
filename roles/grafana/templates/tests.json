@@ -1,5 +1,5 @@
 {
-  "__inputs": [
+    "__inputs": [
     {
       "name": "{{ influx.db.name }}",
       "label": "{{ influx.db.name }}",
@@ -53,7 +53,6 @@
   "graphTooltip": 0,
   "id": null,
   "links": [],
-"//": "Here all pannels",
   "panels": [
     {
       "aliasColors": {},
@@ -112,7 +111,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_temp",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -133,15 +132,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "temp"
+              "value": "total"
             }
           ]
         }
@@ -264,7 +257,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_hum",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -285,15 +278,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "hum"
+              "value": "total"
             }
           ]
         }
@@ -362,7 +349,7 @@
         "x": 0,
         "y": 6
       },
-      "id": 19,
+      "id": 17,
       "legend": {
         "avg": false,
         "current": false,
@@ -406,7 +393,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_temp",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -427,15 +414,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "temp"
+              "value": "total"
             }
           ]
         }
@@ -558,7 +539,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_hum",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -579,15 +560,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "hum"
+              "value": "total"
             }
           ]
         }
@@ -656,7 +631,7 @@
         "x": 0,
         "y": 12
       },
-      "id": 20,
+      "id": 7,
       "legend": {
         "avg": false,
         "current": false,
@@ -700,7 +675,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_temp",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -721,15 +696,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "temp"
+              "value": "total"
             }
           ]
         }
@@ -808,7 +777,7 @@
         "x": 12,
         "y": 12
       },
-      "id": 24,
+      "id": 11,
       "legend": {
         "avg": false,
         "current": false,
@@ -852,7 +821,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_hum",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -873,15 +842,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "hum"
+              "value": "total"
             }
           ]
         }
@@ -950,7 +913,7 @@
         "x": 0,
         "y": 18
       },
-      "id": 21,
+      "id": 8,
       "legend": {
         "avg": false,
         "current": false,
@@ -994,7 +957,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_temp",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1015,15 +978,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "temp"
+              "value": "total"
             }
           ]
         }
@@ -1050,7 +1007,7 @@
           "yaxis": "left"
         }
       ],
-      "timeFrom": "1d",
+      "timeFrom": "24h",
       "timeShift": null,
       "title": "Temperature",
       "tooltip": {
@@ -1102,7 +1059,7 @@
         "x": 12,
         "y": 18
       },
-      "id": 25,
+      "id": 10,
       "legend": {
         "avg": false,
         "current": false,
@@ -1146,7 +1103,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_hum",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1167,15 +1124,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "hum"
+              "value": "total"
             }
           ]
         }
@@ -1192,7 +1143,7 @@
           "yaxis": "left"
         }
       ],
-      "timeFrom": "1d",
+      "timeFrom": "24h",
       "timeShift": null,
       "title": "Humidity",
       "tooltip": {
@@ -1244,7 +1195,7 @@
         "x": 0,
         "y": 24
       },
-      "id": 22,
+      "id": 6,
       "legend": {
         "avg": false,
         "current": false,
@@ -1288,7 +1239,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_temp",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1309,15 +1260,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "temp"
+              "value": "total"
             }
           ]
         }
@@ -1396,7 +1341,7 @@
         "x": 12,
         "y": 24
       },
-      "id": 28,
+      "id": 13,
       "legend": {
         "avg": false,
         "current": false,
@@ -1440,7 +1385,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_hum",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1461,15 +1406,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "hum"
+              "value": "total"
             }
           ]
         }
@@ -1538,7 +1477,7 @@
         "x": 0,
         "y": 30
       },
-      "id": 23,
+      "id": 12,
       "legend": {
         "avg": false,
         "current": false,
@@ -1582,7 +1521,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_temp",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1603,15 +1542,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "temp"
+              "value": "total"
             }
           ]
         }
@@ -1690,7 +1623,7 @@
         "x": 12,
         "y": 30
       },
-      "id": 27,
+      "id": 9,
       "legend": {
         "avg": false,
         "current": false,
@@ -1734,7 +1667,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_hum",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1755,15 +1688,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "hum"
+              "value": "total"
             }
           ]
         }
@@ -1832,7 +1759,7 @@
         "x": 0,
         "y": 36
       },
-      "id": 17,
+      "id": 14,
       "legend": {
         "avg": false,
         "current": false,
@@ -1876,7 +1803,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_temp",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1897,15 +1824,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "temp"
+              "value": "total"
             }
           ]
         }
@@ -1984,7 +1905,7 @@
         "x": 12,
         "y": 36
       },
-      "id": 26,
+      "id": 15,
       "legend": {
         "avg": false,
         "current": false,
@@ -2028,7 +1949,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_hum",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -2049,15 +1970,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "hum"
+              "value": "total"
             }
           ]
         }
@@ -2207,6 +2122,8 @@
       "5s"
     ],
     "time_options": [
+      "30s",
+      "1m",
       "5m",
       "15m",
       "1h",
@@ -2219,7 +2136,7 @@
     ]
   },
   "timezone": "",
-  "title": "Home",
+  "title": "Tests",
   "uid": "{{ lookup('pipe', 'date +%s') }}",
   "version": 10
-} 
+}
