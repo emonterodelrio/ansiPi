@@ -9,9 +9,8 @@
 
 - name: Install software via apt
   become: yes
-  apt:
-    name: "{{ additional_packages }}"
-    force: yes
+  shell: apt-get install -y {{ item }}
+  with_items: "{{ additional_packages }}"
   when: DHT22.present
 
 - name: Download adafruit library
@@ -34,7 +33,12 @@
     - temp
     - hum
   when: DHT22.present
-  
+
+- name: Stop all scripts
+  become: yes
+  shell: "for i in $(ps aux | grep \"{{ DHT22.path }}\" | grep -v \"color=auto\" | awk '{print $2}');do kill -9 $i; done"
+  ignore_errors: yes  
+
 - name: Crontab DHT22 scripts
   cron:
     name: "{{ item }}"

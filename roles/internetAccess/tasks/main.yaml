@@ -10,8 +10,8 @@
     dest: "~/duckDns/duck.sh"
     mode: 0700
     content: |
-      echo url="https://www.duckdns.org/update?domains=meteopi&token={{ duckDnsToken }}&ip=" | curl -k -o ~/duckDns/duck.log -K -
-  
+      echo url="https://www.duckdns.org/update?domains={{ pi.hostname }}&token={{ duckDnsToken }}&ip=" | curl -k -o ~/duckDns/duck.log -K -
+
 - name: Touch duckdns script log
   file:
     path: "~/duckDns/duck.log"

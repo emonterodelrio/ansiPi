@@ -133,7 +133,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "piCpuTempCheck",
+          "measurement": "temperature",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -154,9 +154,15 @@
           ],
           "tags": [
             {
-              "key": "type",
+              "key": "host",
               "operator": "=",
-              "value": "total"
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "cpu"
             }
           ]
         }
@@ -254,7 +260,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "piGpuTempCheck",
+          "measurement": "temperature",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -275,9 +281,15 @@
           ],
           "tags": [
             {
-              "key": "type",
+              "key": "host",
               "operator": "=",
-              "value": "total"
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "gpu"
             }
           ]
         }
@@ -357,7 +369,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "piGpuTempCheck",
+          "measurement": "temperature",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -378,9 +390,15 @@
           ],
           "tags": [
             {
-              "key": "type",
+              "key": "host",
               "operator": "=",
-              "value": "total"
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "gpu"
             }
           ]
         },
@@ -400,7 +418,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "piCpuTempCheck",
+          "measurement": "temperature",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "B",
@@ -419,7 +437,19 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "cpu"
+            }
+          ]
         }
       ],
       "thresholds": [
@@ -554,7 +584,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "piVoltsCoreCheck",
+          "measurement": "voltage",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -575,9 +605,15 @@
           ],
           "tags": [
             {
-              "key": "type",
+              "key": "host",
               "operator": "=",
-              "value": "total"
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "core"
             }
           ]
         }
@@ -654,7 +690,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "alias": "Voltage sdram_i",
+          "alias": "Voltage sdram_c",
           "groupBy": [
             {
               "params": [
@@ -669,7 +705,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "piVoltsSdramICheck",
+          "measurement": "voltage",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -690,15 +726,21 @@
           ],
           "tags": [
             {
-              "key": "type",
+              "key": "host",
               "operator": "=",
-              "value": "total"
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "sdram_c"
             }
           ]
         }
       ],
       "thresholds": "0.7,1.4,2",
-      "title": "Voltage sdram_i",
+      "title": "Voltage sdram_c",
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "70%",
@@ -736,121 +778,6 @@
         "h": 4,
         "w": 3,
         "x": 6,
-        "y": 4
-      },
-      "id": 26,
-      "interval": null,
-      "links": [],
-      "mappingType": 2,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": true,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "alias": "Voltage sdram_p",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "piVoltsSdramPCheck",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "type",
-              "operator": "=",
-              "value": "total"
-            }
-          ]
-        }
-      ],
-      "thresholds": "0.7,1.4,2",
-      "title": "Voltage sdram_p",
-      "transparent": true,
-      "type": "singlestat",
-      "valueFontSize": "70%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorPostfix": true,
-      "colorPrefix": false,
-      "colorValue": false,
-      "colors": [
-        "#d44a3a",
-        "rgba(13, 255, 0, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": "{{ influx.db.name }}",
-      "decimals": 3,
-      "format": "volt",
-      "gauge": {
-        "maxValue": 1.8,
-        "minValue": 0.4,
-        "show": true,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 9,
         "y": 4
       },
       "id": 28,
@@ -899,7 +826,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "piVoltsSdramICheck",
+          "measurement": "voltage",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -920,15 +847,142 @@
           ],
           "tags": [
             {
-              "key": "type",
+              "key": "host",
               "operator": "=",
-              "value": "total"
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "sdram_i"
             }
           ]
         }
       ],
       "thresholds": "0.7,1.4,2",
       "title": "Voltage sdram_i",
+      "transparent": true,
+      "type": "singlestat",
+      "valueFontSize": "70%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorPostfix": true,
+      "colorPrefix": false,
+      "colorValue": false,
+      "colors": [
+        "#d44a3a",
+        "rgba(13, 255, 0, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "{{ influx.db.name }}",
+      "decimals": 3,
+      "format": "volt",
+      "gauge": {
+        "maxValue": 1.8,
+        "minValue": 0.4,
+        "show": true,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 9,
+        "y": 4
+      },
+      "id": 26,
+      "interval": null,
+      "links": [],
+      "mappingType": 2,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": true,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "alias": "Voltage sdram_p",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "voltage",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "sdram_p"
+            }
+          ]
+        }
+      ],
+      "thresholds": "0.7,1.4,2",
+      "title": "Voltage sdram_p",
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "70%",
@@ -1010,7 +1064,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "piVoltsCoreCheck",
+          "measurement": "voltage",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1031,9 +1085,15 @@
           ],
           "tags": [
             {
-              "key": "type",
+              "key": "host",
               "operator": "=",
-              "value": "total"
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "core"
             }
           ]
         },
@@ -1053,7 +1113,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "piVoltsSdramCCheck",
+          "measurement": "voltage",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "B",
@@ -1074,9 +1134,15 @@
           ],
           "tags": [
             {
-              "key": "type",
+              "key": "host",
               "operator": "=",
-              "value": "total"
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "sdram_c"
             }
           ]
         },
@@ -1096,7 +1162,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "piVoltsSdramICheck",
+          "measurement": "voltage",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "C",
@@ -1117,9 +1183,15 @@
           ],
           "tags": [
             {
-              "key": "type",
+              "key": "host",
               "operator": "=",
-              "value": "total"
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "sdram_i"
             }
           ]
         },
@@ -1139,7 +1211,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "piVoltsSdramPCheck",
+          "measurement": "voltage",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "D",
@@ -1160,9 +1232,15 @@
           ],
           "tags": [
             {
-              "key": "type",
+              "key": "host",
               "operator": "=",
-              "value": "total"
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "sdram_p"
             }
           ]
         }
@@ -1293,7 +1371,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "cpuLoad1Check",
+          "measurement": "cpu",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1314,9 +1392,15 @@
           ],
           "tags": [
             {
-              "key": "type",
+              "key": "host",
               "operator": "=",
-              "value": "total"
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "load_1"
             }
           ]
         },
@@ -1336,7 +1420,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "cpuLoad5Check",
+          "measurement": "cpu",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "B",
@@ -1355,7 +1439,19 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "load_5"
+            }
+          ]
         },
         {
           "alias": "Load 15",
@@ -1373,7 +1469,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "cpuLoad15Check",
+          "measurement": "cpu",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "C",
@@ -1392,7 +1488,19 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "load_15"
+            }
+          ]
         }
       ],
       "thresholds": [
@@ -1511,7 +1619,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "memUsageCheck",
+          "measurement": "memory",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1532,9 +1640,15 @@
           ],
           "tags": [
             {
-              "key": "type",
+              "key": "host",
               "operator": "=",
-              "value": "total"
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "used_percent"
             }
           ]
         }
@@ -1648,7 +1762,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "diskUsageCheck",
+          "measurement": "disk",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1669,9 +1783,15 @@
           ],
           "tags": [
             {
-              "key": "type",
+              "key": "host",
               "operator": "=",
-              "value": "total"
+              "value": "meteopi"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "used_percent"
             }
           ]
         }

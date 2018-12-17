@@ -1,7 +1,7 @@
 #!/bin/bash
 while true; do
   RESULT=$( {{ item.command }} )
-  echo "{{ item.measureName }},type={{ item.measureType }} value=$RESULT" | curl -s -XPOST 'http://{{ pi.network.ip }}:8086/write?db={{ influx.db.name }}' --data-binary @-
+  echo "{{ item.group }},name={{ item.name }},host=$(hostname) value=$RESULT" | curl -s -XPOST 'http://{{ pi.network.ip }}:8086/write?db={{ influx.db.name }}' --data-binary @-
   echo $RESULT
   sleep {{ item.delay }}
 done

@@ -6,11 +6,10 @@
     mode: 0755
     state: directory
 
-- name: Install - Install software via apt
+- name: Install software via apt
   become: yes
-  apt:
-    name: "{{ local_additional_packages }}"
-    force: yes
+  shell: apt-get install -y {{ item }}
+  with_items: "{{ local_additional_packages }}"
 
 - name: Lastpass - Check installed
   local_action: command lpass -h

@@ -2,7 +2,10 @@
 import Adafruit_DHT
 import subprocess
 import time
+import socket
 
+
+hostname = socket.gethostname()
 delay = ({{ DHT22.delay }} + ({{ DHT22.delay }} / 2))
 
 while True:
@@ -13,7 +16,7 @@ while True:
   else:
     print '0'
 
-  command = "echo 'dht22_{{ item }},type=total value=%.2f' | curl -s -i -XPOST 'http://{{ pi.network.ip }}:8086/write?db={{ influx.db.name }}' --data-binary @-" % (humidity)
+  command = "echo 'dht22,name={{ item }},host=%s value=%.2f' | curl -s -i -XPOST 'http://{{ pi.network.ip }}:8086/write?db={{ influx.db.name }}' --data-binary @-" % (hostname,humidity) 
   print command
 
   res = subprocess.check_output(['bash','-c', command])

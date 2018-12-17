@@ -5,92 +5,87 @@ metricsCollectors:
 
 collectors:
 ##   Pi Internals   ############################################################
-  - measureName: piCpuTempCheck
-    measureType: total
+  - name: cpu
+    group: temperature
     command: "cpuTemp0=$(cat /sys/class/thermal/thermal_zone0/temp);cpuTemp1=$(($cpuTemp0/1000));cpuTemp2=$(($cpuTemp0/100));cpuTempM=$(($cpuTemp2 % $cpuTemp1));echo $cpuTemp1\".\"$cpuTempM"
     delay: "1"
 
-  - measureName: piGpuTempCheck
-    measureType: total
+  - name: gpu
+    group: temperature
     command: "/opt/vc/bin/vcgencmd measure_temp | cut -d\"=\" -f2 | cut -d\"'\" -f1"
     delay: "1"
 
-  - measureName: piVoltsCoreCheck
-    measureType: total
+  - name: core
+    group: voltage
     command: "vcgencmd measure_volts core | cut -d\"=\" -f2 | cut -d'V' -f1"
     delay: "1"
 
-  - measureName: piVoltsSdramCCheck
-    measureType: total
+  - name: sdram_c
+    group: voltage
     command: "vcgencmd measure_volts sdram_c | cut -d\"=\" -f2 | cut -d'V' -f1"
     delay: "1"
 
-  - measureName: piVoltsSdramICheck
-    measureType: total
+  - name: sdram_i
+    group: voltage
     command: "vcgencmd measure_volts sdram_i | cut -d\"=\" -f2 | cut -d'V' -f1"
     delay: "1"
 
-  - measureName: piVoltsSdramPCheck
-    measureType: total
+  - name: sdram_p
+    group: voltage
     command: "vcgencmd measure_volts sdram_p | cut -d\"=\" -f2 | cut -d'V' -f1"
     delay: "1"
 
-  - measureName: cpuLoad1Check
-    measureType: total
+  - name: load_1
+    group: cpu
     command: "cat /proc/loadavg | awk '{print $1}'"
     delay: "60"
 
-  - measureName: cpuLoad5Check
-    measureType: total
+  - name: load_5
+    group: cpu
     command: "cat /proc/loadavg | awk '{print $2}'"
     delay: "60"
 
-  - measureName: cpuLoad15Check
-    measureType: total
+  - name: load_15
+    group: cpu
     command: "cat /proc/loadavg | awk '{print $3}'"
     delay: "60"
 
-  - measureName: memUsageCheck
-    measureType: total
+  - name: used_percent
+    group: memory
     command: "free -m | grep Mem | awk '{userPercent=$3/$2}; {split(userPercent,a,\".\"); print a[1]\".\"substr(a[2],1,2)}'"
     delay: "60"
 
-  - measureName: diskUsageCheck
-    measureType: total
+  - name: used_percent
+    group: disk
     command: "echo \"0.$(expr \"$(df -h | grep \"/dev/root\" | awk '{print $5}' | tr -d \"%\")\")\""
     delay: "60"
 
 ##   Network   ############################################################
 
-  - measureName: externalIpAccesesCheck
-    measureType: total
+  - name: external_acceses
+    group: nginx
     command: "cat /var/log/nginx/access.log  | grep -v \"{{ pi.network.prefix }}\" | grep \"$(date \"+%d\")\" | wc -l"
     delay: "60"
 
-  - measureName: internalIpAccesesCheck
-    measureType: total
+  - name: local_acceses
+    group: nginx
     command: "cat /var/log/nginx/access.log  | grep \"{{ pi.network.prefix }}\" | grep \"$(date \"+%d\")\" | wc -l"
     delay: "60"
 
-  - measureName: openSessionsCheck
-    measureType: total
+  - name: current_sessions
+    group: sessions
     command: "who | wc -l"
-    delay: "60"
+    delay: "5"
 
-  - measureName: successSshLoginsCheck
-    measureType: total
+  - name: login_ok
+    group: ssh
     command: "LC_ALL=en_EN.utf8; month=$(date \"+%b\");month=\"${month^}\"; day=$(date \"+%-d\"); grep -e \"$month[[:blank:]]\\+$day\" /var/log/auth.log | grep ssh | grep \"session opened for user\" | wc -l"
-    delay: "60"
+    delay: "10"
 
-  - measureName: wrongSshLoginsCheck
-    measureType: total
+  - name: login_ko
+    group: ssh
     command: "LC_ALL=en_EN.utf8; month=$(date \"+%b\");month=\"${month^}\"; day=$(date \"+%-d\"); grep -e \"$month[[:blank:]]\\+$day\" /var/log/auth.log | grep ssh | grep \"authentication failure\" | wc -l"
-    delay: "60"
-
-  - measureName: wrongSshLoginsCheck
-    measureType: total
-    command: "LC_ALL=en_EN.utf8; month=$(date \"+%b\");month=\"${month^}\"; day=$(date \"+%-d\"); grep -e \"$month[[:blank:]]\\+$day\" /var/log/auth.log | grep ssh | grep \"authentication failure\" | wc -l"
-    delay: "60"
+    delay: "10"
 
 ##   Nginx   ############################################################
 

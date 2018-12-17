@@ -13,24 +13,33 @@
     group: pi
     state: directory
 
+- name: Create metric groups log folder
+  file:
+    path: "{{ metricsCollectors.path }}/logs/{{ item.group }}"
+    owner: pi
+    group: pi
+    state: directory
+  with_items: "{{ collectors }}"
+
 - name: Setup scripts
   template:
     src: collectMetrics.j2
-    dest: "{{ metricsCollectors.path }}/{{ item.measureName }}.sh"
+    dest: "{{ metricsCollectors.path }}//{{ item.group }}_{{ item.name }}.sh"
     mode: 0777
   with_items: "{{ collectors }}"
 
 - name: Stop all scripts
-  shell: "for i in $(ps aux | grep \"{{ metricsCollectors.path }}\" | grep -v \"color=auto\" | awk '{print $2}');do sudo kill -9 $i; done"
+  become: yes
+  shell: "for i in $(ps aux | grep \"{{ metricsCollectors.path }}\" | grep -v \"color=auto\" | awk '{print $2}');do kill -9 $i; done"
   ignore_errors: yes
 
 - name: Crontab scripts
   cron:
-    name: "{{ item.measureName }}"
+    name: "{{ item.group }}_{{ item.name }}"
     minute: "*"
     hour: "*"
     day: "*"
     month: "*"
     weekday: "*"
-    job: "bash -c 'if [ ! \"$(ps aux | grep {{ item.measureName }}.sh | grep -v grep)\" ]; then nohup {{ metricsCollectors.path }}/{{ item.measureName }}.sh &>> {{ metricsCollectors.path }}/logs/{{ item.measureName }}.log& fi'"
+    job: "bash -c 'if [ ! \"$(ps aux | grep {{ item.group }}_{{ item.name }}.sh | grep -v grep)\" ]; then nohup {{ metricsCollectors.path }}/{{ item.group }}_{{ item.name }}.sh &>> {{ metricsCollectors.path }}/logs/{{ item.group }}/{{ item.name }}.log& fi'"
   with_items: "{{ collectors }}"

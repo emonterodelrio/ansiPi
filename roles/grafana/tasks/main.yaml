@@ -96,6 +96,15 @@
     group: root
     mode: 0644
 
+- name: Fill tests dashboard with template
+  become: yes
+  template:
+    src: tests.json
+    dest: /var/lib/grafana/dashboards/tests.json
+    owner: root
+    group: root
+    mode: 0644
+
 - name: Create grafana admin credentials at lpass
   local_action: shell lpass generate --no-symbols --username admin --url={{duckDnsUrl}} {{ lpass.piId }}/grafanaAdmin 50
   register: grafanaPassAdmin
