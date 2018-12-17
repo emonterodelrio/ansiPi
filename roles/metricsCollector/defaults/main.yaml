@@ -96,21 +96,21 @@ collectors:
 
   - measureName: nginxGetCountCheck
     measureType: total
-    command: "LC_ALL=en_EN.utf8; grep -e \"$(date \"+%d/%b\")\" /var/log/nginx/access.log | awk '{print $ \" \" $6}' | tr -d \"\\\"\" | grep GET | wc -l"
+    command: "LC_ALL=en_EN.utf8; cat /var/log/nginx/access.log | grep -e \"$(date \"+%d/%b\")\" | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep GET | wc -l"
     delay: "60"
 
   - measureName: nginxPostCountCheck
     measureType: total
-    command: "LC_ALL=en_EN.utf8; grep -e \"$(date \"+%d/%b\")\" /var/log/nginx/access.log | awk '{print $1 \" \" $6}' | tr -d \"\\\"\" | grep POST | wc -l"
+    command: "LC_ALL=en_EN.utf8; cat /var/log/nginx/access.log | grep -e \"$(date \"+%d/%b\")\" | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep POST | wc -l"
     delay: "60"
 
   - measureName: nginxPutCountCheck
     measureType: total
-    command: "LC_ALL=en_EN.utf8; grep -e \"$(date \"+%d/%b\")\" /var/log/nginx/access.log | awk '{print $1 \" \" $6}' | tr -d \"\\\"\" | grep PUT | wc -l"
+    command: "LC_ALL=en_EN.utf8; cat /var/log/nginx/access.log | grep -e \"$(date \"+%d/%b\")\" | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep PUT | wc -l"
     delay: "60"
 
   - measureName: nginxOtherCountCheck
     measureType: total
-    command: "LC_ALL=en_EN.utf8; grep -e \"$(date \"+%d/%b\")\" /var/log/nginx/access.log | awk '{print $1 \" \" $6}' | tr -d \"\\\"\" | grep -v \"POST\\|GET\\|PUT\" | wc -l"
+    command: "LC_ALL=en_EN.utf8; cat /var/log/nginx/access.log | grep -e \"$(date \"+%d/%b\")\" | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep -v \"POST\\|GET\\|PUT\" | wc -l"
     delay: "60"
 
