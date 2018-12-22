@@ -1,5 +1,4 @@
 ---
-
 - hosts: meteopi
   remote_user: pi
   gather_facts: false
@@ -15,11 +14,30 @@
     prompt: "\n\nInsert your DuckDns token present at http://www.duckdns.org"
     private: no
 
+  - name: duckDnsUrl
+    prompt: "\n\nWhat url have you chosen at duckdns? Type something like"
+    default: "meteopi.duckdns.org"
+    private: no
+
+  - name: advisor
+    prompt: "CAUTION! This will re-password your raspberry pi at lastpass. Press enter to continue."
+    default: ""
+    private: no
+
+  vars_files:
+  - vars/piStuff.yaml
+  roles:
+    - firstTime
   vars_files:
   - vars/piStuff.yaml
 
   roles:
+    - firstTime
     - common
     - security
     - internetAccess
-    - finalStuff
+    - nginx
+    - influxdb
+    - metricsCollector
+    - dht22
+    - grafana

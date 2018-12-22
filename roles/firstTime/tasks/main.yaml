@@ -6,6 +6,10 @@
     mode: 0755
     state: directory
 
+- name: Apt-get update
+  become: yes
+  shell: apt-get update -y
+
 - name: Install software via apt
   become: yes
   shell: apt-get install -y {{ item }}

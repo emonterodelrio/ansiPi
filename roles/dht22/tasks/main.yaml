@@ -26,12 +26,9 @@
 
 - name: Setup DHT22 scripts
   template:
-    src: dht22_{{ item }}.j2
-    dest: "{{ DHT22.path }}/dht22_{{ item }}.py"
+    src: dht22.j2
+    dest: "{{ DHT22.path }}/dht22.py"
     mode: 0777
-  with_items:
-    - temp
-    - hum
   when: DHT22.present
 
 - name: Stop all scripts
@@ -41,14 +38,11 @@
 
 - name: Crontab DHT22 scripts
   cron:
-    name: "{{ item }}"
+    name: "dht22"
     minute: "*"
     hour: "*"
     day: "*"
     month: "*"
     weekday: "*" 
-    job: "bash -c 'if [ ! \"$(ps aux | grep dht22_{{ item }}.py | grep -v grep)\" ]; then cd {{ DHT22.path }} && nohup ./dht22_{{ item }}.py &>> {{ DHT22.path }}/{{ item }}.log& fi'"
-  with_items:
-    - temp
-    - hum
+    job: "bash -c 'if [ ! \"$(ps aux | grep dht22.py | grep -v grep)\" ]; then cd {{ DHT22.path }} && nohup ./dht22.py &>> {{ DHT22.path }}/dht22.log& fi'"
   when: DHT22.present

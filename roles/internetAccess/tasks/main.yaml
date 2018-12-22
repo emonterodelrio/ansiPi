@@ -11,6 +11,7 @@
     mode: 0700
     content: |
       echo url="https://www.duckdns.org/update?domains={{ pi.hostname }}&token={{ duckDnsToken }}&ip=" | curl -k -o ~/duckDns/duck.log -K -
+  when: duckDnsToken != ""
 
 - name: Touch duckdns script log
   file:

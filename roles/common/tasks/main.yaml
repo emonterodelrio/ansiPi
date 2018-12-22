@@ -75,13 +75,13 @@
 
       static ip_address={{ pi.network.ip }}/{{ pi.network.maskLength }}
       static routers={{ pi.network.prefix }}.1
-      static domain_name_servers=8.8.8.8 8.8.4.4
+      static domain_name_servers={{ pi.network.dns1 }} {{ pi.network.dns2 }}
 
       interface wlan0
 
       static ip_address={{ pi.network.ip }}/{{ pi.network.maskLength }}
       static routers={{ pi.network.prefix }}.1
-      static domain_name_servers=8.8.8.8 8.8.4.4
+      static domain_name_servers={{ pi.network.dns1 }} {{ pi.network.dns2 }}
   register: changeIp
 
 - name: Setup dns
@@ -89,8 +89,8 @@
   blockinfile:
     path: /etc/resolv.conf
     block: |
-      nameserver 8.8.8.8
-      nameserver 8.8.4.4
+      nameserver {{ pi.network.dns1 }}
+      nameserver {{ pi.network.dns2 }}
 
 - name: Change pi ip at /etc/ansible/hosts
   become: yes
@@ -112,3 +112,7 @@
    path: "{{item}}"
    state: absent
   with_items: "{{ toCleanDirectories }}"
+
+- name: Reboot raspi
+  become: yes
+  shell: sudo reboot -h now

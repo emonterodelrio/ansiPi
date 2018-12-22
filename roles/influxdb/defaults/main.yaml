@@ -2,3 +2,12 @@
 
 additional_packages:
   - influxdb
+
+influx:
+  port: 8088
+  admin:
+    port: 8083
+  http:
+    port: 8086
+  db:
+    name: piMonitorDb

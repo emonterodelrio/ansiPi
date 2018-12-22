@@ -10,4 +10,4 @@ DHT22:
   present: true
   pin: 23
   path: /home/pi/dht22
-  delay: 120
+  delay: 300

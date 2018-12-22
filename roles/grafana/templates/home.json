@@ -112,7 +112,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_temp",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -133,15 +133,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "temp"
+              "value": "total"
             }
           ]
         }
@@ -264,7 +258,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_hum",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -285,15 +279,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "hum"
+              "value": "total"
             }
           ]
         }
@@ -362,7 +350,7 @@
         "x": 0,
         "y": 6
       },
-      "id": 19,
+      "id": 8,
       "legend": {
         "avg": false,
         "current": false,
@@ -406,7 +394,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_temp",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -427,15 +415,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "temp"
+              "value": "total"
             }
           ]
         }
@@ -462,7 +444,7 @@
           "yaxis": "left"
         }
       ],
-      "timeFrom": "6h",
+      "timeFrom": "24h",
       "timeShift": null,
       "title": "Temperature",
       "tooltip": {
@@ -514,7 +496,7 @@
         "x": 12,
         "y": 6
       },
-      "id": 18,
+      "id": 10,
       "legend": {
         "avg": false,
         "current": false,
@@ -558,7 +540,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_hum",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -579,15 +561,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "hum"
+              "value": "total"
             }
           ]
         }
@@ -604,7 +580,7 @@
           "yaxis": "left"
         }
       ],
-      "timeFrom": "6h",
+      "timeFrom": "24h",
       "timeShift": null,
       "title": "Humidity",
       "tooltip": {
@@ -656,7 +632,7 @@
         "x": 0,
         "y": 12
       },
-      "id": 20,
+      "id": 6,
       "legend": {
         "avg": false,
         "current": false,
@@ -700,7 +676,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_temp",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -721,603 +697,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "temp"
-            }
-          ]
-        }
-      ],
-      "thresholds": [
-        {
-          "colorMode": "custom",
-          "fill": true,
-          "fillColor": "rgba(0, 248, 255, 0.07)",
-          "line": true,
-          "lineColor": "rgba(0, 248, 255, 0.4)",
-          "op": "lt",
-          "value": 0,
-          "yaxis": "left"
-        },
-        {
-          "colorMode": "custom",
-          "fill": true,
-          "fillColor": "rgba(255, 0, 0, 0.07)",
-          "line": true,
-          "lineColor": "rgba(255, 0, 0, 0.4)",
-          "op": "gt",
-          "value": 28,
-          "yaxis": "left"
-        }
-      ],
-      "timeFrom": "12h",
-      "timeShift": null,
-      "title": "Temperature",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "celsius",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "{{ influx.db.name }}",
-      "fill": 1,
-      "gridPos": {
-        "h": 6,
-        "w": 12,
-        "x": 12,
-        "y": 12
-      },
-      "id": 24,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 0.5,
-      "points": true,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "Hum",
-          "color": "rgb(0, 200, 255)"
-        }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "Hum",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "none"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "dht22",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "hum"
-            }
-          ]
-        }
-      ],
-      "thresholds": [
-        {
-          "colorMode": "custom",
-          "fill": true,
-          "fillColor": "rgba(0, 20, 255, 0.07)",
-          "line": true,
-          "lineColor": "rgba(0, 20, 255, 0.4)",
-          "op": "gt",
-          "value": 85,
-          "yaxis": "left"
-        }
-      ],
-      "timeFrom": "12h",
-      "timeShift": null,
-      "title": "Humidity",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "humidity",
-          "label": null,
-          "logBase": 1,
-          "max": "100",
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "{{ influx.db.name }}",
-      "fill": 1,
-      "gridPos": {
-        "h": 6,
-        "w": 12,
-        "x": 0,
-        "y": 18
-      },
-      "id": 21,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 1,
-      "points": true,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "Temp",
-          "color": "rgb(37, 255, 0)"
-        }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "Temp",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "none"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "dht22",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "temp"
-            }
-          ]
-        }
-      ],
-      "thresholds": [
-        {
-          "colorMode": "custom",
-          "fill": true,
-          "fillColor": "rgba(0, 248, 255, 0.07)",
-          "line": true,
-          "lineColor": "rgba(0, 248, 255, 0.4)",
-          "op": "lt",
-          "value": 0,
-          "yaxis": "left"
-        },
-        {
-          "colorMode": "custom",
-          "fill": true,
-          "fillColor": "rgba(255, 0, 0, 0.07)",
-          "line": true,
-          "lineColor": "rgba(255, 0, 0, 0.4)",
-          "op": "gt",
-          "value": 28,
-          "yaxis": "left"
-        }
-      ],
-      "timeFrom": "1d",
-      "timeShift": null,
-      "title": "Temperature",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "celsius",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "{{ influx.db.name }}",
-      "fill": 1,
-      "gridPos": {
-        "h": 6,
-        "w": 12,
-        "x": 12,
-        "y": 18
-      },
-      "id": 25,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 0.5,
-      "points": true,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "Hum",
-          "color": "rgb(0, 200, 255)"
-        }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "Hum",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "none"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "dht22",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "hum"
-            }
-          ]
-        }
-      ],
-      "thresholds": [
-        {
-          "colorMode": "custom",
-          "fill": true,
-          "fillColor": "rgba(0, 20, 255, 0.07)",
-          "line": true,
-          "lineColor": "rgba(0, 20, 255, 0.4)",
-          "op": "gt",
-          "value": 85,
-          "yaxis": "left"
-        }
-      ],
-      "timeFrom": "1d",
-      "timeShift": null,
-      "title": "Humidity",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "humidity",
-          "label": null,
-          "logBase": 1,
-          "max": "100",
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "{{ influx.db.name }}",
-      "fill": 1,
-      "gridPos": {
-        "h": 6,
-        "w": 12,
-        "x": 0,
-        "y": 24
-      },
-      "id": 22,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 1,
-      "points": true,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "Temp",
-          "color": "rgb(37, 255, 0)"
-        }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "Temp",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "none"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "dht22",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "temp"
+              "value": "total"
             }
           ]
         }
@@ -1394,9 +776,9 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 24
+        "y": 12
       },
-      "id": 28,
+      "id": 13,
       "legend": {
         "avg": false,
         "current": false,
@@ -1440,7 +822,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_hum",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1461,15 +843,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "hum"
+              "value": "total"
             }
           ]
         }
@@ -1536,9 +912,9 @@
         "h": 6,
         "w": 12,
         "x": 0,
-        "y": 30
+        "y": 18
       },
-      "id": 23,
+      "id": 12,
       "legend": {
         "avg": false,
         "current": false,
@@ -1582,7 +958,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_temp",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1603,15 +979,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "temp"
+              "value": "total"
             }
           ]
         }
@@ -1688,9 +1058,9 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 30
+        "y": 18
       },
-      "id": 27,
+      "id": 9,
       "legend": {
         "avg": false,
         "current": false,
@@ -1734,7 +1104,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_hum",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1755,15 +1125,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "hum"
+              "value": "total"
             }
           ]
         }
@@ -1830,9 +1194,9 @@
         "h": 6,
         "w": 12,
         "x": 0,
-        "y": 36
+        "y": 24
       },
-      "id": 17,
+      "id": 14,
       "legend": {
         "avg": false,
         "current": false,
@@ -1876,7 +1240,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_temp",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1897,15 +1261,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "temp"
+              "value": "total"
             }
           ]
         }
@@ -1982,9 +1340,9 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 36
+        "y": 24
       },
-      "id": 26,
+      "id": 15,
       "legend": {
         "avg": false,
         "current": false,
@@ -2028,7 +1386,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "dht22",
+          "measurement": "dht22_hum",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -2049,15 +1407,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "type",
               "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "hum"
+              "value": "total"
             }
           ]
         }
@@ -2124,7 +1476,7 @@
         "h": 2,
         "w": 24,
         "x": 0,
-        "y": 42
+        "y": 30
       },
       "hideTimeOverride": true,
       "id": 16,

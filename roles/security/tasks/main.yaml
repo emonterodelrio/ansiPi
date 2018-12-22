@@ -12,11 +12,12 @@
     block: |
       root=postmaster
       mailhub=smtp.gmail.com:587
-      hostname=raspberrypi
+      hostname={{ pi.hostname }}
       AuthUser={{ gmailUser }}
       AuthPass={{ gmailPass }}
       FromLineOverride=YES
       UseSTARTTLS=YES
+  when: gmailUser != ""
 
 - name: Clean monit conf-enabled
   become: yes
@@ -57,7 +58,8 @@
       set mailserver smtp.gmail.com port 587
         username {{ gmailUser }} password "{{ gmailPass}}"
         using TLSV1 with timeout 30 seconds
-      set alert emonterodelrio@gmail.com
+      set alert {{ gmailUser }}
+  when: gmailUser != ""
 
 - name: Disable conf-enabled folder configurations
   become: yes
@@ -90,16 +92,34 @@
         if match "session opened" then alert
         if match "authentication failures" then alert
 
-- name: Make sure monit is enabled and stopped
+- name: Make sure monit is enabled and restarted
   become: yes
   service:
     name: monit
-    state: stopped
+    state: restarted 
     enabled: yes 
+  when: production_mode
 
-- name: Make sure fail2ban is enabled and stopped
+- name: Disable and stop monit if no production mode
+  become: yes
+  service:
+    name: monit
+    state: stopped 
+    enabled: no
+  when: not production_mode
+
+- name: Make sure fail2ban is enabled and restarted
   become: yes
   service:
     name: fail2ban
-    state: stopped
+    state: restarted 
     enabled: yes 
+  when: production_mode
+
+- name: Disable and stop fail2ban if no production mode
+  become: yes
+  service:
+    name: fail2ban
+    state: stopped 
+    enabled: no
+  when: not production_mode

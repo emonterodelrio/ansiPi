@@ -9,7 +9,13 @@ nginx:
   worker_connections: 1024
   keepalive_timeout: 65
   noSSLport: 80
+  types_hash_max_size: 2048
   antiddos:
     zonesizemb: 10  #Tamaño máximo de zona
     maxreqsec: 30   #Máximo peticiones por segundo
     maxburst: 15    #Máximo de ráfagas
+  log:
+    access:
+      path: /var/log/nginx/access.log
+      buffer: 32k
+      format: $remote_addr - $remote_user [$time_local] \"$request\" $status $body_bytes_sent \"$http_referer\" \"$http_user_agent\" \"$http_x_forwarded_for\"

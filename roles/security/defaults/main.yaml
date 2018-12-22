@@ -12,5 +12,4 @@ fail2ban:
   maxretry: 6
 
 monitTimeout: 10
-
 production_mode: false

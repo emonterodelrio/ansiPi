@@ -39,8 +39,8 @@
     enabled: yes
 
 - name: Link influxdb datasource
-  shell: "sleep 10 && echo \"\" && curl 'http://admin:admin@localhost:3000/api/datasources' -X POST -H 'Content-Type: application/json;charset=UTF-8' --data-binary '{\"name\":\"{{ influx.db.name }}\",\"type\":\"influxdb\",\"url\":\"http://{{ pi.network.ip }}:8086\",\"access\":\"proxy\",\"isDefault\":true,\"database\":\"{{ influx.db.name }}\"}'"
-  when: existGrafana.rc != 2
+  shell: "sleep 10 && echo \"\" && curl 'http://admin:admin@{{ pi.network.ip }}:3000/api/datasources' -X POST -H 'Content-Type: application/json;charset=UTF-8' --data-binary '{\"name\":\"{{ influx.db.name }}\",\"type\":\"influxdb\",\"url\":\"http://{{ pi.network.ip }}:8086\",\"access\":\"proxy\",\"isDefault\":true,\"database\":\"{{ influx.db.name }}\"}'"
+#  when: existGrafana.rc != 2
 
 - name: Setup dashboards load folder
   become: yes
@@ -127,9 +127,13 @@
   failed_when: '"ser created" not in resultGrafanaPassUser.stdout'
   when: existGrafana.rc != 2
 
-- name: Lpass logout
-  local_action: shell lpass logout -f
-  ignore_errors: yes
+#- name: Lpass logout
+#  local_action: shell lpass logout -f
+#  ignore_errors: yes
+
+- name: Re-Fill /etc/grafana/grafana.ini with template disallowing password changes via api.
+  become: yes
+  template: src=grafana_final.ini dest=/etc/grafana/grafana.ini owner=root group=grafana mode=0640
 
 - name: Make sure grafana-server is enabled and restarted
   become: yes

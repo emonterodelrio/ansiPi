@@ -126,17 +126,17 @@ collectors:
 
   - name: external_acceses
     group: nginx
-    command: "cat /var/log/nginx/access.log  | grep -v \"{{ pi.network.prefix }}\" | grep \"$(date \"+%d\")\" | wc -l"
+    command: "cat {{ nginx.log.access.path }} | grep -v \"{{ pi.network.prefix }}\" | grep \"$(date \"+%d\")\" | wc -l"
     delay: "60"
 
   - name: local_acceses
     group: nginx
-    command: "cat /var/log/nginx/access.log  | grep \"{{ pi.network.prefix }}\" | grep \"$(date \"+%d\")\" | wc -l"
+    command: "cat {{ nginx.log.access.path }} | grep \"{{ pi.network.prefix }}\" | grep \"$(date \"+%d\")\" | wc -l"
     delay: "60"
 
   - name: current_sessions
     group: sessions
-    command: "who | wc -l"
+    command: "ps aux | grep ssh | grep -v \"grep\\|metricsCollectors\\|/sshd\" | grep @ | wc -l"
     delay: "5"
 
   - name: login_ok
@@ -153,21 +153,21 @@ collectors:
 
   - name: get
     group: nginx
-    command: "LC_ALL=en_EN.utf8; cat /var/log/nginx/access.log | grep -e \"$(date \"+%d/%b\")\" | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep GET | wc -l"
+    command: "LC_ALL=en_EN.utf8; cat {{ nginx.log.access.path }} | grep -e \"$(date \"+%d/%b\")\" | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep GET | wc -l"
     delay: "60"
 
   - name: post
     group: nginx
-    command: "LC_ALL=en_EN.utf8; cat /var/log/nginx/access.log | grep -e \"$(date \"+%d/%b\")\" | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep POST | wc -l"
+    command: "LC_ALL=en_EN.utf8; cat {{ nginx.log.access.path }} | grep -e \"$(date \"+%d/%b\")\" | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep POST | wc -l"
     delay: "60"
 
   - name: put
     group: nginx
-    command: "LC_ALL=en_EN.utf8; cat /var/log/nginx/access.log | grep -e \"$(date \"+%d/%b\")\" | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep PUT | wc -l"
+    command: "LC_ALL=en_EN.utf8; cat {{ nginx.log.access.path }} | grep -e \"$(date \"+%d/%b\")\" | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep PUT | wc -l"
     delay: "60"
 
   - name: other
     group: nginx
-    command: "LC_ALL=en_EN.utf8; cat /var/log/nginx/access.log | grep -e \"$(date \"+%d/%b\")\" | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep -v \"POST\\|GET\\|PUT\" | wc -l"
+    command: "LC_ALL=en_EN.utf8; cat {{ nginx.log.access.path }} | grep -e \"$(date \"+%d/%b\")\" | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep -v \"POST\\|GET\\|PUT\" | wc -l"
     delay: "60"
 

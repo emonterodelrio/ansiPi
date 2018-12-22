@@ -1,6 +1,10 @@
 Influx:
 Habilitar log
+Securizar
+https
 
+nginx:
+https
  
 2-. Metricas:
 
@@ -9,3 +13,6 @@ revisar reiniciar la raspi y los procesos, handlers?
 monit con mensajes de fail2ban, demasiado verboso ahora
 
 lanzar los playbooks desde el install.shfor src in arm core h264 isp v3d uart pwm emmc pixel vec hdmi dpi ; do
+
+
+Idempotencia en el rol de firstTime cuando se crean las credenciales de la raspi, si existen actualizarlas en local, sino crear
