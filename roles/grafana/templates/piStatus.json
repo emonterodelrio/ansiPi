@@ -159,7 +159,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
@@ -286,7 +286,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
@@ -320,7 +320,7 @@
       "fill": 0,
       "gridPos": {
         "h": 4,
-        "w": 18,
+        "w": 9,
         "x": 6,
         "y": 0
       },
@@ -395,7 +395,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
@@ -444,7 +444,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
@@ -498,6 +498,262 @@
           "logBase": 1,
           "max": null,
           "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "{{ influx.db.name }}",
+      "fill": 3,
+      "gridPos": {
+        "h": 4,
+        "w": 9,
+        "x": 15,
+        "y": 0
+      },
+      "id": 2,
+      "legend": {
+        "avg": false,
+        "current": true,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 1,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "Load 1",
+          "color": "rgb(13, 255, 0)"
+        },
+        {
+          "alias": "Load 5",
+          "color": "rgb(255, 125, 0)"
+        },
+        {
+          "alias": "Load 15",
+          "color": "rgb(255, 0, 0)"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "Load 1",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "cpu",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ pi.hostname }}"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "load_1"
+            }
+          ]
+        },
+        {
+          "alias": "Load 5",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "cpu",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ pi.hostname }}"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "load_5"
+            }
+          ]
+        },
+        {
+          "alias": "Load 15",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "cpu",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ pi.hostname }}"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "load_15"
+            }
+          ]
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "warning",
+          "fill": true,
+          "line": false,
+          "op": "gt",
+          "value": 50,
+          "yaxis": "left"
+        },
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": false,
+          "op": "gt",
+          "value": 60,
+          "yaxis": "left"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Cpu Load",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transparent": true,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 2,
+          "format": "none",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": "0",
           "show": true
         },
         {
@@ -610,7 +866,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
@@ -731,7 +987,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
@@ -852,7 +1108,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
@@ -973,7 +1229,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
@@ -1090,7 +1346,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
@@ -1139,7 +1395,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
@@ -1188,7 +1444,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
@@ -1237,7 +1493,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
@@ -1315,19 +1571,21 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "{{ influx.db.name }}",
-      "fill": 3,
+      "fill": 1,
       "gridPos": {
-        "h": 4,
-        "w": 8,
+        "h": 5,
+        "w": 12,
         "x": 0,
         "y": 8
       },
-      "id": 2,
+      "id": 5,
       "legend": {
+        "alignAsTable": true,
         "avg": false,
         "current": true,
         "max": false,
         "min": false,
+        "rightSide": true,
         "show": true,
         "total": false,
         "values": true
@@ -1342,16 +1600,34 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "alias": "Load 1",
-          "color": "rgb(13, 255, 0)"
+          "alias": "total",
+          "color": "rgb(255, 255, 255)",
+          "fill": 0
         },
         {
-          "alias": "Load 5",
-          "color": "rgb(255, 125, 0)"
+          "alias": "used",
+          "color": "rgba(255, 0, 0, 0.8)",
+          "fill": 3
         },
         {
-          "alias": "Load 15",
-          "color": "rgb(255, 0, 0)"
+          "alias": "available",
+          "color": "rgb(0, 255, 11)",
+          "fill": 2
+        },
+        {
+          "alias": "shared",
+          "color": "rgb(255, 255, 0)",
+          "fill": 0
+        },
+        {
+          "alias": "buff_cache",
+          "color": "rgb(255, 128, 0)",
+          "fill": 0
+        },
+        {
+          "alias": "free",
+          "color": "rgb(0, 255, 119)",
+          "fill": 0
         }
       ],
       "spaceLength": 10,
@@ -1359,7 +1635,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "Load 1",
+          "alias": "total",
           "groupBy": [
             {
               "params": [
@@ -1374,56 +1650,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "cpu",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "meteopi"
-            },
-            {
-              "condition": "AND",
-              "key": "name",
-              "operator": "=",
-              "value": "load_1"
-            }
-          ]
-        },
-        {
-          "alias": "Load 5",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "none"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "cpu",
+          "measurement": "memory",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "B",
@@ -1446,18 +1673,18 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
               "key": "name",
               "operator": "=",
-              "value": "load_5"
+              "value": "total"
             }
           ]
         },
         {
-          "alias": "Load 15",
+          "alias": "available",
           "groupBy": [
             {
               "params": [
@@ -1472,7 +1699,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "cpu",
+          "measurement": "memory",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "C",
@@ -1495,119 +1722,18 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
               "key": "name",
               "operator": "=",
-              "value": "load_15"
+              "value": "available"
             }
           ]
-        }
-      ],
-      "thresholds": [
-        {
-          "colorMode": "warning",
-          "fill": true,
-          "line": false,
-          "op": "gt",
-          "value": 50,
-          "yaxis": "left"
         },
         {
-          "colorMode": "critical",
-          "fill": true,
-          "line": false,
-          "op": "gt",
-          "value": 60,
-          "yaxis": "left"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Cpu Load",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "transparent": true,
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "decimals": 2,
-          "format": "none",
-          "label": "",
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "{{ influx.db.name }}",
-      "fill": 3,
-      "gridPos": {
-        "h": 4,
-        "w": 8,
-        "x": 8,
-        "y": 8
-      },
-      "id": 5,
-      "legend": {
-        "avg": false,
-        "current": true,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 1,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "Memory Usage %",
-          "color": "rgb(0, 152, 255)"
-        }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "Memory Usage %",
+          "alias": "used",
           "groupBy": [
             {
               "params": [
@@ -1625,7 +1751,7 @@
           "measurement": "memory",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "A",
+          "refId": "D",
           "resultFormat": "time_series",
           "select": [
             [
@@ -1645,31 +1771,168 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
               "key": "name",
               "operator": "=",
-              "value": "used_percent"
+              "value": "used"
+            }
+          ]
+        },
+        {
+          "alias": "shared",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "memory",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ pi.hostname }}"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "shared"
+            }
+          ]
+        },
+        {
+          "alias": "buff_cache",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "memory",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ pi.hostname }}"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "buff_cache"
+            }
+          ]
+        },
+        {
+          "alias": "free",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "memory",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "G",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ pi.hostname }}"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "free"
             }
           ]
         }
       ],
-      "thresholds": [
-        {
-          "colorMode": "custom",
-          "fill": true,
-          "fillColor": "rgba(234, 111, 96, 0.2)",
-          "line": false,
-          "op": "gt",
-          "value": 0.7,
-          "yaxis": "left"
-        }
-      ],
+      "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Memory Usage %",
+      "title": "Memory",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1686,16 +1949,16 @@
       },
       "yaxes": [
         {
-          "decimals": 1,
-          "format": "percentunit",
+          "decimals": 0,
+          "format": "decmbytes",
           "label": "",
           "logBase": 1,
-          "max": "1",
+          "max": null,
           "min": "0",
           "show": true
         },
         {
-          "format": "short",
+          "format": "decmbytes",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -1714,19 +1977,21 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "{{ influx.db.name }}",
-      "fill": 3,
+      "fill": 1,
       "gridPos": {
-        "h": 4,
-        "w": 8,
-        "x": 16,
+        "h": 5,
+        "w": 12,
+        "x": 12,
         "y": 8
       },
-      "id": 7,
+      "id": 30,
       "legend": {
+        "alignAsTable": true,
         "avg": false,
         "current": true,
         "max": false,
         "min": false,
+        "rightSide": true,
         "show": true,
         "total": false,
         "values": true
@@ -1741,8 +2006,34 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "alias": "Disk",
-          "color": "rgb(2, 255, 0)"
+          "alias": "total",
+          "color": "rgb(255, 255, 255)",
+          "fill": 0
+        },
+        {
+          "alias": "used",
+          "color": "rgba(255, 0, 0, 0.8)",
+          "fill": 3
+        },
+        {
+          "alias": "available",
+          "color": "rgb(0, 255, 11)",
+          "fill": 2
+        },
+        {
+          "alias": "shared",
+          "color": "rgb(255, 255, 0)",
+          "fill": 0
+        },
+        {
+          "alias": "buff_cache",
+          "color": "rgb(255, 128, 0)",
+          "fill": 0
+        },
+        {
+          "alias": "free",
+          "color": "rgb(0, 255, 119)",
+          "fill": 0
         }
       ],
       "spaceLength": 10,
@@ -1750,7 +2041,249 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "Disk",
+          "alias": "total",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "swap",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ pi.hostname }}"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "total"
+            }
+          ]
+        },
+        {
+          "alias": "available",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "swap",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ pi.hostname }}"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "free"
+            }
+          ]
+        },
+        {
+          "alias": "used",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "swap",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ pi.hostname }}"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "used"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Swap",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transparent": true,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 0,
+          "format": "decmbytes",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "decmbytes",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "{{ influx.db.name }}",
+      "fill": 2,
+      "gridPos": {
+        "h": 5,
+        "w": 24,
+        "x": 0,
+        "y": 13
+      },
+      "id": 7,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": true,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 1,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "free",
+          "color": "rgb(109, 255, 0)"
+        },
+        {
+          "alias": "used",
+          "color": "rgb(255, 0, 0)"
+        },
+        {
+          "alias": "total",
+          "color": "rgb(255, 255, 255)",
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "total",
           "groupBy": [
             {
               "params": [
@@ -1788,31 +2321,119 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
               "key": "name",
               "operator": "=",
-              "value": "used_percent"
+              "value": "total_KB"
+            }
+          ]
+        },
+        {
+          "alias": "free",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "disk",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ pi.hostname }}"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "free_KB"
+            }
+          ]
+        },
+        {
+          "alias": "used",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "disk",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ pi.hostname }}"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "used_KB"
             }
           ]
         }
       ],
-      "thresholds": [
-        {
-          "colorMode": "custom",
-          "fill": true,
-          "fillColor": "rgba(234, 111, 96, 0.2)",
-          "line": false,
-          "op": "gt",
-          "value": 0.7,
-          "yaxis": "left"
-        }
-      ],
+      "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Disk Usage %",
+      "title": "Disk",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1830,15 +2451,15 @@
       "yaxes": [
         {
           "decimals": 1,
-          "format": "percentunit",
+          "format": "deckbytes",
           "label": "",
           "logBase": 1,
-          "max": "1",
+          "max": null,
           "min": "0",
           "show": true
         },
         {
-          "format": "short",
+          "format": "deckbytes",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -1862,7 +2483,7 @@
         "h": 2,
         "w": 24,
         "x": 0,
-        "y": 12
+        "y": 18
       },
       "hideTimeOverride": true,
       "id": 29,

@@ -24,13 +24,19 @@
 - name: Setup scripts
   template:
     src: collectMetrics.j2
-    dest: "{{ metricsCollectors.path }}//{{ item.group }}_{{ item.name }}.sh"
+    dest: "{{ metricsCollectors.path }}/{{ item.group }}_{{ item.name }}.sh"
     mode: 0777
   with_items: "{{ collectors }}"
 
+- name: Setup stop script
+  template:
+    src: stop_collectors.j2
+    dest: "{{ metricsCollectors.path }}/stop_collectors.sh"
+    mode: 0777
+
 - name: Stop all scripts
   become: yes
-  shell: "for i in $(ps aux | grep \"{{ metricsCollectors.path }}\" | grep -v \"color=auto\" | awk '{print $2}');do kill -9 $i; done"
+  shell: "{{ metricsCollectors.path }}/stop_collectors.sh"
   ignore_errors: yes
 
 - name: Crontab scripts

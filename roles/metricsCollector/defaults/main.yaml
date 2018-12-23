@@ -107,7 +107,7 @@ collectors:
 
   - name: total_KB
     group: disk
-    command: "df |grep \"/dev/root\" | awk '{print $3}'"
+    command: "df |grep \"/dev/root\" | awk '{print $2}'"
     delay: "60"
 
   - name: used_KB
@@ -131,12 +131,12 @@ collectors:
 
   - name: login_ok
     group: ssh
-    command: "LC_ALL=en_EN.utf8 myDate=$(date \"+%b %-d\");myDate=\"${myDate^}\";grep -a \"$myDate\" /var/log/auth.log | grep \"session opened for user\" | wc -l"
+    command: "LC_ALL=en_EN.utf8 myDate=$(date \"+%b %-d\");myDate=\"${myDate^}\";grep -a \"$myDate\" /var/log/auth.log | grep sshd | grep \"session opened for user\" | wc -l"
     delay: "10"
 
   - name: login_ko
     group: ssh
-    command: "LC_ALL=en_EN.utf8 myDate=$(date \"+%b %-d\");myDate=\"${myDate^}\";grep -a \"$myDate\" /var/log/auth.log | grep \"authentication failure    \" | wc -l"
+    command: "LC_ALL=en_EN.utf8 myDate=$(date \"+%b %-d\");myDate=\"${myDate^}\";grep -a \"$myDate\" /var/log/auth.log | grep sshd | grep \"authentication failure\" | wc -l"
     delay: "10"
 
 ##   Network   ############################################################
@@ -205,31 +205,31 @@ collectors:
 
   - name: external_acceses
     group: nginx
-    command: "cat {{ nginx.log.access.path }} | grep -v \"{{ pi.network.prefix }}\" | grep \"$(date \"+%d\")\" | wc -l"
+    command: "LC_ALL=en_EN.utf8 myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | grep -v \"{{ pi.network.prefix }}\" | wc -l"
     delay: "60"
 
   - name: local_acceses
     group: nginx
-    command: "cat {{ nginx.log.access.path }} | grep \"{{ pi.network.prefix }}\" | grep \"$(date \"+%d\")\" | wc -l"
+    command: "LC_ALL=en_EN.utf8 myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | grep \"{{ pi.network.prefix }}\" | wc -l"
     delay: "60"
 
   - name: get
     group: nginx
-    command: "LC_ALL=en_EN.utf8; cat {{ nginx.log.access.path }} | grep -e \"$(date \"+%d/%b\")\" | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep GET | wc -l"
+    command: "LC_ALL=en_EN.utf8 myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep GET | wc -l"
     delay: "60"
 
   - name: post
     group: nginx
-    command: "LC_ALL=en_EN.utf8; cat {{ nginx.log.access.path }} | grep -e \"$(date \"+%d/%b\")\" | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep POST | wc -l"
+    command: "LC_ALL=en_EN.utf8 myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep POST | wc -l"
     delay: "60"
 
   - name: put
     group: nginx
-    command: "LC_ALL=en_EN.utf8; cat {{ nginx.log.access.path }} | grep -e \"$(date \"+%d/%b\")\" | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep PUT | wc -l"
+    command: "LC_ALL=en_EN.utf8 myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep PUT | wc -l"
     delay: "60"
 
   - name: other
     group: nginx
-    command: "LC_ALL=en_EN.utf8; cat {{ nginx.log.access.path }} | grep -e \"$(date \"+%d/%b\")\" | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep -v \"POST\\|GET\\|PUT\" | wc -l"
+    command: "LC_ALL=en_EN.utf8 myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep -v \"POST\\|GET\\|PUT\" | wc -l"
     delay: "60"
 

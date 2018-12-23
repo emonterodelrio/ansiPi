@@ -31,10 +31,16 @@
     mode: 0777
   when: DHT22.present
 
+- name: Setup stop script
+  template:
+    src: stop_dht22.j2
+    dest: "{{ DHT22.path }}/stop_dht22.sh"
+    mode: 0777
+
 - name: Stop all scripts
   become: yes
-  shell: "for i in $(ps aux | grep \"{{ DHT22.path }}\" | grep -v \"color=auto\" | awk '{print $2}');do kill -9 $i; done"
-  ignore_errors: yes  
+  shell: "{{ DHT22.path }}/stop_dht22.sh"
+  ignore_errors: yes
 
 - name: Crontab DHT22 scripts
   cron:
@@ -44,5 +50,5 @@
     day: "*"
     month: "*"
     weekday: "*" 
-    job: "bash -c 'if [ ! \"$(ps aux | grep dht22.py | grep -v grep)\" ]; then cd {{ DHT22.path }} && nohup ./dht22.py &>> {{ DHT22.path }}/dht22.log& fi'"
+    job: "bash -c 'if [ ! \"$(ps aux | grep dht22.py | grep -v grep)\" ]; then nohup {{ DHT22.path }}/dht22.py &>> {{ DHT22.path }}/dht22.log& fi'"
   when: DHT22.present
