@@ -7,8 +7,8 @@
 
 - name: Install software via apt
   become: yes
-  shell: apt-get install -y {{ item }}
-  with_items: "{{ additional_packages }}"
+  apt:
+    name: '{{ additional_packages }}'
   when: existInfluxdb.rc != 0
 
 - name: Add collectd types db
@@ -19,7 +19,6 @@
     owner: influxdb
     group: influxdb
     mode: 0777
-  when: existInfluxdb.rc != 0
 
 - name: Fill /etc/influxdb/influxdb.conf with template
   become: yes
@@ -29,7 +28,6 @@
     owner: root
     group: root
     mode: 0644
-  when: existInfluxdb.rc != 0
 
   #TODO porque no reinicia?
 - name: Crontab influx ensure reboot
@@ -49,4 +47,3 @@
     name: influxdb
     state: restarted 
     enabled: yes
-  when: existInfluxdb.rc != 0

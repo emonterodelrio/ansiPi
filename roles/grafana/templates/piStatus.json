@@ -53,6 +53,9 @@
   "graphTooltip": 0,
   "id": null,
   "links": [],
+"//": "Here all pannels",
+"//": "{{ pi.hostname }}",
+"//": "{{ influx.db.name }}",
   "panels": [
     {
       "cacheTimeout": null,

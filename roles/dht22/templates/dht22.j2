@@ -17,11 +17,14 @@ while True:
     print '0'
 
   command = "echo 'dht22,name=temp,host=%s value=%.2f' | curl -s -i -XPOST 'http://{{ pi.network.ip }}:{{ dht22.influx.port }}/write?db={{ influx.db.name }}' --data-binary @-" % (hostname,temperature)
+  print command
+  res = subprocess.check_output(['bash','-c', command])
+  for line in res.splitlines():
+    print line
+
   command = "echo 'dht22,name=hum,host=%s value=%.2f' | curl -s -i -XPOST 'http://{{ pi.network.ip }}:{{ dht22.influx.port }}/write?db={{ influx.db.name }}' --data-binary @-" % (hostname,humidity) 
   print command
-
   res = subprocess.check_output(['bash','-c', command])
-
   for line in res.splitlines():
     print line
 

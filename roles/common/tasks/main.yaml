@@ -1,8 +1,8 @@
 ---
 - name: Install software via apt
   become: yes
-  shell: apt-get install -y {{ item }}
-  with_items: "{{ additional_packages }}"
+  apt:
+    name: '{{ additional_packages }}'
 
 - name: Update all packages to the latest version
   become: yes

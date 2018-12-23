@@ -12,8 +12,8 @@
 
 - name: Install software via apt
   become: yes
-  shell: apt-get install -y {{ item }}
-  with_items: "{{ local_additional_packages }}"
+  apt:
+    name: '{{ local_additional_packages }}'
 
 - name: Lastpass - Check installed
   local_action: command lpass -h

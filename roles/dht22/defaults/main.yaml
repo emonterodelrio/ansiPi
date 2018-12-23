@@ -1,10 +1,10 @@
 ---
 
 additional_packages:
- - build-essential
- - python-dev
- - python-openssl
- - git
+  - build-essential
+  - python-dev
+  - python-openssl
+  - git
 
 DHT22:
   present: true

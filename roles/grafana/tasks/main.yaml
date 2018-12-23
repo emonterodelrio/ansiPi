@@ -38,9 +38,17 @@
     state: restarted 
     enabled: yes
 
+- name: Install snuids-radar-panel
+  become: yes
+  shell: "grafana-cli plugins install snuids-radar-panel"
+
+- name: Install sun and moon datasource
+  become: yes
+  shell: "grafana-cli plugins install fetzerch-sunandmoon-datasource"
+
 - name: Link influxdb datasource
   shell: "sleep 10 && echo \"\" && curl 'http://admin:admin@{{ pi.network.ip }}:3000/api/datasources' -X POST -H 'Content-Type: application/json;charset=UTF-8' --data-binary '{\"name\":\"{{ influx.db.name }}\",\"type\":\"influxdb\",\"url\":\"http://{{ pi.network.ip }}:8086\",\"access\":\"proxy\",\"isDefault\":true,\"database\":\"{{ influx.db.name }}\"}'"
-#  when: existGrafana.rc != 2
+  when: existGrafana.rc != 2
 
 - name: Setup dashboards load folder
   become: yes

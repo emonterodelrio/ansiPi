@@ -17,7 +17,7 @@
   file:
     path: "~/duckDns/duck.log"
     mode: 0744
-    state: touch
+    state: present
 
 - name: Create duckdns crontab
   cron:

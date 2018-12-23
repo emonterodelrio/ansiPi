@@ -15,9 +15,8 @@
 
 - name: Install software via apt
   become: yes
-  shell: apt-get install -y {{ item }}
-  with_items: "{{ additional_packages }}"
-  when: existNginx.rc != 0
+  apt:
+    name: '{{ additional_packages }}'
 
 - name: Delete default sites-available
   become: yes

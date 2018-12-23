@@ -26,10 +26,6 @@
 
   vars_files:
   - vars/piStuff.yaml
-  roles:
-    - firstTime
-  vars_files:
-  - vars/piStuff.yaml
 
   roles:
     - firstTime

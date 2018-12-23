@@ -53,6 +53,9 @@
   "graphTooltip": 0,
   "id": null,
   "links": [],
+"//": "Here all pannels",
+"//": "{{ pi.hostname }}",
+"//": "{{ influx.db.name }}",
   "panels": [
     {
       "aliasColors": {},
@@ -134,7 +137,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
@@ -267,7 +270,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
@@ -400,7 +403,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
@@ -461,10 +464,728 @@
       "datasource": "{{ influx.db.name }}",
       "fill": 2,
       "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "id": 15,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": true,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 1,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "close",
+          "color": "rgba(255, 100, 50, 0.8)"
+        },
+        {
+          "alias": "close_wait",
+          "color": "rgba(255, 50, 100, 0.8)"
+        },
+        {
+          "alias": "closing",
+          "color": "rgba(255, 0, 0, 0.8)"
+        },
+        {
+          "alias": "established",
+          "color": "rgba(107, 255, 0, 0.8)"
+        },
+        {
+          "alias": "fin_wait1",
+          "color": "rgba(255, 200, 0, 0.8)"
+        },
+        {
+          "alias": "fin_wait2",
+          "color": "rgba(255, 150, 0, 0.8)"
+        },
+        {
+          "alias": "last_ack",
+          "color": "rgba(255, 125, 0, 0.8)"
+        },
+        {
+          "alias": "listen",
+          "color": "rgba(0, 188, 255, 0.8)"
+        },
+        {
+          "alias": "syn_recv",
+          "color": "rgb(4, 0, 255)"
+        },
+        {
+          "alias": "sync_sent",
+          "color": "rgb(0, 164, 255)"
+        },
+        {
+          "alias": "time_wait",
+          "color": "rgba(255, 255, 0, 0.8)"
+        },
+        {
+          "alias": "unknow",
+          "color": "rgb(255, 255, 255)"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "listen",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "network",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ pi.hostname }}"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "listen"
+            }
+          ]
+        },
+        {
+          "alias": "established",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "network",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ pi.hostname }}"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "established"
+            }
+          ]
+        },
+        {
+          "alias": "closing",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "network",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ pi.hostname }}"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "closing"
+            }
+          ]
+        },
+        {
+          "alias": "close_wait",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "network",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ pi.hostname }}"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "close_wait"
+            }
+          ]
+        },
+        {
+          "alias": "fin_wait1",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "network",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ pi.hostname }}"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "fin_wait1"
+            }
+          ]
+        },
+        {
+          "alias": "fin_wait2",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "network",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "G",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ pi.hostname }}"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "fin_wait2"
+            }
+          ]
+        },
+        {
+          "alias": "last_ack",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "network",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "H",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ pi.hostname }}"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "last_ack"
+            }
+          ]
+        },
+        {
+          "alias": "close",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "network",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "I",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ pi.hostname }}"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "close"
+            }
+          ]
+        },
+        {
+          "alias": "syn_recv",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "network",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "J",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ pi.hostname }}"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "syn_recv"
+            }
+          ]
+        },
+        {
+          "alias": "sync_sent",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "network",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "K",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ pi.hostname }}"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "syn_sent"
+            }
+          ]
+        },
+        {
+          "alias": "time_wait",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "network",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "L",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ pi.hostname }}"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "time_wait"
+            }
+          ]
+        },
+        {
+          "alias": "unknow",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "network",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "M",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ pi.hostname }}"
+            },
+            {
+              "condition": "AND",
+              "key": "name",
+              "operator": "=",
+              "value": "unknow"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Network connections",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transparent": true,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 0,
+          "format": "none",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "{{ influx.db.name }}",
+      "fill": 2,
+      "gridPos": {
         "h": 4,
         "w": 12,
         "x": 0,
-        "y": 4
+        "y": 12
       },
       "id": 8,
       "legend": {
@@ -539,7 +1260,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
@@ -588,7 +1309,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
@@ -620,7 +1341,7 @@
       "yaxes": [
         {
           "decimals": 0,
-          "format": "none",
+          "format": "short",
           "label": "",
           "logBase": 1,
           "max": null,
@@ -652,7 +1373,7 @@
         "h": 4,
         "w": 12,
         "x": 12,
-        "y": 4
+        "y": 12
       },
       "id": 14,
       "legend": {
@@ -735,7 +1456,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
@@ -784,7 +1505,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
@@ -833,7 +1554,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
@@ -882,7 +1603,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "meteopi"
+              "value": "{{ pi.hostname }}"
             },
             {
               "condition": "AND",
@@ -946,7 +1667,7 @@
         "h": 2,
         "w": 24,
         "x": 0,
-        "y": 8
+        "y": 16
       },
       "hideTimeOverride": true,
       "id": 13,

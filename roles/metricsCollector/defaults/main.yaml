@@ -122,7 +122,86 @@ collectors:
 
 
 
+##   Security   ############################################################
+
+  - name: current_sessions
+    group: sessions
+    command: "ps aux | grep ssh | grep -v \"grep\\|metricsCollectors\\|/sshd\" | grep @ | wc -l"
+    delay: "3"
+
+  - name: login_ok
+    group: ssh
+    command: "LC_ALL=en_EN.utf8 myDate=$(date \"+%b %-d\");myDate=\"${myDate^}\";grep -a \"$myDate\" /var/log/auth.log | grep \"session opened for user\" | wc -l"
+    delay: "10"
+
+  - name: login_ko
+    group: ssh
+    command: "LC_ALL=en_EN.utf8 myDate=$(date \"+%b %-d\");myDate=\"${myDate^}\";grep -a \"$myDate\" /var/log/auth.log | grep \"authentication failure    \" | wc -l"
+    delay: "10"
+
 ##   Network   ############################################################
+
+  - name: established
+    group: network
+    command: "sudo netstat -putan | grep ESTABLISHED | wc -l"
+    delay: "20"
+
+  - name: syn_sent
+    group: network
+    command: "sudo netstat -putan | grep SYN_SENT | wc -l"
+    delay: "20"
+
+  - name: syn_recv
+    group: network
+    command: "sudo netstat -putan | grep SYN_RECV | wc -l"
+    delay: "20"
+
+  - name: fin_wait1
+    group: network
+    command: "sudo netstat -putan | grep FIN_WAIT1 | wc -l"
+    delay: "20"
+
+  - name: fin_wait2
+    group: network
+    command: "sudo netstat -putan | grep FIN_WAIT2 | wc -l"
+    delay: "20"
+
+  - name: time_wait
+    group: network
+    command: "sudo netstat -putan | grep TIME_WAIT | wc -l"
+    delay: "20"
+
+  - name: close
+    group: network
+    command: "sudo netstat -putan | grep CLOSE | wc -l"
+    delay: "20"
+
+  - name: close_wait
+    group: network
+    command: "sudo netstat -putan | grep CLOSE_WAIT | wc -l"
+    delay: "20"
+
+  - name: closing
+    group: network
+    command: "sudo netstat -putan | grep CLOSING | wc -l"
+    delay: "20"
+
+  - name: last_ack
+    group: network
+    command: "sudo netstat -putan | grep LAST_ACK | wc -l"
+    delay: "20"
+
+  - name: listen
+    group: network
+    command: "sudo netstat -putan | grep LISTEN | wc -l"
+    delay: "20"
+
+  - name: unknow
+    group: network
+    command: "sudo netstat -putan  | grep UNKNOWN | wc -l"
+    delay: "20"
+  
+##   Nginx   ############################################################
 
   - name: external_acceses
     group: nginx
@@ -133,23 +212,6 @@ collectors:
     group: nginx
     command: "cat {{ nginx.log.access.path }} | grep \"{{ pi.network.prefix }}\" | grep \"$(date \"+%d\")\" | wc -l"
     delay: "60"
-
-  - name: current_sessions
-    group: sessions
-    command: "ps aux | grep ssh | grep -v \"grep\\|metricsCollectors\\|/sshd\" | grep @ | wc -l"
-    delay: "5"
-
-  - name: login_ok
-    group: ssh
-    command: "LC_ALL=en_EN.utf8; month=$(date \"+%b\");month=\"${month^}\"; day=$(date \"+%-d\"); grep -e \"$month[[:blank:]]\\+$day\" /var/log/auth.log | grep ssh | grep \"session opened for user\" | wc -l"
-    delay: "10"
-
-  - name: login_ko
-    group: ssh
-    command: "LC_ALL=en_EN.utf8; month=$(date \"+%b\");month=\"${month^}\"; day=$(date \"+%-d\"); grep -e \"$month[[:blank:]]\\+$day\" /var/log/auth.log | grep ssh | grep \"authentication failure\" | wc -l"
-    delay: "10"
-
-##   Nginx   ############################################################
 
   - name: get
     group: nginx
