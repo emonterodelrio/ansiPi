@@ -1,3 +1,14 @@
+Dash tiempo
+Imagen presiones via js en dash home
+1-. Pedir el api key desde ansible
+2-. Si no meten nada no cambiar nada
+3-. Buscar mapas temperatura aire
+4-. Centrar y meter transparencia, curvas-presion nubes y temperatura en uno o dos,
+
+
+
+
+
 Influx:
 Habilitar log
 Securizar
