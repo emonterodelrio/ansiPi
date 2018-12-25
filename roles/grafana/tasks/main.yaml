@@ -38,14 +38,6 @@
     state: restarted 
     enabled: yes
 
-- name: Install snuids-radar-panel
-  become: yes
-  shell: "grafana-cli plugins install snuids-radar-panel"
-
-- name: Install sun and moon datasource
-  become: yes
-  shell: "grafana-cli plugins install fetzerch-sunandmoon-datasource"
-
 - name: Link influxdb datasource
   shell: "sleep 10 && echo \"\" && curl 'http://admin:admin@{{ pi.network.ip }}:3000/api/datasources' -X POST -H 'Content-Type: application/json;charset=UTF-8' --data-binary '{\"name\":\"{{ influx.db.name }}\",\"type\":\"influxdb\",\"url\":\"http://{{ pi.network.ip }}:8086\",\"access\":\"proxy\",\"isDefault\":true,\"database\":\"{{ influx.db.name }}\"}'"
   when: existGrafana.rc != 2
@@ -66,7 +58,7 @@
            folder: ''
            type: file
            options:
-             path: /var/lib/grafana/dashboards
+             path: {{ grafana.dashboards_folder }}
 
 - name: Creates grafana load dashboards folder
   become: yes
@@ -77,23 +69,18 @@
     mode: 0755
     state: directory
 
-- name: Fill raspi status dashboard with template
+- name: Fill dashboards with template
   become: yes
   template:
-    src: piStatus.json
-    dest: /var/lib/grafana/dashboards/piStatus.json
+    src: "{{ item }}.json"
+    dest: "{{ grafana.dashboards_folder }}/{{ item }}.json"
     owner: root
     group: root
     mode: 0644
-
-- name: Fill network status dashboard with template
-  become: yes
-  template:
-    src: networkStatus.json
-    dest: /var/lib/grafana/dashboards/networkStatus.json
-    owner: root
-    group: root
-    mode: 0644
+  with_items:
+    - piStatus
+    - networkStatus
+    - tests
 
 - name: Fill home dashboard with template
   become: yes
@@ -104,14 +91,55 @@
     group: root
     mode: 0644
 
-- name: Fill tests dashboard with template
+- name: Creates meteo-update-pictures folder
   become: yes
+  file:
+    path: "{{ grafana.meteoUpdatePicturesPath }}"
+    owner: pi
+    group: pi
+    mode: 0755
+    state: directory
+
+- name: Creates meteo-update-pictures folder
+  become: yes
+  file:
+    path: "{{ grafana.meteoUpdatePicturesPath }}"
+    owner: pi
+    group: pi
+    mode: 0755
+    state: directory
+
+- name: Setup openaemet api key
+  become: yes
+  shell: echo {{ aemet_opendata_apikey }} > {{ grafana.meteoUpdatePicturesPath }}/api_key && chmod 644 {{ grafana.meteoUpdatePicturesPath }}/api_key && chown pi:pi {{ grafana.meteoUpdatePicturesPath }}/api_key 
+  when: aemet_opendata_apikey != ""
+
+- name: Setup meteo-update-pictures script
   template:
-    src: tests.json
-    dest: /var/lib/grafana/dashboards/tests.json
-    owner: root
-    group: root
-    mode: 0644
+    src: updateMeteoPic.j2
+    dest: "{{ grafana.meteoUpdatePicturesPath }}/updateMeteoPic.sh"
+    mode: 0777
+
+- name: Setup stop meteo-update-pictures script
+  template:
+    src: stopUpdateMeteoPic.j2
+    dest: "{{ grafana.meteoUpdatePicturesPath }}/stopUpdateMeteoPic.sh"
+    mode: 0777
+
+- name: Stop meteo-update-pictures script
+  become: yes
+  shell: "{{ grafana.meteoUpdatePicturesPath }}/stopUpdateMeteoPic.sh"
+  ignore_errors: yes
+
+- name: Crontab meteo-update-pictures script
+  cron:
+    name: "UpdateMeteoPictures"
+    minute: "*"
+    hour: "*/6"
+    day: "*"
+    month: "*"
+    weekday: "*" 
+    job: "bash -c 'nohup {{ grafana.meteoUpdatePicturesPath }}/updateMeteoPic.sh &>> {{ grafana.meteoUpdatePicturesPath }}/updateMeteoPic.log&'"
 
 - name: Create grafana admin credentials at lpass
   local_action: shell lpass generate --no-symbols --username admin --url={{duckDnsUrl}} {{ lpass.piId }}/grafanaAdmin 50
@@ -134,10 +162,6 @@
   register: resultGrafanaPassUser
   failed_when: '"ser created" not in resultGrafanaPassUser.stdout'
   when: existGrafana.rc != 2
-
-#- name: Lpass logout
-#  local_action: shell lpass logout -f
-#  ignore_errors: yes
 
 - name: Re-Fill /etc/grafana/grafana.ini with template disallowing password changes via api.
   become: yes

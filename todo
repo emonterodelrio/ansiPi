@@ -1,11 +1,16 @@
 Dash tiempo
+
+FORECASTIO PANEL
+
 Imagen presiones via js en dash home
-1-. Pedir el api key desde ansible
-2-. Si no meten nada no cambiar nada
-3-. Buscar mapas temperatura aire
-4-. Centrar y meter transparencia, curvas-presion nubes y temperatura en uno o dos,
+  3-. Buscar mapas temperatura aire
+  4-. Centrar y meter transparencia, curvas-presion nubes y temperatura en uno o dos,
 
+nginx:
+https
+  
 
+40X 50X decentes
 
 
 
@@ -14,8 +19,6 @@ Habilitar log
 Securizar
 https
 
-nginx:
-https
  
 2-. Metricas:
 
@@ -27,3 +30,6 @@ lanzar los playbooks desde el install.shfor src in arm core h264 isp v3d uart pw
 
 
 Idempotencia en el rol de firstTime cuando se crean las credenciales de la raspi, si existen actualizarlas en local, sino crear
+
+Hacer un readme
+Mejorar mensajes install

@@ -1,0 +1,25 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <script type = "text/javascript">
+      var request = new XMLHttpRequest();
+      request.open('GET', 'https://opendata.aemet.es/opendata/api/mapasygraficos/analisis?api_key=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbW9udGVyb2RlbHJpb0BnbWFpbC5jb20iLCJqdGkiOiI2ZmQ0Y2M4Ni1jZTg5LTQ4ZWQtOTRiYy05NzU4MWIwOGRhMTciLCJpc3MiOiJBRU1FVCIsImlhdCI6MTU0NTY0NTczOCwidXNlcklkIjoiNmZkNGNjODYtY2U4OS00OGVkLTk0YmMtOTc1ODFiMDhkYTE3Iiwicm9sZSI6IiJ9.-fL8ofAeMg3EXuslB5i797bI9M0m-z6cchsSq3GbXss', true);
+      request.send();
+
+      console.log("Sent");
+
+      request.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var json = JSON.parse(this.responseText);
+<!--          document.getElementById("json").innerHTML = json.datos;-->
+          document.getElementById("pressureImg").src = json.datos;
+          console.log(json.datos);
+        }
+      };
+    </script>
+
+<!--    <p id=json>aA</p>-->
+    <img id="pressureImg" style="transform: rotate(90deg);width:74%;margin:-19% 0 0 13%" src="" alt="meteobars">
+  </body>
+<html>

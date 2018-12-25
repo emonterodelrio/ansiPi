@@ -5,18 +5,26 @@
   vars_prompt:
   - name: gmailUser
     prompt: "\n\nPlease type valid gmail account for emails sending from raspberry"
+    default: ""
     private: no
 
   - name: gmailPass
     prompt: "\n\nNow, that gmail password"
+    default: ""
 
   - name: duckDnsToken
     prompt: "\n\nInsert your DuckDns token present at http://www.duckdns.org"
+    default: ""
     private: no
 
   - name: duckDnsUrl
     prompt: "\n\nWhat url have you chosen at duckdns? Type something like"
     default: "meteopi.duckdns.org"
+    private: no
+
+  - name: aemet_opendata_apikey
+    prompt: "\n\nInsert your opendata aemet api key, if haven't yet go to https://opendata.aemet.es"
+    default: ""
     private: no
 
   - name: advisor

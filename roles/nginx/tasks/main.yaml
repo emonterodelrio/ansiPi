@@ -13,26 +13,77 @@
     purge: yes
     state: absent
 
+- name: Create nginx user
+  become: yes
+  user:
+    name: nginx
+    group: nginx
+    shell: /bin/false
+    create_home: no
+
+- name: Add pi to nginx group
+  become: yes
+  user:
+    name: pi
+    groups: nginx
+    append: yes
+
 - name: Install software via apt
   become: yes
   apt:
     name: '{{ additional_packages }}'
 
-- name: Delete default sites-available
+- name: Delete default stuff
   become: yes
-  file: path=/etc/nginx/sites-available state=absent
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /etc/nginx/sites-available
+    - /etc/nginx/sites-enabled
+    - /var/www/html/index.nginx-debian.html
+  ignore_errors: yes
 
-- name: Delete default sites-enabled
+- name: Create shared files folder
   become: yes
-  file: path=/etc/nginx/sites-enabled state=absent
+  file:
+    owner: nginx
+    group: nginx
+    mode: 0775
+    path: /var/www/html/{{ item }}
+    state: directory
+  with_items:
+    - sharedFiles
+    - errorPages
 
 - name: Fill /etc/nginx/nginx.conf with template
   become: yes
-  template: src=nginx.conf dest=/etc/nginx/nginx.conf owner=root group=root mode=0644
+  template:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: 0644
 
 - name: Fill /etc/nginx/conf.d/front.conf with template
   become: yes
-  template: src=front.conf dest=/etc/nginx/conf.d/front.conf owner=root group=root mode=0644
+  template:
+    src: front.conf
+    dest: /etc/nginx/conf.d/front.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Fill error pages from template
+  become: yes
+  template:
+    src: "{{ item }}.html"
+    dest: /var/www/html/errorPages/{{ item }}.html
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - 404
 
 - name: Make sure nginx is enabled and restarted
   become: yes

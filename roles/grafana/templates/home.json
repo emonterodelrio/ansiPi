@@ -58,31 +58,48 @@
 "//": "{{ influx.db.name }}",
   "panels": [
     {
-      "content": "<style type=\"text/css\">\np.markdown-html.panel-text-content {\noverflow: hidden;\n}\np.markdown-html.panel-text-content iframe {\nheight:225px;\n}\n</style>\n\n<script type=\"text/javascript\">\nvar weatherProperties = 'lat=40.3232129&lon=-3.8676291&color=#2222ff&text-color=#cccccc&units=ca&';\n\n// initial load\ndocument.getElementById('embedweather').src = 'http://forecast.io/embed/?ts=' + (Date.now()) + '#' + weatherProperties;\n\n// refresh\nvar weatherRefresh = setInterval(function() { document.getElementById('embedweather').src = 'http://forecast.io/embed/?ts=' + (Date.now()) + '#' + weatherProperties; }, 1800000);\n\n</script>\n<iframe id=\"embedweather\" height=\"100%\" src=\"#\" style=\"margin: 0; padding: 0; border: none; width:100%; position:relative; top:-50px; overflow:hidden; margin-bottom: -70px;\"></iframe>",
+      "content": "<img id=\"pressureImg\" style=\"transform: rotate(90deg);width:70%;margin:-20% -55% -10% 50px;\" src=\"/sharedFiles/map_meteobar.gif\" alt=\"meteobars\">",
       "gridPos": {
-        "h": 6,
-        "w": 19,
+        "h": 7,
+        "w": 7,
         "x": 0,
         "y": 0
       },
-      "id": 26,
+      "id": 28,
       "links": [],
       "mode": "html",
       "title": "",
+      "transparent": false,
       "type": "text"
     },
     {
-      "content": "[Aemet - Masas de aire](http://www.aemet.es/es/eltiempo/observacion/satelite/masas)\n\n[Aemet - Radar](http://www.aemet.es/es/eltiempo/observacion/radar?opc1=24)\n\n",
+      "content": "<img id=\"pressureImg\" style=\"transform: rotate(90deg);width:70%;margin:-20% -55% -10% 50px;\" src=\"/sharedFiles/map_meteobar.gif\" alt=\"meteobars\">",
       "gridPos": {
-        "h": 6,
-        "w": 5,
-        "x": 19,
+        "h": 7,
+        "w": 7,
+        "x": 7,
         "y": 0
       },
-      "id": 27,
+      "id": 29,
       "links": [],
-      "mode": "markdown",
+      "mode": "html",
       "title": "",
+      "transparent": false,
+      "type": "text"
+    },
+    {
+      "content": "<img id=\"pressureImg\" style=\"transform: rotate(90deg);width:70%;margin:-20% -55% -10% 50px;\" src=\"/sharedFiles/map_meteobar.gif\" alt=\"meteobars\">",
+      "gridPos": {
+        "h": 7,
+        "w": 10,
+        "x": 14,
+        "y": 0
+      },
+      "id": 30,
+      "links": [],
+      "mode": "html",
+      "title": "",
+      "transparent": false,
       "type": "text"
     },
     {
@@ -96,7 +113,7 @@
         "h": 6,
         "w": 12,
         "x": 0,
-        "y": 6
+        "y": 7
       },
       "id": 22,
       "legend": {
@@ -248,7 +265,7 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 6
+        "y": 7
       },
       "id": 5,
       "legend": {
@@ -390,7 +407,7 @@
         "h": 6,
         "w": 12,
         "x": 0,
-        "y": 12
+        "y": 13
       },
       "id": 2,
       "legend": {
@@ -542,7 +559,7 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 12
+        "y": 13
       },
       "id": 20,
       "legend": {
@@ -684,7 +701,7 @@
         "h": 6,
         "w": 12,
         "x": 0,
-        "y": 18
+        "y": 19
       },
       "id": 21,
       "legend": {
@@ -836,7 +853,7 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 18
+        "y": 19
       },
       "id": 19,
       "legend": {
@@ -978,7 +995,7 @@
         "h": 6,
         "w": 12,
         "x": 0,
-        "y": 24
+        "y": 25
       },
       "id": 24,
       "legend": {
@@ -1130,7 +1147,7 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 24
+        "y": 25
       },
       "id": 18,
       "legend": {
@@ -1272,7 +1289,7 @@
         "h": 6,
         "w": 12,
         "x": 0,
-        "y": 30
+        "y": 31
       },
       "id": 23,
       "legend": {
@@ -1424,7 +1441,7 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 30
+        "y": 31
       },
       "id": 17,
       "legend": {
@@ -1566,7 +1583,7 @@
         "h": 2,
         "w": 24,
         "x": 0,
-        "y": 36
+        "y": 37
       },
       "hideTimeOverride": true,
       "id": 16,
