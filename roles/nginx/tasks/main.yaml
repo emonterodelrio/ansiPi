@@ -13,21 +13,6 @@
     purge: yes
     state: absent
 
-- name: Create nginx user
-  become: yes
-  user:
-    name: nginx
-    group: nginx
-    shell: /bin/false
-    create_home: no
-
-- name: Add pi to nginx group
-  become: yes
-  user:
-    name: pi
-    groups: nginx
-    append: yes
-
 - name: Install software via apt
   become: yes
   apt:
@@ -47,14 +32,20 @@
 - name: Create shared files folder
   become: yes
   file:
-    owner: nginx
-    group: nginx
+    owner: pi
+    group: pi
     mode: 0775
     path: /var/www/html/{{ item }}
     state: directory
   with_items:
     - sharedFiles
     - errorPages
+
+- name: Setup tests html
+  template:
+    src: tests.html
+    dest: "/var/www/html/sharedFiles/tests.html"
+    mode: 0644
 
 - name: Fill /etc/nginx/nginx.conf with template
   become: yes
@@ -79,8 +70,8 @@
   template:
     src: "{{ item }}.html"
     dest: /var/www/html/errorPages/{{ item }}.html
-    owner: root
-    group: root
+    owner: pi
+    group: pi
     mode: 0644
   with_items:
     - 404

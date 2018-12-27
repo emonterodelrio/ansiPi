@@ -1,0 +1,115 @@
+<style>
+
+.mymetobars {
+  display: none;
+}
+
+#metobars_img {
+  transform: rotate(90deg);
+  width:70%;
+  margin:-15% 0 0 15%;
+}
+
+
+.metobars_slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+.metobars_text {
+  color: #002f2f;
+  background-color: #ffffff;
+  font-size: 15px;
+  margin: -25% 0 0 -90%;
+  position: absolute;
+  width: 100%;
+  text-align: right;
+}
+
+.metobars_fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 0.2s;
+  animation-name: fade;
+  animation-duration: 0.2s;
+}
+
+@-webkit-keyframes metobars_fade {
+  from {opacity: .7} 
+  to {opacity: 1}
+}
+
+@keyframes metobars_fade {
+  from {opacity: .7} 
+  to {opacity: 1}
+}
+
+@media only screen and (max-width: 500px) {
+  .metobars_text {font-size: 11px}
+}
+
+</style>
+
+<div class="metobars_slideshow-container">
+  <div class="mymetobars metobars_fade">
+    <img id=metobars_img src="/sharedFiles/map_meteobars_0.gif" alt="">
+    <div class="metobars_text">Now</div>
+  </div>
+
+  <div class="mymetobars metobars_fade">
+    <img id=metobars_img src="/sharedFiles/map_meteobars_1.gif" alt="">
+    <div class="metobars_text">+12h</div>
+  </div>
+
+  <div class="mymetobars metobars_fade">
+    <img id=metobars_img src="/sharedFiles/map_meteobars_2.gif" alt="">
+    <div class="metobars_text">+24h</div>
+  </div>
+
+  <div class="mymetobars metobars_fade">
+    <img id=metobars_img src="/sharedFiles/map_meteobars_3.gif" alt="">
+    <div class="metobars_text">+36h</div>
+  </div>
+
+  <div class="mymetobars metobars_fade">
+    <img id=metobars_img src="/sharedFiles/map_meteobars_4.gif" alt="">
+    <div class="metobars_text">+48h</div>
+  </div>
+
+  <div class="mymetobars metobars_fade">
+    <img id=metobars_img src="/sharedFiles/map_meteobars_5.gif" alt="">
+    <div class="metobars_text">+60h</div>
+  </div>
+
+  <div class="mymetobars metobars_fade">
+    <img id=metobars_img src="/sharedFiles/map_meteobars_6.gif" alt="">
+    <div class="metobars_text">+72h</div>
+  </div>
+
+</div>
+
+<script>
+var slideIndex = 0;
+showSlides();
+
+function showSlides() {
+  var i;
+  var slides = document.getElementsByClassName("mymetobars");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}    
+
+  slides[slideIndex-1].style.display = "block";
+    console.log("index" + slideIndex)
+  if (slideIndex == 1) {
+    console.log("Call delayed" + slideIndex)
+    setTimeout(showSlides, 3000); // Change image every 2 seconds
+  }else{
+    setTimeout(showSlides, 1000); // Change image every 2 seconds
+  }
+}
+
+</script>

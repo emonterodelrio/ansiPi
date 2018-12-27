@@ -5,6 +5,7 @@ additional_packages:
   - git
   - vim
   - stress
+  - imagemagick
   
 toCleanDirectories:
   - Documents

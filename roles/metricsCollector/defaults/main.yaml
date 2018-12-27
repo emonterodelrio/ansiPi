@@ -5,6 +5,16 @@ metricsCollectors:
 
 collectors:
 ##   Pi Internals   ############################################################
+
+##@@@   anomalous situations
+
+  - name: reboots
+    group: monitor
+    command: "LC_ALL=en_EN.utf8 myDate=$(date \"+%b %-d\");myDate=\"${myDate^}\";grep -a \"$myDate\" /var/log/syslog | grep -a \"Booting Linux on physical\" | wc -l"
+    delay: "60"
+
+##@@@   temperatures
+
   - name: cpu
     group: temperature
     command: "sleep 1 && cpuTemp0=$(cat /sys/class/thermal/thermal_zone0/temp);cpuTemp1=$(($cpuTemp0/1000));cpuTemp2=$(($cpuTemp0/100));cpuTempM=$(($cpuTemp2 % $cpuTemp1));echo $cpuTemp1\".\"$cpuTempM"
@@ -14,6 +24,8 @@ collectors:
     group: temperature
     command: "sleep 1 && /opt/vc/bin/vcgencmd measure_temp | cut -d\"=\" -f2 | cut -d\"'\" -f1"
     delay: "1"
+
+##@@@   voltages
 
   - name: core
     group: voltage
@@ -35,6 +47,8 @@ collectors:
     command: "sleep 2 && vcgencmd measure_volts sdram_p | cut -d\"=\" -f2 | cut -d'V' -f1"
     delay: "1"
 
+##@@@   cpu
+
   - name: load_1
     group: cpu
     command: "sleep 3 && cat /proc/loadavg | awk '{print $1}'"
@@ -50,6 +64,7 @@ collectors:
     command: "sleep 3 && cat /proc/loadavg | awk '{print $3}'"
     delay: "60"
 
+##@@@   memory
   - name: used_percent
     group: memory
     command: "sleep 4 && free -m | grep Mem | awk '{userPercent=$3/$2}; {split(userPercent,a,\".\"); print a[1]\".\"substr(a[2],1,2)}'"
@@ -85,6 +100,8 @@ collectors:
     command: "sleep 4 && free -m | grep -i mem | awk '{print $7}'"
     delay: "60"
 
+##@@@   swap
+
   - name: total
     group: swap
     command: "sleep 5 && free -m | grep -i swap | awk '{print $2}'"
@@ -99,6 +116,8 @@ collectors:
     group: swap
     command: "sleep 5 && free -m | grep -i swap | awk '{print $4}'"
     delay: "60"
+
+##@@@   disk
 
   - name: used_percent
     group: disk
@@ -121,22 +140,25 @@ collectors:
     delay: "60"
 
 
-
 ##   Security   ############################################################
+
+##@@@   sessions
 
   - name: current_sessions
     group: sessions
-    command: "sleep 8 && ps aux | grep ssh | grep -v \"grep\\|metricsCollectors\\|/sshd\" | grep @ | wc -l"
+    command: "sleep 8 && ps aux | grep -a ssh | grep -v \"grep\\|metricsCollectors\\|/sshd\" | grep @ | wc -l"
     delay: "3"
+
+##@@@   ssh
 
   - name: login_ok
     group: ssh
-    command: "sleep 9 && LC_ALL=en_EN.utf8 myDate=$(date \"+%b %-d\");myDate=\"${myDate^}\";grep -a \"$myDate\" /var/log/auth.log | grep sshd | grep \"session opened for user\" | wc -l"
+    command: "sleep 9 && LC_ALL=en_EN.utf8 myDate=$(date \"+%b %-d\");myDate=\"${myDate^}\";grep -a \"$myDate\" /var/log/auth.log | grep -a sshd | grep -a \"session opened for user\" | wc -l"
     delay: "10"
 
   - name: login_ko
     group: ssh
-    command: "sleep 9 && LC_ALL=en_EN.utf8 myDate=$(date \"+%b %-d\");myDate=\"${myDate^}\";grep -a \"$myDate\" /var/log/auth.log | grep sshd | grep \"authentication failure\" | wc -l"
+    command: "sleep 9 && LC_ALL=en_EN.utf8 myDate=$(date \"+%b %-d\");myDate=\"${myDate^}\";grep -a \"$myDate\" /var/log/auth.log | grep -a sshd | grep -a \"authentication failure\" | wc -l"
     delay: "10"
 
 ##   Network   ############################################################
@@ -201,7 +223,7 @@ collectors:
     command: "sleep 10 && sudo netstat -putan  | grep UNKNOWN | wc -l"
     delay: "20"
   
-##   Nginx   ############################################################
+##@@@   nginx
 
   - name: external_acceses
     group: nginx

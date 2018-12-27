@@ -4,31 +4,31 @@
   gather_facts: false
   vars_prompt:
   - name: gmailUser
-    prompt: "\n\nPlease type valid gmail account for emails sending from raspberry"
+    prompt: "\n\nPlease type valid gmail account for emails sending from raspberry (Unchanged if none)"
     default: ""
     private: no
 
   - name: gmailPass
-    prompt: "\n\nNow, that gmail password"
+    prompt: "\n\nNow, that gmail password (Unchanged if none)"
     default: ""
 
   - name: duckDnsToken
-    prompt: "\n\nInsert your DuckDns token present at http://www.duckdns.org"
+    prompt: "\n\nInsert your DuckDns token present at http://www.duckdns.org. (Unchanged if none)"
     default: ""
     private: no
 
   - name: duckDnsUrl
-    prompt: "\n\nWhat url have you chosen at duckdns? Type something like"
+    prompt: "\n\nWhat url have you chosen at duckdns? (default-> meteopi.duckdns.org)"
     default: "meteopi.duckdns.org"
     private: no
 
   - name: aemet_opendata_apikey
-    prompt: "\n\nInsert your opendata aemet api key, if haven't yet go to https://opendata.aemet.es"
+    prompt: "\n\nInsert your opendata aemet api key, if haven't yet go to https://opendata.aemet.es. (Unchanged if none)"
     default: ""
     private: no
 
   - name: advisor
-    prompt: "CAUTION! This will re-password your raspberry pi at lastpass. Press enter to continue."
+    prompt: "\n\nCAUTION! This will re-password your raspberry pi at lastpass. Press enter to continue."
     default: ""
     private: no
 

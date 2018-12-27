@@ -116,13 +116,13 @@
 
 - name: Setup meteo-update-pictures script
   template:
-    src: updateMeteoPic.j2
+    src: updateMeteoPic.sh
     dest: "{{ grafana.meteoUpdatePicturesPath }}/updateMeteoPic.sh"
     mode: 0777
 
 - name: Setup stop meteo-update-pictures script
   template:
-    src: stopUpdateMeteoPic.j2
+    src: stopUpdateMeteoPic.sh
     dest: "{{ grafana.meteoUpdatePicturesPath }}/stopUpdateMeteoPic.sh"
     mode: 0777
 
