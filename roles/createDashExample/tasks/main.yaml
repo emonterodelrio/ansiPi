@@ -1,0 +1,72 @@
+---
+- name: Check existing grafana
+  become: yes
+  shell: grafana-server -h
+  register: existGrafana
+  ignore_errors: yes
+
+- name: Lastpass - Ensure user loged in
+  local_action: shell lpass ls
+  when: existGrafana.rc == 2
+
+- name: Lastpass - Load credentials
+  local_action: shell lpass show {{ lpass.piId }}/grafanaAdmin | grep username | awk '{print $2}'
+  register: grafanaAdminUsername
+  when: existGrafana.rc == 2
+
+- name: Lastpass - Load password
+  local_action: shell lpass show {{ lpass.piId }}/grafanaAdmin | grep password | awk '{print $2}'
+  register: grafanaAdminPass
+  when: existGrafana.rc == 2
+
+- name: Allow api access - Fill at /etc/grafana/grafana.ini with template
+  become: yes
+  lineinfile:
+    path: /etc/grafana/grafana.ini
+    regexp: 'enable anonymous access$'
+    line: ';enabled = true # enable anonymous access'
+  when: existGrafana.rc == 2
+
+- name: Allow api access - Restart grafana-server
+  become: yes 
+  service:
+    name: grafana-server
+    state: restarted
+
+- name: Create temp folder
+  file:
+    path: /tmp/temp
+    mode: 0777
+    state: directory
+  when: existGrafana.rc == 2
+
+- name: Setup create dashboards script
+  template:
+    src: create_dashboards.sh
+    dest: "/tmp/temp/create_dashboards.sh"
+    mode: 0777
+  when: existGrafana.rc == 2
+
+- name: Execute script
+  shell: /tmp/temp/create_dashboards.sh
+  when: existGrafana.rc == 2
+
+#- name: Delete temp folder
+#  file:
+#    path: /tmp/temp
+#    state: absent
+#  when: existGrafana.rc == 2
+
+- name: Disallow api access
+  become: yes
+  lineinfile:
+    path: /etc/grafana/grafana.ini
+    regexp: 'enable anonymous access$'
+    line: 'enabled = true # enable anonymous access'
+  when: existGrafana.rc == 2
+
+- name: Disallow api access - Restart grafana-server
+  become: yes 
+  service:
+    name: grafana-server
+    state: restarted
