@@ -6,6 +6,8 @@ additional_packages:
   - python-openssl
   - git
 
+meteoUpdatePicturesPath: /home/pi/meteoUpdatePictures
+
 DHT22:
   present: true
   pin: 23

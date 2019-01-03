@@ -1,0 +1,8 @@
+{{ metricsCollectors.path }}/logs/{{ item.group }}/{{ item.name }}.log {
+  daily
+  copytruncate
+  rotate 50
+  compress
+  missingok
+  size 10M
+}

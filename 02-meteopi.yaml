@@ -3,32 +3,32 @@
   remote_user: pi
   gather_facts: false
   vars_prompt:
+  - name: advisor
+    prompt: "\n\nCAUTION! This will re-password your raspberry pi at current lastpass logged in account.\n\n\nFollowing variable prompts will be stored as hidden files inside /home/pi folder.\nIf you have enter any of them before you don't need to do it again (simply press enter), unless you want to change it.\nPress enter to continue:"
+    default: ""
+    private: no
+
   - name: gmailUser
-    prompt: "\n\nPlease type valid gmail account for emails sending from raspberry (Unchanged if none)"
+    prompt: "\n\nPlease type valid gmail account for emails sending from raspberry"
     default: ""
     private: no
 
   - name: gmailPass
-    prompt: "\n\nNow, that gmail password (Unchanged if none)"
+    prompt: "\n\nNow, that gmail password."
     default: ""
 
   - name: duckDnsToken
-    prompt: "\n\nInsert your DuckDns token present at http://www.duckdns.org. (Unchanged if none)"
+    prompt: "\n\nInsert your DuckDns token present at http://www.duckdns.org"
     default: ""
     private: no
 
   - name: duckDnsUrl
-    prompt: "\n\nWhat url have you chosen at duckdns? (default-> meteopi.duckdns.org)"
-    default: "meteopi.duckdns.org"
-    private: no
-
-  - name: aemet_opendata_apikey
-    prompt: "\n\nInsert your opendata aemet api key, if haven't yet go to https://opendata.aemet.es. (Unchanged if none)"
+    prompt: "\n\nWhat url have you chosen at duckdns? It's for lastpass auto-fill credentials"
     default: ""
     private: no
 
-  - name: advisor
-    prompt: "\n\nCAUTION! This will re-password your raspberry pi at lastpass. Press enter to continue."
+  - name: aemet_opendata_apikey
+    prompt: "\n\nInsert your opendata aemet api key, if haven't yet go to https://opendata.aemet.es"
     default: ""
     private: no
 
@@ -37,11 +37,14 @@
 
   roles:
     - firstTime
+    - storeAccounts
     - common
     - security
-    - internetAccess
+    - duckDns
     - nginx
     - influxdb
     - metricsCollector
     - dht22
     - grafana
+    - createMeteopiDash_Dht22
+

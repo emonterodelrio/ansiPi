@@ -6,6 +6,7 @@ additional_packages:
   - vim
   - stress
   - imagemagick
+  - jq
   
 toCleanDirectories:
   - Documents

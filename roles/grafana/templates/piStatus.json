@@ -64,7 +64,7 @@
       "colorPrefix": false,
       "colorValue": false,
       "colors": [
-        "#299c46",
+        "rgb(0, 255, 35)",
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
@@ -191,7 +191,7 @@
       "colorPrefix": false,
       "colorValue": false,
       "colors": [
-        "#299c46",
+        "#f4d598",
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
@@ -345,11 +345,11 @@
       "seriesOverrides": [
         {
           "alias": "gpu",
-          "color": "rgb(0, 255, 226)"
+          "color": "#f4d598"
         },
         {
           "alias": "cpu",
-          "color": "rgb(255, 125, 0)"
+          "color": "rgb(0, 255, 35)"
         }
       ],
       "spaceLength": 10,
@@ -927,9 +927,9 @@
       "colorPrefix": false,
       "colorValue": false,
       "colors": [
-        "#d44a3a",
-        "rgba(13, 255, 0, 0.89)",
-        "#d44a3a"
+        "#bf1b00",
+        "rgb(112, 237, 123)",
+        "#bf1b00"
       ],
       "datasource": "{{ influx.db.name }}",
       "decimals": 3,
@@ -1027,7 +1027,7 @@
           ]
         }
       ],
-      "thresholds": "0.7,1.4,2",
+      "thresholds": "1,1.32",
       "title": "Voltage core",
       "transparent": true,
       "type": "singlestat",
@@ -1048,9 +1048,9 @@
       "colorPrefix": false,
       "colorValue": false,
       "colors": [
-        "#d44a3a",
-        "rgba(13, 255, 0, 0.89)",
-        "#d44a3a"
+        "#bf1b00",
+        "rgb(4, 0, 255)",
+        "#bf1b00"
       ],
       "datasource": "{{ influx.db.name }}",
       "decimals": 3,
@@ -1148,7 +1148,7 @@
           ]
         }
       ],
-      "thresholds": "0.7,1.4,2",
+      "thresholds": "1,1.32",
       "title": "Voltage sdram_c",
       "transparent": true,
       "type": "singlestat",
@@ -1169,9 +1169,9 @@
       "colorPrefix": false,
       "colorValue": false,
       "colors": [
-        "#d44a3a",
-        "rgba(13, 255, 0, 0.89)",
-        "#d44a3a"
+        "#bf1b00",
+        "rgb(4, 0, 255)",
+        "#bf1b00"
       ],
       "datasource": "{{ influx.db.name }}",
       "decimals": 3,
@@ -1269,7 +1269,7 @@
           ]
         }
       ],
-      "thresholds": "0.7,1.4,2",
+      "thresholds": "1,1.32",
       "title": "Voltage sdram_i",
       "transparent": true,
       "type": "singlestat",
@@ -1290,9 +1290,9 @@
       "colorPrefix": false,
       "colorValue": false,
       "colors": [
-        "#d44a3a",
-        "rgba(13, 255, 0, 0.89)",
-        "#d44a3a"
+        "#bf1b00",
+        "#abcdef",
+        "#bf1b00"
       ],
       "datasource": "{{ influx.db.name }}",
       "decimals": 3,
@@ -1390,7 +1390,7 @@
           ]
         }
       ],
-      "thresholds": "0.7,1.4,2",
+      "thresholds": "1,1.32",
       "title": "Voltage sdram_p",
       "transparent": true,
       "type": "singlestat",
@@ -1438,19 +1438,19 @@
       "seriesOverrides": [
         {
           "alias": "core",
-          "color": "rgb(255, 41, 0)"
+          "color": "rgb(112, 237, 123)"
         },
         {
           "alias": "sdram_c",
-          "color": "rgb(25, 255, 0)"
+          "color": "rgb(4, 0, 255)"
         },
         {
           "alias": "sdram_i",
-          "color": "rgb(16, 0, 255)"
+          "color": "rgb(4, 0, 255)"
         },
         {
           "alias": "sdram_p",
-          "color": "rgb(205, 255, 0)"
+          "color": "#abcdef"
         }
       ],
       "spaceLength": 10,
@@ -2725,7 +2725,7 @@
     ]
   },
   "timezone": "",
-  "title": "RasPi status",
-  "uid": "{{ lookup('pipe', 'date +%s') }}",
+  "title": "Pi status",
+  "uid": "pi_status",
   "version": 10
 }

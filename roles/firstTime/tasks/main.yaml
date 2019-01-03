@@ -72,6 +72,11 @@
   become_user: root
   local_action: shell sed -i 's/#callback_whitelist\(.*\)/callback_whitelist\1/g' /etc/ansible/ansible.cfg
 
+- name: Ansible - Enable pretty log
+  become: yes
+  become_user: root
+  local_action: shell sed -i 's/#stdout_callback = \(.*\)/stdout_callback = minimal/g' /etc/ansible/ansible.cfg
+
 - name: Ansible - Enable timer and profile_tasks callbacks
   become: yes
   become_user: root

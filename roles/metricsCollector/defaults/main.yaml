@@ -2,7 +2,6 @@
 metricsCollectors:
   path: /home/pi/metricsCollectors
 
-
 collectors:
 ##   Pi Internals   ############################################################
 

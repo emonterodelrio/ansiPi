@@ -4,6 +4,14 @@
   apt:
     name: '{{ additional_packages }}'
 
+- name: Load gmail credentials from file
+  shell: cat /home/pi/.gmailUser
+  register: gmailUserReaded
+
+- name: Load gmail password from file
+  shell: cat /home/pi/.gmailPass
+  register: gmailPassReaded
+
 - name: Add gmail account to ssmtp.conf
   become: yes
   blockinfile:
@@ -13,11 +21,10 @@
       root=postmaster
       mailhub=smtp.gmail.com:587
       hostname={{ pi.hostname }}
-      AuthUser={{ gmailUser }}
-      AuthPass={{ gmailPass }}
+      AuthUser={{ gmailUserReaded.stdout }}
+      AuthPass={{ gmailPassReaded.stdout }}
       FromLineOverride=YES
       UseSTARTTLS=YES
-  when: gmailUser != ""
 
 - name: Clean monit conf-enabled
   become: yes
@@ -56,10 +63,9 @@
                  Your faithful employee,
                  Monit }
       set mailserver smtp.gmail.com port 587
-        username {{ gmailUser }} password "{{ gmailPass}}"
+        username {{ gmailUserReaded.stdout }} password "{{ gmailPassReaded.stdout }}"
         using TLSV1 with timeout 30 seconds
-      set alert {{ gmailUser }}
-  when: gmailUser != ""
+      set alert {{ gmailUserReaded.stdout }}
 
 - name: Disable conf-enabled folder configurations
   become: yes

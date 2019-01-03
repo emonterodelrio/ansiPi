@@ -1,4 +1,8 @@
 ---
+- name: Load duckdns token from file
+  shell: cat /home/pi/.duckDnsToken
+  register: duckDnsTokenReaded
+
 - name: Create duckdns folder
   file:
     state: directory
@@ -10,14 +14,13 @@
     dest: "~/duckDns/duck.sh"
     mode: 0700
     content: |
-      echo url="https://www.duckdns.org/update?domains={{ pi.hostname }}&token={{ duckDnsToken }}&ip=" | curl -k -o ~/duckDns/duck.log -K -
-  when: duckDnsToken != ""
+      echo url="https://www.duckdns.org/update?domains={{ pi.hostname }}&token={{ duckDnsTokenReaded.stdout }}&ip=" | curl -k -o ~/duckDns/duck.log -K -
 
 - name: Touch duckdns script log
   file:
     path: "~/duckDns/duck.log"
     mode: 0744
-    state: present
+    state: touch
 
 - name: Create duckdns crontab
   cron:

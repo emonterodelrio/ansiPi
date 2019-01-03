@@ -19,20 +19,6 @@
   register: grafanaAdminPass
   when: existGrafana.rc == 2
 
-- name: Allow api access - Fill at /etc/grafana/grafana.ini with template
-  become: yes
-  lineinfile:
-    path: /etc/grafana/grafana.ini
-    regexp: 'enable anonymous access$'
-    line: ';enabled = true # enable anonymous access'
-  when: existGrafana.rc == 2
-
-- name: Allow api access - Restart grafana-server
-  become: yes 
-  service:
-    name: grafana-server
-    state: restarted
-
 - name: Create temp folder
   file:
     path: /tmp/temp
@@ -51,21 +37,13 @@
   shell: /tmp/temp/create_dashboards.sh
   when: existGrafana.rc == 2
 
-#- name: Delete temp folder
-#  file:
-#    path: /tmp/temp
-#    state: absent
-#  when: existGrafana.rc == 2
-
-- name: Disallow api access
-  become: yes
-  lineinfile:
-    path: /etc/grafana/grafana.ini
-    regexp: 'enable anonymous access$'
-    line: 'enabled = true # enable anonymous access'
+- name: Delete temp folder
+  file:
+    path: /tmp/temp
+    state: absent
   when: existGrafana.rc == 2
 
-- name: Disallow api access - Restart grafana-server
+- name: Restart grafana-server
   become: yes 
   service:
     name: grafana-server

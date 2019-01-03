@@ -1769,6 +1769,6 @@
   },
   "timezone": "",
   "title": "Network status",
-  "uid": "{{ lookup('pipe', 'date +%s') }}",
+  "uid": "network_status",
   "version": 10
 }

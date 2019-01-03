@@ -1,12 +1,4 @@
 ---
-- name: Create DHT22 folder
-  file:
-    path: "{{ DHT22.path }}"
-    owner: pi
-    group: pi
-    state: directory
-  when: DHT22.present
-
 - name: Install software via apt
   become: yes
   apt:
@@ -24,23 +16,58 @@
   shell: cd {{ DHT22.path }}/Adafruit_Python_DHT && python setup.py install
   when: DHT22.present
 
-- name: Setup DHT22 scripts
+- name: Create folders
+  become: yes
+  file:
+    path: "{{ item }}"
+    owner: pi
+    group: pi
+    mode: 0755
+    state: directory
+  with_items:
+    - "{{ meteoUpdatePicturesPath }}"
+    - "{{ DHT22.path }}"
+  when: DHT22.present
+
+- name: Setup dht22 script
   template:
     src: dht22.j2
     dest: "{{ DHT22.path }}/dht22.py"
     mode: 0777
   when: DHT22.present
 
-- name: Setup stop script
+- name: Setup meteo-update-pictures script
+  template:
+    src: updateMeteoPic.sh
+    dest: "{{ meteoUpdatePicturesPath }}/updateMeteoPic.sh"
+    mode: 0777
+  when: DHT22.present
+
+- name: Setup dht22 stop script
   template:
     src: stop_dht22.j2
     dest: "{{ DHT22.path }}/stop_dht22.sh"
     mode: 0777
+  when: DHT22.present
 
-- name: Stop all scripts
+- name: Setup stop meteo-update-pictures script
+  template:
+    src: stopUpdateMeteoPic.sh
+    dest: "{{ meteoUpdatePicturesPath }}/stopUpdateMeteoPic.sh"
+    mode: 0777
+  when: DHT22.present
+
+- name: Stop dht22 script
   become: yes
   shell: "{{ DHT22.path }}/stop_dht22.sh"
   ignore_errors: yes
+  when: DHT22.present
+
+- name: Stop meteo-update-pictures script
+  become: yes
+  shell: "{{ meteoUpdatePicturesPath }}/stopUpdateMeteoPic.sh"
+  ignore_errors: yes
+  when: DHT22.present
 
 - name: Crontab DHT22 scripts
   cron:
@@ -51,4 +78,35 @@
     month: "*"
     weekday: "*" 
     job: "bash -c 'if [ ! \"$(ps aux | grep dht22.py | grep -v grep)\" ]; then nohup {{ DHT22.path }}/dht22.py &>> {{ DHT22.path }}/dht22.log& fi'"
+  when: DHT22.present
+
+- name: Crontab meteo-update-pictures script
+  cron:
+    name: "UpdateMeteoPictures"
+    minute: "*"
+    hour: "*/2"
+    day: "*"
+    month: "*"
+    weekday: "*" 
+    job: "bash -c 'nohup {{ meteoUpdatePicturesPath }}/updateMeteoPic.sh &>> {{ meteoUpdatePicturesPath }}/updateMeteoPic.log&'"
+  when: DHT22.present
+
+- name: Setup dht22 logrotate.d
+  become: yes
+  template:
+    src: logrotate_dht22.j2
+    dest: "/etc/logrotate.d/dht22"
+    mode: 0644
+    owner: root
+    group: root
+  when: DHT22.present
+
+- name: Setup updateMeteoPic logrotate.d
+  become: yes
+  template:
+    src: logrotate_updateMeteoPic.j2
+    dest: "/etc/logrotate.d/updateMeteoPic"
+    mode: 0644
+    owner: root
+    group: root
   when: DHT22.present

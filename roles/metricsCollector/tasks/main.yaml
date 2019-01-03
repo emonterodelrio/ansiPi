@@ -39,6 +39,16 @@
   shell: "{{ metricsCollectors.path }}/stop_collectors.sh"
   ignore_errors: yes
 
+- name: Setup logrotate.d logs
+  become: yes
+  template:
+    src: logrotate.j2
+    dest: "/etc/logrotate.d/{{ item.group }}_{{ item.name }}"
+    mode: 0644
+    owner: root
+    group: root
+  with_items: "{{ collectors }}"
+
 - name: Crontab scripts
   cron:
     name: "{{ item.group }}_{{ item.name }}"

@@ -1,41 +1,123 @@
-Dash tiempo
+1-.Crear home dash con api para que salga en la lista
+Sacar lista de thresholds en vez de que sean fijos
 
-LOgrotate!!!
+2-. Mover las cosas a su sitio
+
+
+Pasar las variables a los playbooks via fichero, rellenar fichero desde el install y pasarlo en vez del prompt de ansible, cuando falle el install tirar del fichero en lo que se muestra.
+ 
+Buscar api para mapas mejor
 
 Licencia:
 Revisar lo que usas y https://creativecommons.org/choose/?lang=es_es#metadata
 
-
-FORECASTIO PANEL
-
-Imagen presiones via js en dash home
-  3-. Buscar mapas temperatura aire
-  4-. Centrar y meter transparencia, curvas-presion nubes y temperatura en uno o dos,
-
 nginx:
 https
   
-
 40X 50X decentes
-
-
 
 Influx:
 Habilitar log
 Securizar
 https
 
- 
-2-. Metricas:
-
 revisar reiniciar la raspi y los procesos, handlers?
 
 monit con mensajes de fail2ban, demasiado verboso ahora
-
-lanzar los playbooks desde el install.shfor src in arm core h264 isp v3d uart pwm emmc pixel vec hdmi dpi ; do
-
 
 Idempotencia en el rol de firstTime cuando se crean las credenciales de la raspi, si existen actualizarlas en local, sino crear
 
 Hacer un readme
 Mejorar mensajes install
+
+
+En vez de sleep poner un loop esperando al api de grafana while (curl != 200) -> sleep
+- name: Link influxdb datasource
+  shell: sleep 15
+
+
+
+####################################
+V2.0:
+
+Mensaje de lo que hay que hacer antes de instalar nada:
+dd if=...
+rellenar pompt de conf de la raspi
+raspi-config
+enable ssh
+
+
+1-.Crear dashboards via curls para ver dónde meter lo de meteoupdate, separar como dht22? en el fond es un sensor más
+
+Seguir:
+http://docs.grafana.org/tutorials/api_org_token_howto/
+roles/createDashExample
+
+
+
+
+  ORG="meteopiOrg"; curl -s -X POST -H "Content-Type: application/json" -d "{\"name\":\"$ORG\"}" http://admin:@192.168.1.11:3000/api/orgs
+
+
+USER="admin"; ROLE="Admin"; curl -s -X POST -H "Content-Type: application/json" -d "{\"loginOrEmail\":\"$USER\",\"role\":\"$ROLE\"}" http://admin:@192.168.1.11:3000/api/orgs/11/users
+
+
+{\"loginOrEmail\":\"$USER\",\"role\":\"$ROLE\"}
+
+
+for i in
+curl -s -X GET http://admin:@192.168.1.11:3000/api/orgs | jq . | grep id | awk '{print $2}' | tr -d ","
+do
+  curl -s -X DELETE -H "Content-Type: application/json" http://admin:@192.168.1.11:3000/api/orgs/$i | jq .
+done
+
+
+{"loginOrEmail":"admin","role":"Admin"}
+
+List orgs
+curl -s -X GET http://admin:@192.168.1.11:3000/api/orgs | jq .
+
+Delete orgs
+  curl -s -X DELETE -H "Content-Type: application/json" http://admin:@192.168.1.11:3000/api/orgs6 | jq .
+
+
+
+
+
+2-.Hacer refactor en roles para ver que se necesita en los satelites
+
+3-.Trocear el common
+
+
+En el install.sh
+New devices?
+  ¿How many devices?
+  Setup a name for device
+  Show free Ips
+  What to use?
+  03-addSatellite.yaml
+  ...
+else
+  Which to update?
+  Setup a name for device
+  Show used Ips
+  Selected device is using this:
+  03-addSatellite.yaml
+  ...
+
+
+Instalar raspi 2
+crea sus dashboards con sus metricas predefinidas via curl a la raspi central
+
+
+Con arduino:
+...................
+Montar circuito
+Temp esp8266
+Generar código arduino
+Instalar cliente arduino
+Subir código
+crea sus dashboards con sus metricas predefinidas via curl a la raspi central
+
+
+
