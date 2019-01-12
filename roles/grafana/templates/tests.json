@@ -1650,7 +1650,7 @@
       }
     }
   ],
-  "refresh": "5s",
+  "refresh": "30s",
   "schemaVersion": 16,
   "style": "dark",
   "tags": [],
@@ -1663,7 +1663,7 @@
   },
   "timepicker": {
     "refresh_intervals": [
-      "5s"
+      "30s"
     ],
     "time_options": [
       "30s",

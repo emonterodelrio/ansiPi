@@ -84,7 +84,7 @@
         "x": 0,
         "y": 0
       },
-      "id": 12,
+      "id": 1,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -170,7 +170,7 @@
           ]
         }
       ],
-      "thresholds": "60,80",
+      "thresholds": "70,80",
       "title": "Cpu Temp",
       "transparent": true,
       "type": "singlestat",
@@ -211,7 +211,7 @@
         "x": 3,
         "y": 0
       },
-      "id": 25,
+      "id": 2,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -297,7 +297,7 @@
           ]
         }
       ],
-      "thresholds": "60,80",
+      "thresholds": "70,80",
       "title": "Gpu Temp",
       "transparent": true,
       "type": "singlestat",
@@ -312,6 +312,63 @@
       "valueName": "current"
     },
     {
+      "alert": {
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                70
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "20s",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                70
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "or"
+            },
+            "query": {
+              "params": [
+                "B",
+                "20s",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "frequency": "10s",
+        "handler": 1,
+        "message": "The CPU/GPU temperature has exceeded 70º for at least 20 seconds.",
+        "name": "Cpu/Gpu > 70º !",
+        "noDataState": "keep_state",
+        "notifications": []
+      },
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -324,12 +381,14 @@
         "x": 6,
         "y": 0
       },
-      "id": 24,
+      "id": 3,
       "legend": {
+        "alignAsTable": false,
         "avg": false,
         "current": true,
         "max": false,
         "min": false,
+        "rightSide": false,
         "show": true,
         "total": false,
         "values": true
@@ -457,17 +516,9 @@
       ],
       "thresholds": [
         {
-          "colorMode": "warning",
-          "fill": true,
-          "line": false,
-          "op": "gt",
-          "value": 60,
-          "yaxis": "left"
-        },
-        {
           "colorMode": "critical",
           "fill": true,
-          "line": false,
+          "line": true,
           "op": "gt",
           "value": 70,
           "yaxis": "left"
@@ -515,24 +566,108 @@
       }
     },
     {
+      "alert": {
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                8
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "1m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                4
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "or"
+            },
+            "query": {
+              "params": [
+                "B",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                2
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "or"
+            },
+            "query": {
+              "params": [
+                "C",
+                "15m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "frequency": "10s",
+        "handler": 1,
+        "message": "Some cpu load has exceeded 40 for at least 10 seconds.",
+        "name": "Cpu load > 40",
+        "noDataState": "keep_state",
+        "notifications": []
+      },
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
       "datasource": "{{ influx.db.name }}",
+      "decimals": 0,
       "fill": 3,
       "gridPos": {
         "h": 4,
-        "w": 6,
+        "w": 7,
         "x": 12,
         "y": 0
       },
-      "id": 2,
+      "id": 4,
       "legend": {
+        "alignAsTable": false,
         "avg": false,
         "current": true,
+        "decimals": 0,
         "max": false,
         "min": false,
+        "rightSide": false,
         "show": true,
         "total": false,
         "values": true
@@ -547,15 +682,15 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "alias": "Load 1",
+          "alias": "Last 1 min",
           "color": "rgb(13, 255, 0)"
         },
         {
-          "alias": "Load 5",
+          "alias": "Last 5 min",
           "color": "rgb(255, 125, 0)"
         },
         {
-          "alias": "Load 15",
+          "alias": "Last 15 min",
           "color": "rgb(255, 0, 0)"
         }
       ],
@@ -564,7 +699,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "Load 1",
+          "alias": "Last 1 min",
           "groupBy": [
             {
               "params": [
@@ -613,7 +748,7 @@
           ]
         },
         {
-          "alias": "Load 5",
+          "alias": "Last 5 min",
           "groupBy": [
             {
               "params": [
@@ -662,7 +797,7 @@
           ]
         },
         {
-          "alias": "Load 15",
+          "alias": "Last 15 min",
           "groupBy": [
             {
               "params": [
@@ -713,20 +848,11 @@
       ],
       "thresholds": [
         {
-          "colorMode": "warning",
-          "fill": true,
-          "line": false,
-          "op": "gt",
-          "value": 50,
-          "yaxis": "left"
-        },
-        {
           "colorMode": "critical",
           "fill": true,
-          "line": false,
+          "line": true,
           "op": "gt",
-          "value": 60,
-          "yaxis": "left"
+          "value": 40
         }
       ],
       "timeFrom": null,
@@ -748,8 +874,8 @@
       },
       "yaxes": [
         {
-          "decimals": 2,
-          "format": "none",
+          "decimals": 0,
+          "format": "percentunit",
           "label": "",
           "logBase": 1,
           "max": null,
@@ -757,7 +883,7 @@
           "show": true
         },
         {
-          "format": "short",
+          "format": "percentunit",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -771,6 +897,40 @@
       }
     },
     {
+      "alert": {
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                0
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "1h",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "frequency": "60s",
+        "handler": 1,
+        "message": "Raspi has been restarted in the last hour.",
+        "name": "Raspi reboots > 0",
+        "noDataState": "keep_state",
+        "notifications": []
+      },
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -779,16 +939,18 @@
       "fill": 3,
       "gridPos": {
         "h": 4,
-        "w": 6,
-        "x": 18,
+        "w": 5,
+        "x": 19,
         "y": 0
       },
-      "id": 31,
+      "id": 5,
       "legend": {
+        "alignAsTable": false,
         "avg": false,
         "current": true,
         "max": false,
         "min": false,
+        "rightSide": false,
         "show": true,
         "total": false,
         "values": true
@@ -863,20 +1025,11 @@
       ],
       "thresholds": [
         {
-          "colorMode": "warning",
-          "fill": true,
-          "line": false,
-          "op": "gt",
-          "value": 50,
-          "yaxis": "left"
-        },
-        {
           "colorMode": "critical",
           "fill": true,
-          "line": false,
+          "line": true,
           "op": "gt",
-          "value": 60,
-          "yaxis": "left"
+          "value": 0
         }
       ],
       "timeFrom": null,
@@ -947,7 +1100,7 @@
         "x": 0,
         "y": 4
       },
-      "id": 14,
+      "id": 6,
       "interval": null,
       "links": [],
       "mappingType": 2,
@@ -1068,7 +1221,7 @@
         "x": 3,
         "y": 4
       },
-      "id": 27,
+      "id": 7,
       "interval": null,
       "links": [],
       "mappingType": 2,
@@ -1189,7 +1342,7 @@
         "x": 6,
         "y": 4
       },
-      "id": 28,
+      "id": 8,
       "interval": null,
       "links": [],
       "mappingType": 2,
@@ -1310,7 +1463,7 @@
         "x": 9,
         "y": 4
       },
-      "id": 26,
+      "id": 9,
       "interval": null,
       "links": [],
       "mappingType": 2,
@@ -1417,12 +1570,14 @@
         "x": 12,
         "y": 4
       },
-      "id": 23,
+      "id": 10,
       "legend": {
+        "alignAsTable": false,
         "avg": false,
         "current": true,
         "max": false,
         "min": false,
+        "rightSide": false,
         "show": true,
         "total": false,
         "values": true
@@ -1728,14 +1883,14 @@
         "x": 0,
         "y": 8
       },
-      "id": 5,
+      "id": 11,
       "legend": {
-        "alignAsTable": true,
+        "alignAsTable": false,
         "avg": false,
         "current": true,
         "max": false,
         "min": false,
-        "rightSide": true,
+        "rightSide": false,
         "show": true,
         "total": false,
         "values": true
@@ -2134,7 +2289,7 @@
         "x": 12,
         "y": 8
       },
-      "id": 30,
+      "id": 12,
       "legend": {
         "alignAsTable": true,
         "avg": false,
@@ -2393,7 +2548,7 @@
         "x": 0,
         "y": 13
       },
-      "id": 7,
+      "id": 13,
       "legend": {
         "alignAsTable": true,
         "avg": false,
@@ -2636,15 +2791,17 @@
         "y": 18
       },
       "hideTimeOverride": true,
-      "id": 29,
+      "id": 14,
       "legend": {
+        "alignAsTable": true,
         "avg": false,
-        "current": false,
+        "current": true,
         "max": false,
         "min": false,
-        "show": false,
+        "rightSide": true,
+        "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": false,
       "linewidth": 1,
@@ -2702,6 +2859,13 @@
       }
     }
   ],
+  "refresh": "5s",
+  "schemaVersion": 16,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
   "time": {
     "from": "now-3h",
     "to": "now"

@@ -10,133 +10,133 @@ collectors:
   - name: reboots
     group: monitor
     command: "LC_ALL=en_EN.utf8 myDate=$(date \"+%b %-d\");myDate=\"${myDate^}\";grep -a \"$myDate\" /var/log/syslog | grep -a \"Booting Linux on physical\" | wc -l"
-    delay: "60"
+    delay: "30"
 
 ##@@@   temperatures
 
   - name: cpu
     group: temperature
-    command: "sleep 1 && cpuTemp0=$(cat /sys/class/thermal/thermal_zone0/temp);cpuTemp1=$(($cpuTemp0/1000));cpuTemp2=$(($cpuTemp0/100));cpuTempM=$(($cpuTemp2 % $cpuTemp1));echo $cpuTemp1\".\"$cpuTempM"
+    command: "cpuTemp0=$(cat /sys/class/thermal/thermal_zone0/temp);cpuTemp1=$(($cpuTemp0/1000));cpuTemp2=$(($cpuTemp0/100));cpuTempM=$(($cpuTemp2 % $cpuTemp1));echo $cpuTemp1\".\"$cpuTempM"
     delay: "1"
 
   - name: gpu
     group: temperature
-    command: "sleep 1 && /opt/vc/bin/vcgencmd measure_temp | cut -d\"=\" -f2 | cut -d\"'\" -f1"
+    command: "/opt/vc/bin/vcgencmd measure_temp | cut -d\"=\" -f2 | cut -d\"'\" -f1"
     delay: "1"
 
 ##@@@   voltages
 
   - name: core
     group: voltage
-    command: "sleep 2 && vcgencmd measure_volts core | cut -d\"=\" -f2 | cut -d'V' -f1"
+    command: "vcgencmd measure_volts core | cut -d\"=\" -f2 | cut -d'V' -f1"
     delay: "1"
 
   - name: sdram_c
     group: voltage
-    command: "sleep 2 && vcgencmd measure_volts sdram_c | cut -d\"=\" -f2 | cut -d'V' -f1"
+    command: "vcgencmd measure_volts sdram_c | cut -d\"=\" -f2 | cut -d'V' -f1"
     delay: "1"
 
   - name: sdram_i
     group: voltage
-    command: "sleep 2 && vcgencmd measure_volts sdram_i | cut -d\"=\" -f2 | cut -d'V' -f1"
+    command: "vcgencmd measure_volts sdram_i | cut -d\"=\" -f2 | cut -d'V' -f1"
     delay: "1"
 
   - name: sdram_p
     group: voltage
-    command: "sleep 2 && vcgencmd measure_volts sdram_p | cut -d\"=\" -f2 | cut -d'V' -f1"
+    command: "vcgencmd measure_volts sdram_p | cut -d\"=\" -f2 | cut -d'V' -f1"
     delay: "1"
 
 ##@@@   cpu
 
   - name: load_1
     group: cpu
-    command: "sleep 3 && cat /proc/loadavg | awk '{print $1}'"
-    delay: "60"
+    command: "cat /proc/loadavg | awk '{print $1}'"
+    delay: "5"
 
   - name: load_5
     group: cpu
-    command: "sleep 3 && cat /proc/loadavg | awk '{print $2}'"
-    delay: "60"
+    command: "cat /proc/loadavg | awk '{print $2}'"
+    delay: "5"
 
   - name: load_15
     group: cpu
-    command: "sleep 3 && cat /proc/loadavg | awk '{print $3}'"
-    delay: "60"
+    command: "cat /proc/loadavg | awk '{print $3}'"
+    delay: "5"
 
 ##@@@   memory
   - name: used_percent
     group: memory
-    command: "sleep 4 && free -m | grep Mem | awk '{userPercent=$3/$2}; {split(userPercent,a,\".\"); print a[1]\".\"substr(a[2],1,2)}'"
-    delay: "60"
+    command: "free -m | grep Mem | awk '{userPercent=$3/$2}; {split(userPercent,a,\".\"); print a[1]\".\"substr(a[2],1,2)}'"
+    delay: "30"
 
   - name: total
     group: memory
-    command: "sleep 4 && free -m | grep -i mem | awk '{print $2}'"
-    delay: "60"
+    command: "free -m | grep -i mem | awk '{print $2}'"
+    delay: "30"
 
   - name: used
     group: memory
-    command: "sleep 4 && free -m | grep -i mem | awk '{print $3}'"
-    delay: "60"
+    command: "free -m | grep -i mem | awk '{print $3}'"
+    delay: "30"
 
   - name: free
     group: memory
-    command: "sleep 4 && free -m | grep -i mem | awk '{print $4}'"
-    delay: "60"
+    command: "free -m | grep -i mem | awk '{print $4}'"
+    delay: "30"
 
   - name: shared
     group: memory
-    command: "sleep 4 && free -m | grep -i mem | awk '{print $5}'"
-    delay: "60"
+    command: "free -m | grep -i mem | awk '{print $5}'"
+    delay: "30"
 
   - name: buff_cache
     group: memory
-    command: "sleep 4 && free -m | grep -i mem | awk '{print $6}'"
-    delay: "60"
+    command: "free -m | grep -i mem | awk '{print $6}'"
+    delay: "30"
 
   - name: available
     group: memory
-    command: "sleep 4 && free -m | grep -i mem | awk '{print $7}'"
-    delay: "60"
+    command: "free -m | grep -i mem | awk '{print $7}'"
+    delay: "30"
 
 ##@@@   swap
 
   - name: total
     group: swap
-    command: "sleep 5 && free -m | grep -i swap | awk '{print $2}'"
-    delay: "60"
+    command: "free -m | grep -i swap | awk '{print $2}'"
+    delay: "30"
 
   - name: used
     group: swap
-    command: "sleep 5 && free -m | grep -i swap | awk '{print $3}'"
-    delay: "60"
+    command: "free -m | grep -i swap | awk '{print $3}'"
+    delay: "30"
 
   - name: free
     group: swap
-    command: "sleep 5 && free -m | grep -i swap | awk '{print $4}'"
-    delay: "60"
+    command: "free -m | grep -i swap | awk '{print $4}'"
+    delay: "30"
 
 ##@@@   disk
 
   - name: used_percent
     group: disk
-    command: "sleep 6 && echo \"0.$(expr \"$(df -h | grep \"/dev/root\" | awk '{print $5}' | tr -d \"%\")\")\""
-    delay: "60"
+    command: "sleep 10 && echo \"0.$(expr \"$(df -h | grep \"/dev/root\" | awk '{print $5}' | tr -d \"%\")\")\""
+    delay: "50"
 
   - name: total_KB
     group: disk
-    command: "sleep 6 && df |grep \"/dev/root\" | awk '{print $2}'"
-    delay: "60"
+    command: "sleep 10 && df |grep \"/dev/root\" | awk '{print $2}'"
+    delay: "50"
 
   - name: used_KB
     group: disk
-    command: "sleep 7 && df |grep \"/dev/root\" | awk '{print $3}'"
-    delay: "60"
+    command: "sleep 10 && df |grep \"/dev/root\" | awk '{print $3}'"
+    delay: "50"
 
   - name: free_KB
     group: disk
-    command: "sleep 7 && df |grep \"/dev/root\" | awk '{print $4}'"
-    delay: "60"
+    command: "sleep 10 && df |grep \"/dev/root\" | awk '{print $4}'"
+    delay: "50"
 
 
 ##   Security   ############################################################
@@ -145,19 +145,19 @@ collectors:
 
   - name: current_sessions
     group: sessions
-    command: "sleep 8 && ps aux | grep -a ssh | grep -v \"grep\\|metricsCollectors\\|/sshd\" | grep @ | wc -l"
-    delay: "3"
+    command: "ps aux | grep -a ssh | grep -v \"grep\\|metricsCollectors\\|/sshd\" | grep @ | wc -l"
+    delay: 10"
 
 ##@@@   ssh
 
   - name: login_ok
     group: ssh
-    command: "sleep 9 && LC_ALL=en_EN.utf8 myDate=$(date \"+%b %-d\");myDate=\"${myDate^}\";grep -a \"$myDate\" /var/log/auth.log | grep -a sshd | grep -a \"session opened for user\" | wc -l"
+    command: "LC_ALL=en_EN.utf8 myDate=$(date \"+%b %-d\");myDate=\"${myDate^}\";grep -a \"$myDate\" /var/log/auth.log | grep -a sshd | grep -a \"session opened for user\" | wc -l"
     delay: "10"
 
   - name: login_ko
     group: ssh
-    command: "sleep 9 && LC_ALL=en_EN.utf8 myDate=$(date \"+%b %-d\");myDate=\"${myDate^}\";grep -a \"$myDate\" /var/log/auth.log | grep -a sshd | grep -a \"authentication failure\" | wc -l"
+    command: "LC_ALL=en_EN.utf8 myDate=$(date \"+%b %-d\");myDate=\"${myDate^}\";grep -a \"$myDate\" /var/log/auth.log | grep -a sshd | grep -a \"authentication failure\" | wc -l"
     delay: "10"
 
 ##   Network   ############################################################
@@ -227,30 +227,30 @@ collectors:
   - name: external_acceses
     group: nginx
     command: "sleep 11 && LC_ALL=en_EN.utf8 myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | grep -v \"{{ pi.network.prefix }}\" | wc -l"
-    delay: "60"
+    delay: "30"
 
   - name: local_acceses
     group: nginx
     command: "sleep 11 && LC_ALL=en_EN.utf8 myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | grep \"{{ pi.network.prefix }}\" | wc -l"
-    delay: "60"
+    delay: "30"
 
   - name: get
     group: nginx
     command: "sleep 11 && LC_ALL=en_EN.utf8 myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep GET | wc -l"
-    delay: "60"
+    delay: "30"
 
   - name: post
     group: nginx
     command: "sleep 11 && LC_ALL=en_EN.utf8 myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep POST | wc -l"
-    delay: "60"
+    delay: "30"
 
   - name: put
     group: nginx
     command: "sleep 11 && LC_ALL=en_EN.utf8 myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep PUT | wc -l"
-    delay: "60"
+    delay: "30"
 
   - name: other
     group: nginx
     command: "sleep 11 && LC_ALL=en_EN.utf8 myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep -v \"POST\\|GET\\|PUT\" | wc -l"
-    delay: "60"
+    delay: "30"
 

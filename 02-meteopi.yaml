@@ -44,7 +44,7 @@
     - nginx
     - influxdb
     - metricsCollector
-    - dht22
     - grafana
+    - dht22
     - createMeteopiDash_Dht22
 

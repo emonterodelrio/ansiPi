@@ -1,10 +1,14 @@
 ---
-
-- name: Check existing grafana
+- name: Check exists
   become: yes
   shell: grafana-server -h
   register: existGrafana
   ignore_errors: yes
+
+- name: Install software via apt
+  become: yes
+  apt:
+    name: '{{ additional_packages }}'
 
 - name: Download grafana deb
   get_url:
@@ -103,7 +107,7 @@
     mode: 0755
     state: directory
 
-- name: Fill dashboards with template
+- name: Fill common dashboards with template
   become: yes
   template:
     src: "{{ item }}.json"
@@ -117,44 +121,51 @@
 
 - name: Lastpass - Ensure user loged in
   local_action: shell lpass ls
-  when: existGrafana.rc == 2
 
 - name: Lastpass - Load credentials
-  local_action: shell lpass show {{ lpass.piId }}/grafanaAdmin | grep username | awk '{print $2}'
-  register: grafanaAdminUsername
-  when: existGrafana.rc == 2
+  local_action: shell lpass show {{ lpass.piId }}/grafanaAdmin | grep Username | awk '{print $2}'
+  register: grafanaAdminUserReaded
 
 - name: Lastpass - Load password
-  local_action: shell lpass show {{ lpass.piId }}/grafanaAdmin | grep password | awk '{print $2}'
-  register: grafanaAdminPass
-  when: existGrafana.rc == 2
+  local_action: shell lpass show {{ lpass.piId }}/grafanaAdmin | grep Password | awk '{print $2}'
+  register: grafanaAdminPassReaded
+
+- debug:
+    msg: "{{ grafanaAdminUserReaded }} -- {{ grafanaAdminPassReaded }}"
 
 - name: Create temp folder
   file:
-    path: /tmp/temp
+    path: /tmp/grafana_temp
     mode: 0777
     state: directory
-  when: existGrafana.rc == 2
+
+- name: Setup api stuff script
+  template:
+    src: apiStuff.sh
+    dest: "/tmp/grafana_temp/apiStuff.sh"
+    mode: 0777
 
 - name: Setup create dashboards script
   template:
     src: create_faq.sh
-    dest: "/tmp/temp/create_faq.sh"
+    dest: "/tmp/grafana_temp/create_faq.sh"
     mode: 0777
-  when: existGrafana.rc == 2
 
-- name: Execute script
-  shell: /tmp/temp/create_faq.sh
+- name: Execute scripts
+  shell: "{{ item }}"
   when: existGrafana.rc == 2
+  with_items:
+    - /tmp/grafana_temp/apiStuff.sh
+    - /tmp/grafana_temp/create_faq.sh
 
-- name: Delete temp folder
-  file:
-    path: /tmp/temp
-    state: absent
-  when: existGrafana.rc == 2
+#- name: Delete temp folder
+#  file:
+#    path: /tmp/grafana_temp
+#    state: absent
+#  when: existGrafana.rc == 2
 
 - name: Restart grafana-server
   become: yes 
   service:
     name: grafana-server
-    state: restarted
+    state: restarted  

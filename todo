@@ -1,8 +1,8 @@
-1-.Crear home dash con api para que salga en la lista
-Sacar lista de thresholds en vez de que sean fijos
+AAAAAAAAAAAAAAAa
+  Crear home dash con api para que salga en la lista
+  Sacar lista de thresholds en vez de que sean fijos
 
-2-. Mover las cosas a su sitio
-
+Del día 1 al 9 no funcionan las metricas de syslog "ssh"
 
 Pasar las variables a los playbooks via fichero, rellenar fichero desde el install y pasarlo en vez del prompt de ansible, cuando falle el install tirar del fichero en lo que se muestra.
  

@@ -57,24 +57,17 @@ EOL
 function setupDashOptions() {
 #Create dashboard json temp file
 cat >>$BASE_PATH/temp.json <<EOL
-    "style": "dark",
-    "time": {
-      "from": "now-3h",
-      "to": "now"
-    },
-    "timepicker": {
-      "refresh_intervals": [
-        "5s",
-        "10s",
-        "30s",
-        "1m",
-        "5m",
-        "15m",
-        "30m",
-        "1h",
-        "2h",
-        "1d"
-      ],
+  "schemaVersion": 16,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-3h",
+    "to": "now"
+  },
+  "timepicker": {
       "time_options": [
         "5m",
         "15m",
@@ -94,9 +87,9 @@ EOL
 
 
 ###    MAIN    #####################################
-BASE_PATH="/tmp/temp"
-USER="{{ grafanaAdminUsername.stdout }}"
-PASS="{{ grafanaAdminPass.stdout }}"
+BASE_PATH="/tmp/grafana_temp"
+USER="{{ grafanaAdminUserReaded.stdout }}"
+PASS="{{ grafanaAdminPassReaded.stdout }}"
 
 DASHBOARD_TITLE="FAQ"
 
@@ -104,8 +97,27 @@ setupDashHeaders;
 setupDashPanels;
 setupDashOptions;
 
+#Create notifications group from json file
+curl -X POST "http://$USER:$PASS@{{ pi.network.ip }}:3000/api/alert-notifications" \
+-H 'Accept: application/json' \
+-H 'Content-Type:application/json' \
+-d '{"name":"Notifications channel","type":"email","isDefault":true,"sendReminder":false,"settings":{"addresses": "{{ gmailUserReaded.stdout }}"}}' | jq . > $BASE_PATH/notificationsChanel-create.log
+
 #Create dashboard from json file
-curl -s -X POST "http://$USER:$PASS@{{ pi.network.ip }}:3000/api/dashboards/db" \
+curl -X POST "http://$USER:$PASS@{{ pi.network.ip }}:3000/api/dashboards/db" \
 -H "Accept: application/json" \
 -H "Content-Type:application/json" \
 -d @$BASE_PATH/temp.json | jq . > $BASE_PATH/dashboard-create.log
+
+
+ID=$(cat $BASE_PATH/dashboard-create.log  | grep "\"id\"" | awk '{print $2}' | tr -d ",")
+
+cat >>$BASE_PATH/dashHomeSetup.json <<EOL
+{"homeDashboardId": $ID}
+EOL
+
+curl -X PUT "http://$USER:$PASS@{{ pi.network.ip }}:3000/api/user/preferences" \
+-H 'Accept: application/json'  \
+-H 'Content-Type:application/json' \
+-d @$BASE_PATH/dashHomeSetup.json | jq . > $BASE_PATH/setupHomeDashboard.log
+

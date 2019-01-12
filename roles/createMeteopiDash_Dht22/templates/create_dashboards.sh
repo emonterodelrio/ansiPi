@@ -4,19 +4,18 @@ function setupDashHeaders() {
 #Create dashboard json temp file
 cat >$BASE_PATH/temp.json <<EOL
 {
-  "folderId": 0,
-  "overwrite": true,
-  "dashboard": {
-    "uid": "$DASHBOARD_TITLE",
-    "title": "$DASHBOARD_TITLE",
-    "tags": [],
-    "timezone": "browser",
-    "schemaVersion": 16,
-    "version": 0,
-    "editable": true,
-    "gnetId": null,
-    "graphTooltip": 0,
-    "links": [],
+	"folderId": 0,
+	"overwrite": true,
+	"dashboard": {
+		"uid": "MeteoPi",
+		"title": "MeteoPi",
+		"tags": [],
+		"timezone": "browser",
+		"version": 0,
+		"editable": true,
+		"gnetId": null,
+		"graphTooltip": 0,
+		"links": [],
 EOL
 }
 
@@ -24,7 +23,7 @@ function setupDashAemetMeteobars() {
 #Create dashboard json temp file
 cat >>$BASE_PATH/temp.json <<EOL
       {
-        "content": "<style>\n\n.forward {\n  position: absolute;\n  bottom: 10%;\n  left: 19%;\n  color: #8b00b2;\n  font-weight: bold;\n}\n\n.back {\n  position: absolute;\n  bottom: 10%;\n  left: 7%;\n  color: #8b00b2;\n  font-weight: bold;\n}\n\n.mymeteobars {\n  display: none;\n}\n\n.meteobars_txt {\n  position: absolute;\n  bottom: 10%;\n  left: 10%;\n  color: #0000aa;\n  font-weight: bold;\n}\n\n.meteobars_img {\n  margin:-3% 0 0 0;\n}\n\n.meteobars_slideshow-container {\n  max-width: 1000px;\n  position: relative;\n  margin: auto;\n}\n\n.meteobars_fade {\n  -webkit-animation-name: fade;\n  -webkit-animation-duration: 0.2s;\n  animation-name: fade;\n  animation-duration: 0.2s;\n}\n\n@-webkit-keyframes meteobars_fade {\n  from {opacity: .4} \n  to {opacity: 1}\n}\n\n@keyframes meteobars_fade {\n  from {opacity: .4} \n  to {opacity: 1}\n}\n\n@media only screen and (max-width: 500px) {\n  .meteobars_text {font-size: 11px}\n}\n\n</style>\n\n<div class=\"meteobars_slideshow-container\">\n\n  <div class=\"mymeteobars meteobars_fade\">\n    <img class=\"meteobars_img\" src=\"/sharedFiles/map_meteobars_0.gif\" alt=\"\">\n    <span class=\"meteobars_txt\">Now</span><span class=\"forward\">+</span>\n  </div>\n\n  <div class=\"mymeteobars meteobars_fade\">\n    <img class=\"meteobars_img\" src=\"/sharedFiles/map_meteobars_1.gif\" alt=\"\">\n    <span class=\"back\">-</span><span class=\"meteobars_txt\">12h</span><span class=\"forward\">+</span>\n  </div>\n\n  <div class=\"mymeteobars meteobars_fade\">\n    <img class=\"meteobars_img\" src=\"/sharedFiles/map_meteobars_2.gif\" alt=\"\">\n    <span class=\"back\">-</span><span class=\"meteobars_txt\">24h</span><span class=\"forward\">+</span>\n  </div>\n\n  <div class=\"mymeteobars meteobars_fade\">\n    <img class=\"meteobars_img\" src=\"/sharedFiles/map_meteobars_3.gif\" alt=\"\">\n    <span class=\"back\">-</span><span class=\"meteobars_txt\">36h</span><span class=\"forward\">+</span>\n  </div>\n\n  <div class=\"mymeteobars meteobars_fade\">\n    <img class=\"meteobars_img\" src=\"/sharedFiles/map_meteobars_4.gif\" alt=\"\">\n    <span class=\"back\">-</span><span class=\"meteobars_txt\">48h</span><span class=\"forward\">+</span>\n  </div>\n\n  <div class=\"mymeteobars meteobars_fade\">\n    <img class=\"meteobars_img\" src=\"/sharedFiles/map_meteobars_5.gif\" alt=\"\">\n    <span class=\"back\">-</span><span class=\"meteobars_txt\">60h</span><span class=\"forward\">+</span>\n  </div>\n\n  <div class=\"mymeteobars meteobars_fade\">\n    <img class=\"meteobars_img\" src=\"/sharedFiles/map_meteobars_6.gif\" alt=\"\">\n    <span class=\"back\">-</span><span class=\"meteobars_txt\">72h</span>\n  </div>\n\n</div>\n\n<script>\nvar meteobar_slideIndex = 0;\nmeteobar_showSlides()\n\nfunction meteobar_showSlides() {\n  var meteobar_i;\n  var meteobar_slides = document.getElementsByClassName(\"mymeteobars\");\n  for (meteobar_i = 0; meteobar_i < meteobar_slides.length; meteobar_i++) {\n    meteobar_slides[meteobar_i].style.display = \"none\";  \n  }\n\n  if (meteobar_slideIndex >= meteobar_slides.length) {\n    meteobar_slideIndex = 0\n  }\n\n  meteobar_slides[meteobar_slideIndex].style.display = \"block\";\n\n  if (meteobar_slideIndex == 0) {\n    meteobar_slideIndex++;\n    setTimeout(meteobar_showSlides, 3000);\n  }else{\n    meteobar_slideIndex++;\n    setTimeout(meteobar_showSlides, 400);\n  }\n}\n\n</script>",
+        "content": "  <style>\n\n  .forward {\n    position: absolute;\n    bottom: 10%;\n    left: 19%;\n    color: #8b00b2;\n    font-weight: bold;\n    cursor: pointer;\n  }\n\n  .back {\n    position: absolute;\n    bottom: 10%;\n    left: 7%;\n    color: #8b00b2;\n    font-weight: bold;\n    cursor: pointer;\n  }\n\n  .mymeteobars {\n    display: none;\n  }\n\n  .meteobars_txt {\n    position: absolute;\n    bottom: 10%;\n    left: 10%;\n    color: #0000aa;\n    font-weight: bold;\n  }\n\n  .meteobars_img {\n    margin:-3% 0 0 0;\n  }\n\n  .meteobars_slideshow-container {\n    max-width: 1000px;\n    position: relative;\n    margin: auto;\n  }\n\n  .meteobars_fade {\n    -webkit-animation-name: fade;\n    -webkit-animation-duration: 0.2s;\n    animation-name: fade;\n    animation-duration: 0.2s;\n    -webkit-user-select: none; /* Safari 3.1+ */\n    -moz-user-select: none; /* Firefox 2+ */\n    -ms-user-select: none; /* IE 10+ */\n    user-select: none; /* Standard syntax */\n  }\n\n  @-webkit-keyframes meteobars_fade {\n    from {opacity: .4} \n    to {opacity: 1}\n  }\n\n  @keyframes meteobars_fade {\n    from {opacity: .4} \n    to {opacity: 1}\n  }\n\n  @media only screen and (max-width: 500px) {\n    .meteobars_text {font-size: 11px}\n  }\n\n  </style>\n\n  <div class=\\"meteobars_slideshow-container\\">\n\n    <div class=\\"mymeteobars meteobars_fade\\">\n      <img class=\\"meteobars_img\\" src=\\"/sharedFiles/map_meteobars_0.gif?dummy=123\\" alt=\\"\\">\n      <span class=\\"back\\" ontouch=\\"less()\\">-</span><span class=\\"meteobars_txt\\">Now</span><span class=\\"forward\\" ontouch=\\"more()\\">+</span>\n    </div>\n\n    <div class=\\"mymeteobars meteobars_fade\\">\n      <img class=\\"meteobars_img\\" src=\\"/sharedFiles/map_meteobars_1.gif?dummy=123\\" alt=\\"\\">\n      <span class=\\"back\\" ontouch=\\"less()\\">-</span><span class=\\"meteobars_txt\\">12h</span><span class=\\"forward\\" ontouch=\\"more()\\">+</span>\n    </div>\n\n    <div class=\\"mymeteobars meteobars_fade\\">\n      <img class=\\"meteobars_img\\" src=\\"/sharedFiles/map_meteobars_2.gif?dummy=123\\" alt=\\"\\">\n      <span class=\\"back\\" ontouch=\\"less()\\">-</span><span class=\\"meteobars_txt\\">24h</span><span class=\\"forward\\" ontouch=\\"more()\\">+</span>\n    </div>\n\n    <div class=\\"mymeteobars meteobars_fade\\">\n      <img class=\\"meteobars_img\\" src=\\"/sharedFiles/map_meteobars_3.gif?dummy=123\\" alt=\\"\\">\n      <span class=\\"back\\" ontouch=\\"less()\\">-</span><span class=\\"meteobars_txt\\">36h</span><span class=\\"forward\\" ontouch=\\"more()\\">+</span>\n    </div>\n\n    <div class=\\"mymeteobars meteobars_fade\\">\n      <img class=\\"meteobars_img\\" src=\\"/sharedFiles/map_meteobars_4.gif?dummy=123\\" alt=\\"\\">\n      <span class=\\"back\\" ontouch=\\"less()\\">-</span><span class=\\"meteobars_txt\\">48h</span><span class=\\"forward\\" ontouch=\\"more()\\">+</span>\n    </div>\n\n    <div class=\\"mymeteobars meteobars_fade\\">\n      <img class=\\"meteobars_img\\" src=\\"/sharedFiles/map_meteobars_5.gif?dummy=123\\" alt=\\"\\">\n      <span class=\\"back\\" ontouch=\\"less()\\">-</span><span class=\\"meteobars_txt\\">60h</span><span class=\\"forward\\" ontouch=\\"more()\\">+</span>\n    </div>\n\n    <div class=\\"mymeteobars meteobars_fade\\">\n      <img class=\\"meteobars_img\\" src=\\"/sharedFiles/map_meteobars_6.gif?dummy=123\\" alt=\\"\\">\n      <span class=\\"back\\" ontouch=\\"less()\\">-</span><span class=\\"meteobars_txt\\">72h</span><span class=\\"forward\\" ontouch=\\"more()\\">+</span>\n    </div>\n\n  </div>\n\n  <script>\n  var meteobar_slideIndex = 0;\n  var numExecution = 0;\n  var loops = 10;\n  var isEnd = false;\n  meteobar_showSlides()\n\n  function more() {\n    var meteobar_i;\n    var meteobar_slides = document.getElementsByClassName(\\"mymeteobars\\");\n\n    console.log(\\"More prev \\" + meteobar_slideIndex + \\" \\");\n\n    if (meteobar_slideIndex >= meteobar_slides.length-1) {\n      meteobar_slideIndex = 0\n      console.log(\\"More\\" + meteobar_slideIndex + \\" \\");\n    }else{\n      meteobar_slideIndex++;\n      console.log(\\"More\\" + meteobar_slideIndex + \\" \\");\n    }\n\n<!--    Hide and display-->\n    for (meteobar_i = 0; meteobar_i < meteobar_slides.length; meteobar_i++) {\n      meteobar_slides[meteobar_i].style.display = \\"none\\";  \n    }\n    meteobar_slides[meteobar_slideIndex].style.display = \\"block\\";\n    \n  }\n\n  function less() {\n    var meteobar_i;\n    var meteobar_slides = document.getElementsByClassName(\\"mymeteobars\\");\n\n    console.log(\\"Less prev \\" + meteobar_slideIndex + \\" \\");\n\n    if (meteobar_slideIndex == 0) {\n      meteobar_slideIndex = meteobar_slides.length-1\n      console.log(\\"Less\\" + meteobar_slideIndex + \\" \\");\n    }else{\n      meteobar_slideIndex--;\n      console.log(\\"Less\\" + meteobar_slideIndex + \\" \\");\n    }\n  \n<!--    Hide and display-->\n    for (meteobar_i = 0; meteobar_i < meteobar_slides.length; meteobar_i++) {\n      meteobar_slides[meteobar_i].style.display = \\"none\\";  \n    }\n    meteobar_slides[meteobar_slideIndex].style.display = \\"block\\";\n  }\n\n  function meteobar_showSlides() {\n    var meteobar_i;\n    var meteobar_slides = document.getElementsByClassName(\\"mymeteobars\\");\n    for (meteobar_i = 0; meteobar_i < meteobar_slides.length; meteobar_i++) {\n      meteobar_slides[meteobar_i].style.display = \\"none\\";  \n    }\n\n    if (meteobar_slideIndex >= meteobar_slides.length) {\n      console.log(\\"Reset index to 0 because is \\" + meteobar_slideIndex + \\" \\");\n      meteobar_slideIndex = 0;\n      numExecution++;\n    }\n    \n    if (numExecution == loops) {\n      isEnd=true;\n    }\n\n    if ((meteobar_slideIndex == 0) && (isEnd === true)) {\n      meteobar_slides[0].style.display = \\"block\\";\n      console.log(\\"End \\" + numExecution + \\" \\");\n    }else{\n      console.log(\\"Showing \\" + meteobar_slideIndex + \\" \\");\n      meteobar_slides[meteobar_slideIndex].style.display = \\"block\\";\n      console.log(\\"Continue \\" + numExecution + \\" \\");\n      if ((meteobar_slideIndex == 0) && (numExecution == 0)) {\n        meteobar_slideIndex++;\n        setTimeout(meteobar_showSlides, 3000);\n      }else{\n        meteobar_slideIndex++;\n        setTimeout(meteobar_showSlides, 200);\n      }\n    }\n  }\n  </script>",
         "gridPos": {
           "h": 7,
           "w": 7,
@@ -45,7 +44,7 @@ function setupDashAemetPrediction() {
 #Create dashboard json temp file
 cat >>$BASE_PATH/temp.json <<EOL
       {
-        "content": "<style>\n\n.mypredictions {\n  display: none;\n}\n\n.predictions_txt {\n  position: absolute;\n  bottom: 21%;\n  right: 5%;\n  color: #0000aa;\n  font-weight: bold;\n}\n\n.predictions_img {\n  margin:0 0 0 0;\n}\n\n.predictions_slideshow-container {\n  max-width: 1000px;\n  position: relative;\n  margin: auto;\n}\n\n.predictions_fade {\n  -webkit-animation-name: fade;\n  -webkit-animation-duration: 0.2s;\n  animation-name: fade;\n  animation-duration: 0.2s;\n}\n\n@-webkit-keyframes predictions_fade {\n  from {opacity: .7} \n  to {opacity: 1}\n}\n\n@keyframes predictions_fade {\n  from {opacity: .7} \n  to {opacity: 1}\n}\n\n@media only screen and (max-width: 500px) {\n  .predictions_text {font-size: 11px}\n}\n\n</style>\n\n<div class=\"predictions_slideshow-container\">\n\n  <div class=\"mypredictions predictions_fade\">\n    <img class=\"predictions_img\" src=\"/sharedFiles/map_pred_0.jpg\" alt=\"\">\n    <span class=\"predictions_txt\">Now</span>\n  </div>\n\n  <div class=\"mypredictions predictions_fade\">\n    <img class=\"predictions_img\" src=\"/sharedFiles/map_pred_1.jpg\" alt=\"\">\n    <span class=\"predictions_txt\">+12h</span>\n  </div>\n\n  <div class=\"mypredictions predictions_fade\">\n    <img class=\"predictions_img\" src=\"/sharedFiles/map_pred_2.jpg\" alt=\"\">\n    <span class=\"predictions_txt\">+24h</span>\n  </div>\n\n  <div class=\"mypredictions predictions_fade\">\n    <img class=\"predictions_img\" src=\"/sharedFiles/map_pred_3.jpg\" alt=\"\">\n    <span class=\"predictions_txt\">+36h</span>\n  </div>\n\n</div>\n\n<script>\nvar prediction_slideIndex = 0;\nprediction_showSlides();\n\nfunction prediction_showSlides() {\n\n  var prediction_i;\n  var prediction_slides = document.getElementsByClassName(\"mypredictions\");\n\n  for (prediction_i = 0; prediction_i < prediction_slides.length; prediction_i++) {\n    prediction_slides[prediction_i].style.display = \"none\";  \n  }\n\n  if (prediction_slideIndex >= prediction_slides.length) {\n    prediction_slideIndex = 0\n  }    \n\n  prediction_slides[prediction_slideIndex].style.display = \"block\";\n\n  if (prediction_slideIndex == 0) {\n    prediction_slideIndex++;\n    setTimeout(prediction_showSlides, 2000);\n  }else{\n    prediction_slideIndex++;\n    setTimeout(prediction_showSlides, 2000);\n  }\n}\n\n</script>",
+        "content": "<style>\n\n.mypredictions {\n  display: none;\n}\n\n.predictions_txt {\n  position: absolute;\n  bottom: 21%;\n  right: 5%;\n  color: #0000aa;\n  font-weight: bold;\n}\n\n.predictions_img {\n  margin:0 0 0 0;\n}\n\n.predictions_slideshow-container {\n  max-width: 1000px;\n  position: relative;\n  margin: auto;\n}\n\n.predictions_fade {\n  -webkit-animation-name: fade;\n  -webkit-animation-duration: 0.2s;\n  animation-name: fade;\n  animation-duration: 0.2s;\n}\n\n    -webkit-user-select: none; /* Safari 3.1+ */\n    -moz-user-select: none; /* Firefox 2+ */\n    -ms-user-select: none; /* IE 10+ */\n    user-select: none; /* Standard syntax */\n  }\n\n@-webkit-keyframes predictions_fade {\n  from {opacity: .7} \n  to {opacity: 1}\n}\n\n@keyframes predictions_fade {\n  from {opacity: .7} \n  to {opacity: 1}\n}\n\n@media only screen and (max-width: 500px) {\n  .predictions_text {font-size: 11px}\n}\n\n</style>\n\n<div class=\"predictions_slideshow-container\">\n\n  <div class=\"mypredictions predictions_fade\">\n    <img class=\"predictions_img\" src=\"/sharedFiles/map_pred_0.jpg?dummy=123\" alt=\"\">\n    <span class=\"predictions_txt\">Now</span>\n  </div>\n\n  <div class=\"mypredictions predictions_fade\">\n    <img class=\"predictions_img\" src=\"/sharedFiles/map_pred_1.jpg?dummy=123\" alt=\"\">\n    <span class=\"predictions_txt\">+12h</span>\n  </div>\n\n  <div class=\"mypredictions predictions_fade\">\n    <img class=\"predictions_img\" src=\"/sharedFiles/map_pred_2.jpg?dummy=123\" alt=\"\">\n    <span class=\"predictions_txt\">+24h</span>\n  </div>\n\n  <div class=\"mypredictions predictions_fade\">\n    <img class=\"predictions_img\" j\"/sharedFiles/map_pred_3.jpg?dummy=123\" alt=\"\">\n    <span class=\"predictions_txt\">+36h</span>\n  </div>\n\n</div>\n\n<script>\nvar prediction_slideIndex = 0;\nprediction_showSlides();\n\nfunction prediction_showSlides() {\n\n  var prediction_i;\n  var prediction_slides = document.getElementsByClassName(\"mypredictions\");\n\n  for (prediction_i = 0; prediction_i < prediction_slides.length; prediction_i++) {\n    prediction_slides[prediction_i].style.display = \"none\";  \n  }\n\n  if (prediction_slideIndex >= prediction_slides.length) {\n    prediction_slideIndex = 0\n  }    \n\n  prediction_slides[prediction_slideIndex].style.display = \"block\";\n\n  if (prediction_slideIndex == 0) {\n    prediction_slideIndex++;\n    setTimeout(prediction_showSlides, 2000);\n  }else{\n    prediction_slideIndex++;\n    setTimeout(prediction_showSlides, 2000);\n  }\n}\n\n</script>",
         "gridPos": {
           "h": 7,
           "w": 7,
@@ -537,46 +536,42 @@ EOL
 function setupDashOptions() {
 #Create dashboard json temp file
 cat >>$BASE_PATH/temp.json <<EOL
-    "style": "dark",
-    "time": {
-      "from": "now-3h",
-      "to": "now"
-    },
-    "timepicker": {
-      "refresh_intervals": [
-        "5s",
-        "10s",
-        "30s",
-        "1m",
-        "5m",
-        "15m",
-        "30m",
-        "1h",
-        "2h",
-        "1d"
-      ],
-      "time_options": [
-        "5m",
-        "15m",
-        "1h",
-        "6h",
-        "12h",
-        "24h",
-        "2d",
-        "7d",
-        "30d"
-      ]
-    }
-  }
+		"refresh": "120s",
+		"schemaVersion": 16,
+		"style": "dark",
+		"templating": {
+			"list": []
+		},
+		"time": {
+			"from": "now-3h",
+			"to": "now"
+		},
+		"timepicker": {
+			"refresh_intervals": [
+				"120s"
+			],
+			"time_options": [
+				"5m",
+				"15m",
+				"1h",
+				"6h",
+				"12h",
+				"24h",
+				"2d",
+				"7d",
+				"30d"
+			]
+		}
+	}
 }
 EOL
 }
 
 
 ###    MAIN    #####################################
-BASE_PATH="/tmp/temp"
-USER="{{ grafanaAdminUsername.stdout }}"
-PASS="{{ grafanaAdminPass.stdout }}"
+BASE_PATH="/tmp/dht22_temp"
+USER="{{ grafanaAdminUserReaded.stdout }}"
+PASS="{{ grafanaAdminPassReaded.stdout }}"
 
 
 INTERVAL='$__interval'
@@ -606,7 +601,7 @@ Y_AXIS="short"
 #      MEASURE_TH_OP="$(echo $i | cut -d';' -f12)"
 #      MEASURE_TH_VALUE="$(echo $i | cut -d';' -f13)"
 
-MEASURES=("Temperature;temp;2;short;celsius;;;#f10000;last;#a0000033;#a00000aa;gt;30;" "Humidity;hum;2;humidity;humidity;0;100;#00ffff;last;#0088ff33;#0088ffaa;gt;70")
+MEASURES=("Temperature;temp;2;short;celsius;;;#00ff24;last;#a0000033;#a00000aa;gt;30;" "Humidity;hum;2;humidity;humidity;0;100;#00ffff;last;#0088ff33;#0088ffaa;gt;70")
 
 
 
@@ -616,6 +611,13 @@ MEASURES_TIMELINE=( 24h 7d 1M 1y )
 setupDashHeaders;
 setupDashPanels;
 setupDashOptions;
+
+echo $USER
+echo $PASS
+echo "curl -s -X POST 'http://$USER:$PASS@{{ pi.network.ip }}:3000/api/dashboards/db' \
+-H 'Accept: application/json' \
+-H 'Content-Type:application/json' \
+-d @$BASE_PATH/temp.json | jq ."
 
 #Create dashboard from json file
 curl -s -X POST "http://$USER:$PASS@{{ pi.network.ip }}:3000/api/dashboards/db" \

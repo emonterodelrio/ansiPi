@@ -72,7 +72,6 @@
       "type": "text"
     }
   ],
-  "refresh": "5s",
   "schemaVersion": 16,
   "style": "dark",
   "tags": [],
@@ -84,9 +83,6 @@
     "to": "now"
   },
   "timepicker": {
-    "refresh_intervals": [
-      "5s"
-    ],
     "time_options": [
       "5m",
       "15m",
