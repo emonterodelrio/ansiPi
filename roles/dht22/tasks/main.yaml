@@ -15,6 +15,11 @@
   become: yes
   shell: cd {{ DHT22.path }}/Adafruit_Python_DHT && python setup.py install
   when: DHT22.present
+  
+- name: Ensure numpy
+  become: yes
+  shell: pip install numpy
+  when: DHT22.present
 
 - name: Create folders
   become: yes
