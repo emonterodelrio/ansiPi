@@ -23,7 +23,7 @@ function setupDashAemetMeteobars() {
 #Create dashboard json temp file
 cat >>$BASE_PATH/temp.json <<EOL
       {
-        "content": "  <style>\n\n  .forward {\n    position: absolute;\n    bottom: 10%;\n    left: 19%;\n    color: #8b00b2;\n    font-weight: bold;\n    cursor: pointer;\n  }\n\n  .back {\n    position: absolute;\n    bottom: 10%;\n    left: 7%;\n    color: #8b00b2;\n    font-weight: bold;\n    cursor: pointer;\n  }\n\n  .mymeteobars {\n    display: none;\n  }\n\n  .meteobars_txt {\n    position: absolute;\n    bottom: 10%;\n    left: 10%;\n    color: #0000aa;\n    font-weight: bold;\n  }\n\n  .meteobars_img {\n    margin:-3% 0 0 0;\n  }\n\n  .meteobars_slideshow-container {\n    max-width: 1000px;\n    position: relative;\n    margin: auto;\n  }\n\n  .meteobars_fade {\n    -webkit-animation-name: fade;\n    -webkit-animation-duration: 0.2s;\n    animation-name: fade;\n    animation-duration: 0.2s;\n    -webkit-user-select: none; /* Safari 3.1+ */\n    -moz-user-select: none; /* Firefox 2+ */\n    -ms-user-select: none; /* IE 10+ */\n    user-select: none; /* Standard syntax */\n  }\n\n  @-webkit-keyframes meteobars_fade {\n    from {opacity: .4} \n    to {opacity: 1}\n  }\n\n  @keyframes meteobars_fade {\n    from {opacity: .4} \n    to {opacity: 1}\n  }\n\n  @media only screen and (max-width: 500px) {\n    .meteobars_text {font-size: 11px}\n  }\n\n  </style>\n\n  <div class=\\"meteobars_slideshow-container\\">\n\n    <div class=\\"mymeteobars meteobars_fade\\">\n      <img class=\\"meteobars_img\\" src=\\"/sharedFiles/map_meteobars_0.gif?dummy=123\\" alt=\\"\\">\n      <span class=\\"back\\" onclick=\\"less()\\">-</span><span class=\\"meteobars_txt\\">Now</span><span class=\\"forward\\" onclick=\\"more()\\">+</span>\n    </div>\n\n    <div class=\\"mymeteobars meteobars_fade\\">\n      <img class=\\"meteobars_img\\" src=\\"/sharedFiles/map_meteobars_1.gif?dummy=123\\" alt=\\"\\">\n      <span class=\\"back\\" onclick=\\"less()\\">-</span><span class=\\"meteobars_txt\\">12h</span><span class=\\"forward\\" onclick=\\"more()\\">+</span>\n    </div>\n\n    <div class=\\"mymeteobars meteobars_fade\\">\n      <img class=\\"meteobars_img\\" src=\\"/sharedFiles/map_meteobars_2.gif?dummy=123\\" alt=\\"\\">\n      <span class=\\"back\\" onclick=\\"less()\\">-</span><span class=\\"meteobars_txt\\">24h</span><span class=\\"forward\\" onclick=\\"more()\\">+</span>\n    </div>\n\n    <div class=\\"mymeteobars meteobars_fade\\">\n      <img class=\\"meteobars_img\\" src=\\"/sharedFiles/map_meteobars_3.gif?dummy=123\\" alt=\\"\\">\n      <span class=\\"back\\" onclick=\\"less()\\">-</span><span class=\\"meteobars_txt\\">36h</span><span class=\\"forward\\" onclick=\\"more()\\">+</span>\n    </div>\n\n    <div class=\\"mymeteobars meteobars_fade\\">\n      <img class=\\"meteobars_img\\" src=\\"/sharedFiles/map_meteobars_4.gif?dummy=123\\" alt=\\"\\">\n      <span class=\\"back\\" onclick=\\"less()\\">-</span><span class=\\"meteobars_txt\\">48h</span><span class=\\"forward\\" onclick=\\"more()\\">+</span>\n    </div>\n\n    <div class=\\"mymeteobars meteobars_fade\\">\n      <img class=\\"meteobars_img\\" src=\\"/sharedFiles/map_meteobars_5.gif?dummy=123\\" alt=\\"\\">\n      <span class=\\"back\\" onclick=\\"less()\\">-</span><span class=\\"meteobars_txt\\">60h</span><span class=\\"forward\\" onclick=\\"more()\\">+</span>\n    </div>\n\n    <div class=\\"mymeteobars meteobars_fade\\">\n      <img class=\\"meteobars_img\\" src=\\"/sharedFiles/map_meteobars_6.gif?dummy=123\\" alt=\\"\\">\n      <span class=\\"back\\" onclick=\\"less()\\">-</span><span class=\\"meteobars_txt\\">72h</span><span class=\\"forward\\" onclick=\\"more()\\">+</span>\n    </div>\n\n  </div>\n\n  <script>\n  var meteobar_slideIndex = 0;\n  var numExecution = 0;\n  var loops = 10;\n  var isEnd = false;\n  meteobar_showSlides()\n\n  function more() {\n    var meteobar_i;\n    var meteobar_slides = document.getElementsByClassName(\\"mymeteobars\\");\n\n    console.log(\\"More prev \\" + meteobar_slideIndex + \\" \\");\n\n    if (meteobar_slideIndex >= meteobar_slides.length-1) {\n      meteobar_slideIndex = 0\n      console.log(\\"More\\" + meteobar_slideIndex + \\" \\");\n    }else{\n      meteobar_slideIndex++;\n      console.log(\\"More\\" + meteobar_slideIndex + \\" \\");\n    }\n\n<!--    Hide and display-->\n    for (meteobar_i = 0; meteobar_i < meteobar_slides.length; meteobar_i++) {\n      meteobar_slides[meteobar_i].style.display = \\"none\\";  \n    }\n    meteobar_slides[meteobar_slideIndex].style.display = \\"block\\";\n    \n  }\n\n  function less() {\n    var meteobar_i;\n    var meteobar_slides = document.getElementsByClassName(\\"mymeteobars\\");\n\n    console.log(\\"Less prev \\" + meteobar_slideIndex + \\" \\");\n\n    if (meteobar_slideIndex == 0) {\n      meteobar_slideIndex = meteobar_slides.length-1\n      console.log(\\"Less\\" + meteobar_slideIndex + \\" \\");\n    }else{\n      meteobar_slideIndex--;\n      console.log(\\"Less\\" + meteobar_slideIndex + \\" \\");\n    }\n  \n<!--    Hide and display-->\n    for (meteobar_i = 0; meteobar_i < meteobar_slides.length; meteobar_i++) {\n      meteobar_slides[meteobar_i].style.display = \\"none\\";  \n    }\n    meteobar_slides[meteobar_slideIndex].style.display = \\"block\\";\n  }\n\n  function meteobar_showSlides() {\n    var meteobar_i;\n    var meteobar_slides = document.getElementsByClassName(\\"mymeteobars\\");\n    for (meteobar_i = 0; meteobar_i < meteobar_slides.length; meteobar_i++) {\n      meteobar_slides[meteobar_i].style.display = \\"none\\";  \n    }\n\n    if (meteobar_slideIndex >= meteobar_slides.length) {\n      console.log(\\"Reset index to 0 because is \\" + meteobar_slideIndex + \\" \\");\n      meteobar_slideIndex = 0;\n      numExecution++;\n    }\n    \n    if (numExecution == loops) {\n      isEnd=true;\n    }\n\n    if ((meteobar_slideIndex == 0) && (isEnd === true)) {\n      meteobar_slides[0].style.display = \\"block\\";\n      console.log(\\"End \\" + numExecution + \\" \\");\n    }else{\n      console.log(\\"Showing \\" + meteobar_slideIndex + \\" \\");\n      meteobar_slides[meteobar_slideIndex].style.display = \\"block\\";\n      console.log(\\"Continue \\" + numExecution + \\" \\");\n      if ((meteobar_slideIndex == 0) && (numExecution == 0)) {\n        meteobar_slideIndex++;\n        setTimeout(meteobar_showSlides, 3000);\n      }else{\n        meteobar_slideIndex++;\n        setTimeout(meteobar_showSlides, 200);\n      }\n    }\n  }\n  </script>",
+        "content": "  <style>\n\n  .forward {\n    font-size: 300%; width: 10%; position: absolute;\n    bottom: 10%;\n    left: 19%;\n    color: #8b00b2;\n    font-weight: bold;\n    cursor: pointer;\n  }\n\n  .back {\n    font-size: 300%; width: 10%; position: absolute;\n    bottom: 10%;\n    left: 7%;\n    color: #8b00b2;\n    font-weight: bold;\n    cursor: pointer;\n  }\n\n  .mymeteobars {\n    display: none;\n  }\n\n  .meteobars_txt {\n    position: absolute;\n    bottom: 10%;\n    left: 10%;\n    color: #0000aa;\n    font-weight: bold;\n  }\n\n  .meteobars_img {\n    margin:-3% 0 0 0;\n  }\n\n  .meteobars_slideshow-container {\n    max-width: 1000px;\n    position: relative;\n    margin: auto;\n  }\n\n  .meteobars_fade {\n    -webkit-animation-name: fade;\n    -webkit-animation-duration: 0.2s;\n    animation-name: fade;\n    animation-duration: 0.2s;\n    -webkit-user-select: none; /* Safari 3.1+ */\n    -moz-user-select: none; /* Firefox 2+ */\n    -ms-user-select: none; /* IE 10+ */\n    user-select: none; /* Standard syntax */\n  }\n\n  @-webkit-keyframes meteobars_fade {\n    from {opacity: .4} \n    to {opacity: 1}\n  }\n\n  @keyframes meteobars_fade {\n    from {opacity: .4} \n    to {opacity: 1}\n  }\n\n  @media only screen and (max-width: 500px) {\n    .meteobars_text {font-size: 11px}\n  }\n\n  </style>\n\n  <div class=\\"meteobars_slideshow-container\\">\n\n    <div class=\\"mymeteobars meteobars_fade\\">\n      <img class=\\"meteobars_img\\" src=\\"/sharedFiles/map_meteobars_0.gif?dummy=123\\" alt=\\"\\">\n      <span class=\\"back\\" onclick=\\"less()\\">-</span><span class=\\"meteobars_txt\\">Now</span><span class=\\"forward\\" onclick=\\"more()\\">+</span>\n    </div>\n\n    <div class=\\"mymeteobars meteobars_fade\\">\n      <img class=\\"meteobars_img\\" src=\\"/sharedFiles/map_meteobars_1.gif?dummy=123\\" alt=\\"\\">\n      <span class=\\"back\\" onclick=\\"less()\\">-</span><span class=\\"meteobars_txt\\">12h</span><span class=\\"forward\\" onclick=\\"more()\\">+</span>\n    </div>\n\n    <div class=\\"mymeteobars meteobars_fade\\">\n      <img class=\\"meteobars_img\\" src=\\"/sharedFiles/map_meteobars_2.gif?dummy=123\\" alt=\\"\\">\n      <span class=\\"back\\" onclick=\\"less()\\">-</span><span class=\\"meteobars_txt\\">24h</span><span class=\\"forward\\" onclick=\\"more()\\">+</span>\n    </div>\n\n    <div class=\\"mymeteobars meteobars_fade\\">\n      <img class=\\"meteobars_img\\" src=\\"/sharedFiles/map_meteobars_3.gif?dummy=123\\" alt=\\"\\">\n      <span class=\\"back\\" onclick=\\"less()\\">-</span><span class=\\"meteobars_txt\\">36h</span><span class=\\"forward\\" onclick=\\"more()\\">+</span>\n    </div>\n\n    <div class=\\"mymeteobars meteobars_fade\\">\n      <img class=\\"meteobars_img\\" src=\\"/sharedFiles/map_meteobars_4.gif?dummy=123\\" alt=\\"\\">\n      <span class=\\"back\\" onclick=\\"less()\\">-</span><span class=\\"meteobars_txt\\">48h</span><span class=\\"forward\\" onclick=\\"more()\\">+</span>\n    </div>\n\n    <div class=\\"mymeteobars meteobars_fade\\">\n      <img class=\\"meteobars_img\\" src=\\"/sharedFiles/map_meteobars_5.gif?dummy=123\\" alt=\\"\\">\n      <span class=\\"back\\" onclick=\\"less()\\">-</span><span class=\\"meteobars_txt\\">60h</span><span class=\\"forward\\" onclick=\\"more()\\">+</span>\n    </div>\n\n    <div class=\\"mymeteobars meteobars_fade\\">\n      <img class=\\"meteobars_img\\" src=\\"/sharedFiles/map_meteobars_6.gif?dummy=123\\" alt=\\"\\">\n      <span class=\\"back\\" onclick=\\"less()\\">-</span><span class=\\"meteobars_txt\\">72h</span><span class=\\"forward\\" onclick=\\"more()\\">+</span>\n    </div>\n\n  </div>\n\n  <script>\n  var meteobar_slideIndex = 0;\n  var numExecution = 0;\n  var loops = 10;\n  var isEnd = false;\n  meteobar_showSlides()\n\n  function more() {\n    var meteobar_i;\n    var meteobar_slides = document.getElementsByClassName(\\"mymeteobars\\");\n\n    console.log(\\"More prev \\" + meteobar_slideIndex + \\" \\");\n\n    if (meteobar_slideIndex >= meteobar_slides.length-1) {\n      meteobar_slideIndex = 0\n      console.log(\\"More\\" + meteobar_slideIndex + \\" \\");\n    }else{\n      meteobar_slideIndex++;\n      console.log(\\"More\\" + meteobar_slideIndex + \\" \\");\n    }\n\n<!--    Hide and display-->\n    for (meteobar_i = 0; meteobar_i < meteobar_slides.length; meteobar_i++) {\n      meteobar_slides[meteobar_i].style.display = \\"none\\";  \n    }\n    meteobar_slides[meteobar_slideIndex].style.display = \\"block\\";\n    \n  }\n\n  function less() {\n    var meteobar_i;\n    var meteobar_slides = document.getElementsByClassName(\\"mymeteobars\\");\n\n    console.log(\\"Less prev \\" + meteobar_slideIndex + \\" \\");\n\n    if (meteobar_slideIndex == 0) {\n      meteobar_slideIndex = meteobar_slides.length-1\n      console.log(\\"Less\\" + meteobar_slideIndex + \\" \\");\n    }else{\n      meteobar_slideIndex--;\n      console.log(\\"Less\\" + meteobar_slideIndex + \\" \\");\n    }\n  \n<!--    Hide and display-->\n    for (meteobar_i = 0; meteobar_i < meteobar_slides.length; meteobar_i++) {\n      meteobar_slides[meteobar_i].style.display = \\"none\\";  \n    }\n    meteobar_slides[meteobar_slideIndex].style.display = \\"block\\";\n  }\n\n  function meteobar_showSlides() {\n    var meteobar_i;\n    var meteobar_slides = document.getElementsByClassName(\\"mymeteobars\\");\n    for (meteobar_i = 0; meteobar_i < meteobar_slides.length; meteobar_i++) {\n      meteobar_slides[meteobar_i].style.display = \\"none\\";  \n    }\n\n    if (meteobar_slideIndex >= meteobar_slides.length) {\n      console.log(\\"Reset index to 0 because is \\" + meteobar_slideIndex + \\" \\");\n      meteobar_slideIndex = 0;\n      numExecution++;\n    }\n    \n    if (numExecution == loops) {\n      isEnd=true;\n    }\n\n    if ((meteobar_slideIndex == 0) && (isEnd === true)) {\n      meteobar_slides[0].style.display = \\"block\\";\n      console.log(\\"End \\" + numExecution + \\" \\");\n    }else{\n      console.log(\\"Showing \\" + meteobar_slideIndex + \\" \\");\n      meteobar_slides[meteobar_slideIndex].style.display = \\"block\\";\n      console.log(\\"Continue \\" + numExecution + \\" \\");\n      if ((meteobar_slideIndex == 0) && (numExecution == 0)) {\n        meteobar_slideIndex++;\n        setTimeout(meteobar_showSlides, 3000);\n      }else{\n        meteobar_slideIndex++;\n        setTimeout(meteobar_showSlides, 200);\n      }\n    }\n  }\n  </script>",
         "gridPos": {
           "h": 7,
           "w": 7,
@@ -125,7 +125,7 @@ cat >>$BASE_PATH/temp.json <<EOL
         "dashLength": 10,
         "dashes": false,
         "datasource": "{{ influx.db.name }}",
-        "fill": 1,
+        "fill": 0,
         "gridPos": {
           "h": 7,
           "w": 12,
@@ -148,7 +148,7 @@ cat >>$BASE_PATH/temp.json <<EOL
         "nullPointMode": "null",
         "percentage": false,
         "pointradius": 1,
-        "points": true,
+        "points": false,
         "renderer": "flot",
         "seriesOverrides": [
           {
@@ -210,6 +210,9 @@ cat >>$BASE_PATH/temp.json <<EOL
             ]
           }
         ],
+EOL
+  if [[ $(( $PANEL_ID % 2 )) == 0 ]]; then
+cat >>$BASE_PATH/temp.json <<EOL
         "thresholds": [
           {
             "colorMode": "custom",
@@ -267,6 +270,32 @@ cat >>$BASE_PATH/temp.json <<EOL
             "yaxis": "left"
           }
         ],
+EOL
+  else
+cat >>$BASE_PATH/temp.json <<EOL
+        "thresholds": [
+          {
+            "colorMode": "custom",
+            "fill": true,
+            "fillColor": "rgba(193, 92, 23, 0.1)",
+            "line": false,
+            "op": "lt",
+            "value": 40,
+            "yaxis": "left"
+          },
+          {
+            "colorMode": "custom",
+            "fill": true,
+            "fillColor": "rgba(112, 219, 237, 0.1)",
+            "line": false,
+            "op": "gt",
+            "value": 85,
+            "yaxis": "left"
+          }
+        ],
+EOL
+  fi
+cat >>$BASE_PATH/temp.json <<EOL
         "timeFrom": null,
         "timeShift": null,
         "title": "$PANEL_TITLE",
@@ -365,7 +394,7 @@ cat >>$BASE_PATH/temp.json <<EOL
         "dashLength": 10,
         "dashes": false,
         "datasource": "{{ influx.db.name }}",
-        "fill": 1,
+        "fill": 0,
         "gridPos": {
           "h": 7,
           "w": 12,
@@ -388,7 +417,7 @@ cat >>$BASE_PATH/temp.json <<EOL
         "nullPointMode": "null",
         "percentage": false,
         "pointradius": 1,
-        "points": true,
+        "points": false,
         "renderer": "flot",
         "seriesOverrides": [
           {
@@ -450,18 +479,92 @@ cat >>$BASE_PATH/temp.json <<EOL
             ]
           }
         ],
+EOL
+  if [[ $(( $PANEL_ID % 2 )) == 0 ]]; then
+cat >>$BASE_PATH/temp.json <<EOL
         "thresholds": [
           {
             "colorMode": "custom",
             "fill": true,
-            "fillColor": "$MEASURE_TH_OP_FILL_COLOR",
-            "line": true,
-            "lineColor": "$MEASURE_TH_OP_LINE_COLOR",
-            "op": "$MEASURE_TH_OP",
-            "value": $MEASURE_TH_VALUE,
+            "fillColor": "#65c5db33",
+            "line": false,
+            "lineColor": "#ffffffff",
+            "op": "lt",
+            "value": -7,
+            "yaxis": "left"
+          },
+          {
+            "colorMode": "custom",
+            "fill": true,
+            "fillColor": "#70dbed11",
+            "line": false,
+            "op": "lt",
+            "value": 12,
+            "yaxis": "left"
+          },
+          {
+            "colorMode": "custom",
+            "fill": true,
+            "fillColor": "#ef843c11",
+            "line": false,
+            "op": "gt",
+            "value": 12,
+            "yaxis": "left"
+          },
+          {
+            "colorMode": "custom",
+            "fill": true,
+            "fillColor": "#bf1b0011",
+            "line": false,
+            "op": "gt",
+            "value": 21,
+            "yaxis": "left"
+          },
+          {
+            "colorMode": "custom",
+            "fill": true,
+            "fillColor": "#bf1b0011",
+            "line": false,
+            "op": "gt",
+            "value": 28,
+            "yaxis": "left"
+          },
+          {
+            "colorMode": "custom",
+            "fill": true,
+            "fillColor": "#bf1b0033",
+            "line": false,
+            "op": "gt",
+            "value": 34,
             "yaxis": "left"
           }
         ],
+EOL
+  else
+cat >>$BASE_PATH/temp.json <<EOL
+        "thresholds": [
+          {
+            "colorMode": "custom",
+            "fill": true,
+            "fillColor": "rgba(193, 92, 23, 0.1)",
+            "line": false,
+            "op": "lt",
+            "value": 40,
+            "yaxis": "left"
+          },
+          {
+            "colorMode": "custom",
+            "fill": true,
+            "fillColor": "rgba(112, 219, 237, 0.1)",
+            "line": false,
+            "op": "gt",
+            "value": 85,
+            "yaxis": "left"
+          }
+        ],
+EOL
+  fi
+cat >>$BASE_PATH/temp.json <<EOL
         "timeFrom": "$MEASURE_NAME_TIMELINE",
         "timeShift": null,
         "title": "$PANEL_TITLE",
@@ -606,7 +709,7 @@ MEASURES=("Temperature;temp;2;short;celsius;;;#00ff24;last;#a0000033;#a00000aa;g
 
 
 #One panel of each measure at these times
-MEASURES_TIMELINE=( 24h 7d 1M 1y )
+MEASURES_TIMELINE=( 24h 2d 2w 3M )
 
 setupDashHeaders;
 setupDashPanels;
