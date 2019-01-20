@@ -1,25 +1,192 @@
-<html>
-  <head>
-  </head>
-  <body>
-    <script type = "text/javascript">
-      var request = new XMLHttpRequest();
-      request.open('GET', 'https://opendata.aemet.es/opendata/api/mapasygraficos/analisis?api_key=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbW9udGVyb2RlbHJpb0BnbWFpbC5jb20iLCJqdGkiOiI2ZmQ0Y2M4Ni1jZTg5LTQ4ZWQtOTRiYy05NzU4MWIwOGRhMTciLCJpc3MiOiJBRU1FVCIsImlhdCI6MTU0NTY0NTczOCwidXNlcklkIjoiNmZkNGNjODYtY2U4OS00OGVkLTk0YmMtOTc1ODFiMDhkYTE3Iiwicm9sZSI6IiJ9.-fL8ofAeMg3EXuslB5i797bI9M0m-z6cchsSq3GbXss', true);
-      request.send();
+<style>
 
-      console.log("Sent");
+  .forward {
+    font-size: 30%; width: 10%; position: absolute;
+    bottom: 10%;
+    left: 19%;
+    color: #8b00b2;
+    font-weight: bold;
+    cursor: pointer;
+  }
 
-      request.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          var json = JSON.parse(this.responseText);
-<!--          document.getElementById("json").innerHTML = json.datos;-->
-          document.getElementById("pressureImg").src = json.datos;
-          console.log(json.datos);
-        }
-      };
-    </script>
+  .back {
+    font-size: 30%; width: 10%; position: absolute;
+    bottom: 10%;
+    left: 7%;
+    color: #8b00b2;
+    font-weight: bold;
+    cursor: pointer;
+  }
 
-<!--    <p id=json>aA</p>-->
-    <img id="pressureImg" style="transform: rotate(90deg);width:74%;margin:-19% 0 0 13%" src="" alt="meteobars">
-  </body>
-<html>
+  .mymeteobars {
+    display: none;
+  }
+
+  .meteobars_txt {
+    position: absolute;
+    bottom: 10%;
+    left: 10%;
+    color: #0000aa;
+    font-weight: bold;
+  }
+
+  .meteobars_img {
+    margin:-3% 0 0 0;
+  }
+
+  .meteobars_slideshow-container {
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
+  }
+
+  .meteobars_fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 0.2s;
+    animation-name: fade;
+    animation-duration: 0.2s;
+    -webkit-user-select: none; /* Safari 3.1+ */
+    -moz-user-select: none; /* Firefox 2+ */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Standard syntax */
+  }
+
+  @-webkit-keyframes meteobars_fade {
+    from {opacity: .4} 
+    to {opacity: 1}
+  }
+
+  @keyframes meteobars_fade {
+    from {opacity: .4} 
+    to {opacity: 1}
+  }
+
+  @media only screen and (max-width: 500px) {
+    .meteobars_text {font-size: 11px}
+  }
+
+  </style>
+
+  <div class="meteobars_slideshow-container">
+
+    <div class="mymeteobars meteobars_fade">
+      <img class="meteobars_img" src="/sharedFiles/map_meteobars_0.gif?dummy=123" alt="">
+      <span class="back" onclick="less()">-</span><span class="meteobars_txt">Now</span><span class="forward" onclick="more()">+</span>
+    </div>
+
+    <div class="mymeteobars meteobars_fade">
+      <img class="meteobars_img" src="/sharedFiles/map_meteobars_1.gif?dummy=123" alt="">
+      <span class="back" onclick="less()">-</span><span class="meteobars_txt">12h</span><span class="forward" onclick="more()">+</span>
+    </div>
+
+    <div class="mymeteobars meteobars_fade">
+      <img class="meteobars_img" src="/sharedFiles/map_meteobars_2.gif?dummy=123" alt="">
+      <span class="back" onclick="less()">-</span><span class="meteobars_txt">24h</span><span class="forward" onclick="more()">+</span>
+    </div>
+
+    <div class="mymeteobars meteobars_fade">
+      <img class="meteobars_img" src="/sharedFiles/map_meteobars_3.gif?dummy=123" alt="">
+      <span class="back" onclick="less()">-</span><span class="meteobars_txt">36h</span><span class="forward" onclick="more()">+</span>
+    </div>
+
+    <div class="mymeteobars meteobars_fade">
+      <img class="meteobars_img" src="/sharedFiles/map_meteobars_4.gif?dummy=123" alt="">
+      <span class="back" onclick="less()">-</span><span class="meteobars_txt">48h</span><span class="forward" onclick="more()">+</span>
+    </div>
+
+    <div class="mymeteobars meteobars_fade">
+      <img class="meteobars_img" src="/sharedFiles/map_meteobars_5.gif?dummy=123" alt="">
+      <span class="back" onclick="less()">-</span><span class="meteobars_txt">60h</span><span class="forward" onclick="more()">+</span>
+    </div>
+
+    <div class="mymeteobars meteobars_fade">
+      <img class="meteobars_img" src="/sharedFiles/map_meteobars_6.gif?dummy=123" alt="">
+      <span class="back" onclick="less()">-</span><span class="meteobars_txt">72h</span><span class="forward" onclick="more()">+</span>
+    </div>
+
+  </div>
+
+  <script>
+  var meteobar_slideIndex = 0;
+  var numExecution = 0;
+  var loops = 10;
+  var isEnd = false;
+  meteobar_showSlides()
+
+  function more() {
+    var meteobar_i;
+    var meteobar_slides = document.getElementsByClassName("mymeteobars");
+
+    console.log("More prev " + meteobar_slideIndex + " ");
+
+    if (meteobar_slideIndex >= meteobar_slides.length-1) {
+      meteobar_slideIndex = 0
+      console.log("More" + meteobar_slideIndex + " ");
+    }else{
+      meteobar_slideIndex++;
+      console.log("More" + meteobar_slideIndex + " ");
+    }
+
+<!--    Hide and display-->
+    for (meteobar_i = 0; meteobar_i < meteobar_slides.length; meteobar_i++) {
+      meteobar_slides[meteobar_i].style.display = "none";  
+    }
+    meteobar_slides[meteobar_slideIndex].style.display = "block";
+    
+  }
+
+  function less() {
+    var meteobar_i;
+    var meteobar_slides = document.getElementsByClassName("mymeteobars");
+
+    console.log("Less prev " + meteobar_slideIndex + " ");
+
+    if (meteobar_slideIndex == 0) {
+      meteobar_slideIndex = meteobar_slides.length-1
+      console.log("Less" + meteobar_slideIndex + " ");
+    }else{
+      meteobar_slideIndex--;
+      console.log("Less" + meteobar_slideIndex + " ");
+    }
+  
+<!--    Hide and display-->
+    for (meteobar_i = 0; meteobar_i < meteobar_slides.length; meteobar_i++) {
+      meteobar_slides[meteobar_i].style.display = "none";  
+    }
+    meteobar_slides[meteobar_slideIndex].style.display = "block";
+  }
+
+  function meteobar_showSlides() {
+    var meteobar_i;
+    var meteobar_slides = document.getElementsByClassName("mymeteobars");
+    for (meteobar_i = 0; meteobar_i < meteobar_slides.length; meteobar_i++) {
+      meteobar_slides[meteobar_i].style.display = "none";  
+    }
+
+    if (meteobar_slideIndex >= meteobar_slides.length) {
+      console.log("Reset index to 0 because is " + meteobar_slideIndex + " ");
+      meteobar_slideIndex = 0;
+      numExecution++;
+    }
+    
+    if (numExecution == loops) {
+      isEnd=true;
+    }
+
+    if ((meteobar_slideIndex == 0) && (isEnd === true)) {
+      meteobar_slides[0].style.display = "block";
+      console.log("End " + numExecution + " ");
+    }else{
+      console.log("Showing " + meteobar_slideIndex + " ");
+      meteobar_slides[meteobar_slideIndex].style.display = "block";
+      console.log("Continue " + numExecution + " ");
+      if ((meteobar_slideIndex == 0) && (numExecution == 0)) {
+        meteobar_slideIndex++;
+        setTimeout(meteobar_showSlides, 3000);
+      }else{
+        meteobar_slideIndex++;
+        setTimeout(meteobar_showSlides, 200);
+      }
+    }
+  }
+  </script>
