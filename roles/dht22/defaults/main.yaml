@@ -14,5 +14,5 @@ DHT22:
   path: /home/pi/dht22
   delay: 10
   samples_size: 10
-  #1 \ºC
+  #3 \ºC
   measure_allowed_desviation: 1
