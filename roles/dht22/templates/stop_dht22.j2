@@ -1,4 +1,4 @@
 #!/bin/bash
-for i in $(ps aux | grep "{{ DHT22.path }}" | grep -v grep | awk '{print $2}'); do
+for i in $(ps aux | grep "dht22" | grep -v grep | awk '{print $2}'); do
   sudo kill -9 $i
 done

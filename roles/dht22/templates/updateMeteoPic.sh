@@ -32,13 +32,13 @@ for i in $(ls temp_map_meteobars* | grep temp); do
   convert $i -rotate 90 /var/www/html/sharedFiles/$(echo $i | cut -d"_" -f2-)
 done
 
-echo "Cut bottom of predictions original images"
+#echo "Cut bottom of predictions original images"
 for i in $(ls temp_map_pred*); do
   echo $i | cut -d"_" -f2- | cut -d"." -f1
-  convert -crop 500x333 $i mv $(echo $i | cut -d"_" -f2- | cut -d"." -f1).jpg
-  echo $i | cut -d"_" -f2- | cut -d"." -f1
-  mv $(echo $i | cut -d"_" -f2- | cut -d"." -f1)-0.jpg /var/www/html/sharedFiles/$(echo $i | cut -d"_" -f2- | cut -d"." -f1).jpg
-  rm $(echo $i | cut -d"_" -f2- | cut -d"." -f1)-*.jpg
+#  convert -crop 500x333 $i mv $(echo $i | cut -d"_" -f2- | cut -d"." -f1).jpg
+#  echo $i | cut -d"_" -f2- | cut -d"." -f1
+  mv $i /var/www/html/sharedFiles/$(echo $i | cut -d"_" -f2- | cut -d"." -f1).jpg
+#  rm $(echo $i | cut -d"_" -f2- | cut -d"." -f1)-*.jpg
 done
 
 #Go out
