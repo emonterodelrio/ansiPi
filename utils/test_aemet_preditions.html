@@ -1,0 +1,267 @@
+<style>
+  .forward_pred {
+    position: absolute;
+    opacity: 0;
+    width: 50%;
+    height: 100%;
+    margin: -67% 0 0 50%;
+    padding: 30% 0 0 0;
+    background-color: #0000ff;
+    font-size: 25pt;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+    cursor: pointer;
+  }
+
+  .back_pred {
+    position: absolute;
+    opacity: 0;
+    width: 50%;
+    height: 100%;
+    margin: -67% 0 0 0;
+    padding: 30% 0 0 0;
+    background-color: #ff0000;
+    font-size: 25pt;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+    cursor: pointer;
+  }
+
+  .mypredictions {
+    display: none;
+  }
+
+  .predictions_txt {
+    position: absolute;
+    bottom: 10%;
+    left: 10%;
+    color: #0000aa;
+    font-weight: bold;
+  }
+
+  .predictions_img {
+    margin:0 0 0 0;
+  }
+
+  .predictions_slideshow-container {
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
+  }
+
+  .predictions_fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 0.2s;
+    animation-name: fade;
+    animation-duration: 0.2s;
+    -webkit-user-select: none; /* Safari 3.1+ */
+    -moz-user-select: none; /* Firefox 2+ */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Standard syntax */
+  }
+
+  @-webkit-keyframes predictions_fade {
+    from {opacity: .4} 
+    to {opacity: 1}
+  }
+
+  @keyframes predictions_fade {
+    from {opacity: .4} 
+    to {opacity: 1}
+  }
+
+  @media only screen and (max-width: 500px) {
+    .predictions_text {font-size: 11px}
+  }
+
+  </style>
+  <div class="predictions_slideshow-container">
+
+    <div class="mypredictions predictions_fade">
+      <img class="predictions_img" src="/sharedFiles/map_pred_0.jpg?dummy=123" alt="">
+      <span class="back_pred" onclick="less_pred()"<p>Previous image</span><span class="predictions_txt"></span><span class="forward_pred" onclick="more_pred()">Next image</span>
+    </div>
+
+    <div class="mypredictions predictions_fade">
+      <img class="predictions_img" src="/sharedFiles/map_pred_1.jpg?dummy=123" alt="">
+      <span class="back_pred" onclick="less_pred()"<p>Previous image</span><span class="predictions_txt"></span><span class="forward_pred" onclick="more_pred()">Next image</span>
+    </div>
+
+    <div class="mypredictions predictions_fade">
+      <img class="predictions_img" src="/sharedFiles/map_pred_2.jpg?dummy=123" alt="">
+      <span class="back_pred" onclick="less_pred()"<p>Previous image</span><span class="predictions_txt"></span><span class="forward_pred" onclick="more_pred()">Next image</span>
+    </div>
+
+    <div class="mypredictions predictions_fade">
+      <img class="predictions_img" src="/sharedFiles/map_pred_3.jpg?dummy=123" alt="">
+            <span class="back_pred" onclick="less_pred()"<p>Previous image</span><span class="predictions_txt"></span><span class="forward_pred" onclick="more_pred()">Next image</span>
+    </div>
+
+  </div>
+  <script>
+  var prediction_slideIndex = 0;
+  var numExecution_pred = 0;
+  var loops_pred = 3;
+  var isEnd_pred = false;
+  var clicks_pred = 0;
+  prediction_showSlides()
+
+  function changeOpacity_pred() {
+    var back_pred_span = document.getElementsByClassName("back_pred");
+    var forward_pred_span = document.getElementsByClassName("forward_pred");
+
+    if (clicks_pred == 0) {
+      console.log("Opacity to 0.4");
+      for (back_pred_span_i = 0; back_pred_span_i < back_pred_span.length; back_pred_span_i++) {
+        back_pred_span[back_pred_span_i].style.opacity = "0.2";
+      }
+      for (forward_pred_span_i = 0; forward_pred_span_i < forward_pred_span.length; forward_pred_span_i++) {
+        forward_pred_span[forward_pred_span_i].style.opacity = "0.2";
+      }
+    }
+    if (clicks_pred == 1) {
+      console.log("back_pred opacity to 0.2");
+      for (back_pred_span_i = 0; back_pred_span_i < back_pred_span.length; back_pred_span_i++) {
+        back_pred_span[back_pred_span_i].style.opacity = "0.1";
+      }
+      for (forward_pred_span_i = 0; forward_pred_span_i < forward_pred_span.length; forward_pred_span_i++) {
+        forward_pred_span[forward_pred_span_i].style.opacity = "0.1";
+      }
+    }
+    if (clicks_pred > 1) {
+      console.log("back_pred opacity to 0");
+      for (back_pred_span_i = 0; back_pred_span_i < back_pred_span.length; back_pred_span_i++) {
+        back_pred_span[back_pred_span_i].style.opacity = "0";
+      }
+      for (forward_pred_span_i = 0; forward_pred_span_i < forward_pred_span.length; forward_pred_span_i++) {
+        forward_pred_span[forward_pred_span_i].style.opacity = "0";
+      }
+    }
+    clicks_pred++;
+  }
+  
+  function more_pred() {
+    var prediction_i;
+    var prediction_slides = document.getElementsByClassName("mypredictions");
+    
+    changeOpacity_pred();
+    
+    console.log("more_pred prev " + prediction_slideIndex + " ");
+
+    if (prediction_slideIndex >= prediction_slides.length-1) {
+      prediction_slideIndex = 0
+      console.log("more_pred" + prediction_slideIndex + " ");
+    }else{
+      prediction_slideIndex++;
+      console.log("more_pred" + prediction_slideIndex + " ");
+    }
+
+    for (prediction_i = 0; prediction_i < prediction_slides.length; prediction_i++) {
+      prediction_slides[prediction_i].style.display = "none";
+    }
+    prediction_slides[prediction_slideIndex].style.display = "block";
+    
+  }
+
+  function less_pred() {
+    var prediction_i;
+    var prediction_slides = document.getElementsByClassName("mypredictions");
+
+    changeOpacity_pred();
+    
+    console.log("less_pred prev " + prediction_slideIndex + " ");
+
+    if (prediction_slideIndex == 0) {
+      prediction_slideIndex = prediction_slides.length-1
+      console.log("less_pred" + prediction_slideIndex + " ");
+    }else{
+      prediction_slideIndex--;
+      console.log("less_pred" + prediction_slideIndex + " ");
+    }
+  
+    for (prediction_i = 0; prediction_i < prediction_slides.length; prediction_i++) {
+      prediction_slides[prediction_i].style.display = "none";  
+    }
+    prediction_slides[prediction_slideIndex].style.display = "block";
+  }
+
+  function prediction_showSlides() {
+    var prediction_i;
+    var prediction_slides = document.getElementsByClassName("mypredictions");
+    var back_pred_span = document.getElementsByClassName("back_pred");
+    var forward_pred_span = document.getElementsByClassName("forward_pred");
+    
+    for (prediction_i = 0; prediction_i < prediction_slides.length; prediction_i++) {
+      prediction_slides[prediction_i].style.display = "none";  
+    }
+
+    if (prediction_slideIndex >= prediction_slides.length) {
+      console.log("Reset index to 0 because is " + prediction_slideIndex + " ");
+      prediction_slideIndex = 0;
+      numExecution_pred++;
+      for (back_pred_span_i = 0; back_pred_span_i < back_pred_span.length; back_pred_span_i++) {
+        back_pred_span[back_pred_span_i].style.opacity = "0.4";
+      }
+      for (forward_pred_span_i = 0; forward_pred_span_i < forward_pred_span.length; forward_pred_span_i++) {
+        forward_pred_span[forward_pred_span_i].style.opacity = "0.4";
+      }
+    }
+    
+    if (numExecution_pred == loops_pred) {
+      isEnd_pred=true;
+      var back_pred_span = document.getElementsByClassName("back_pred");
+      var forward_pred_span = document.getElementsByClassName("forward_pred");
+
+      for (back_pred_span_i = 0; back_pred_span_i < back_pred_span.length; back_pred_span_i++) {
+        back_pred_span[back_pred_span_i].style.backgroundColor = "#ff0000";
+        back_pred_span[back_pred_span_i].innerHTML = "Previous";
+        back_pred_span[back_pred_span_i].style.opacity = "0.4";
+      }
+      for (forward_pred_span_i = 0; forward_pred_span_i < forward_pred_span.length; forward_pred_span_i++) {
+        forward_pred_span[forward_pred_span_i].style.backgroundColor = "#0000ff";
+        forward_pred_span[forward_pred_span_i].innerHTML = "Next";
+        forward_pred_span[forward_pred_span_i].style.opacity = "0.4";
+      }
+    }
+
+    if ((prediction_slideIndex == 0) && (isEnd_pred === true)) {
+      prediction_slides[0].style.display = "block";
+      console.log("End " + numExecution_pred + " ");
+    }else{
+      console.log("Showing " + prediction_slideIndex + " ");
+      prediction_slides[prediction_slideIndex].style.display = "block";
+      console.log("Continue " + numExecution_pred + " ");
+      if (prediction_slideIndex == 0) {
+        console.log("@@@@@@@@@@@@@@@@@@@@ Es la primera!!!")
+        for (back_pred_span_i = 0; back_pred_span_i < back_pred_span.length; back_pred_span_i++) {
+          back_pred_span[back_pred_span_i].style.backgroundColor = "#0044ff";
+          back_pred_span[back_pred_span_i].innerHTML = "";
+          back_pred_span[back_pred_span_i].style.opacity = "0.4";
+        }
+        for (forward_pred_span_i = 0; forward_pred_span_i < forward_pred_span.length; forward_pred_span_i++) {
+          forward_pred_span[forward_pred_span_i].style.backgroundColor = "#0044ff";
+          forward_pred_span[forward_pred_span_i].innerHTML = "";
+          forward_pred_span[forward_pred_span_i].style.opacity = "0.4";
+        }
+      }else{
+        for (back_pred_span_i = 0; back_pred_span_i < back_pred_span.length; back_pred_span_i++) {
+          back_pred_span[back_pred_span_i].style.opacity = "0";
+          back_pred_span[back_pred_span_i].style.opacity = "0";
+        }
+        for (forward_pred_span_i = 0; forward_pred_span_i < forward_pred_span.length; forward_pred_span_i++) {
+          forward_pred_span[forward_pred_span_i].style.opacity = "0";
+          forward_pred_span[forward_pred_span_i].style.opacity = "0";
+        }
+      }        
+      if ((prediction_slideIndex == 0) && (numExecution_pred == 0)) {
+        prediction_slideIndex++;
+        setTimeout(prediction_showSlides, 500);
+      }else{
+        prediction_slideIndex++;
+        setTimeout(prediction_showSlides, 500);
+      }
+    }
+  }
+  </script>

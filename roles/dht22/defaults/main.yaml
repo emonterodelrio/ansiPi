@@ -12,7 +12,7 @@ DHT22:
   present: true
   pin: 23
   path: /home/pi/dht22
-  delay: 10
+  delay: 20
   samples_size: 10
-  #1 \ºC
+  #3 \ºC
   measure_allowed_desviation: 1

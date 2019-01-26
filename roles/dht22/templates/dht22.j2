@@ -57,25 +57,40 @@ def readingValues():
       try:
         rawHumidity, rawTemperature = Adafruit_DHT.read_retry( Adafruit_DHT.DHT22 , {{ DHT22.pin }} )
 
-      except IOError:
+      except IOError as e:
         print 'ERROR - IO error' 
-
-      if math.isnan(rawTemperature) == False and math.isnan(rawHumidity) == False:
-        temperature = round(rawTemperature, 2)
-        humidity = round(rawHumidity, 2)
-        print "Temp: %f   Hum: %f" % (temperature,humidity)
-        values.append({"temperature" : temperature, "humidity" : humidity})
-        measures += 1
-      else:
-        print 'ERROR - NaN'
-
+        if hasattr(e, 'message'):
+          print(e.message)
+        else:
+          print(e)
+                
+      try:
+        if math.isnan(rawTemperature) == False and math.isnan(rawHumidity) == False:
+          temperature = round(rawTemperature, 2)
+          humidity = round(rawHumidity, 2)
+          print "%d Temp: %f   Hum: %f" % (measures,temperature,humidity)
+          values.append({"temperature" : temperature, "humidity" : humidity})
+          measures += 1
+        else:
+          print 'ERROR - NaN'
+      except TypeError as e:
+        print 'ERROR - Type Error' 
+        if hasattr(e, 'message'):
+          print(e.message)
+        else:
+          print(e)
+        
       time.sleep({{ DHT22.delay }})
-    lock.acquire()
-    filtered_temperature.append(numpy.mean(eliminateNoise([x["temperature"] for x in values])))
-    filtered_humidity.append(numpy.mean(eliminateNoise([x["humidity"] for x in values])))
-    lock.release()
-#    print 'filtered_temperature '+str(filtered_temperature)[1:-1]
-#    print 'filtered_humidity '+str(filtered_humidity)[1:-1]
+      
+    if (rawHumidity > 100):
+      print 'ERROR - Hum > 100 -> rawHumidity'
+    else:  
+      lock.acquire()
+      filtered_temperature.append(numpy.mean(eliminateNoise([x["temperature"] for x in values])))
+      filtered_humidity.append(numpy.mean(eliminateNoise([x["humidity"] for x in values])))
+      lock.release()
+  #    print 'filtered_temperature '+str(filtered_temperature)[1:-1]
+  #    print 'filtered_humidity '+str(filtered_humidity)[1:-1]
     values = []
     
 def Main():
@@ -91,13 +106,13 @@ def Main():
       humidity = filtered_humidity.pop()
       print "Send " + time.strftime("%Y-%m-%d %H:%M:%S")
       print 'Send Temp: %.2f - Hum: %.2f' % (temperature,humidity)
-      command = "echo 'dht22,name=temp,host=%s value=%.2f' | curl -s -i -XPOST 'http://{{ pi.network.ip }}:{{ dht22.influx.port }}/write?db={{ influx.db.name }}' --data-binary @-" % (hostname,temperature)
+      command = "echo 'dht22,name=temp,host=%s value=%.2f' | curl -s -XPOST 'http://{{ pi.network.ip }}:{{ dht22.influx.port }}/write?db={{ influx.db.name }}' --data-binary @-" % (hostname,temperature)
       print command
       res = subprocess.check_output(['bash','-c', command])
       for line in res.splitlines():
         print line
 
-      command = "echo 'dht22,name=hum,host=%s value=%.2f' | curl -s -i -XPOST 'http://{{ pi.network.ip }}:{{ dht22.influx.port }}/write?db={{ influx.db.name }}' --data-binary @-" % (hostname,humidity) 
+      command = "echo 'dht22,name=hum,host=%s value=%.2f' | curl -s -XPOST 'http://{{ pi.network.ip }}:{{ dht22.influx.port }}/write?db={{ influx.db.name }}' --data-binary @-" % (hostname,humidity) 
       print command
       res = subprocess.check_output(['bash','-c', command])
       for line in res.splitlines():
