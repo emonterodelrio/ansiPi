@@ -1,0 +1,132 @@
+#!/usr/bin/python
+import Adafruit_DHT
+import subprocess
+import time
+import socket
+import math
+import numpy
+import threading
+from datetime import datetime
+
+
+hostname = socket.gethostname()
+delay = ({{ DHT22.delay }})
+
+filtered_temperature = [] # here we keep the temperature values after removing outliers
+filtered_humidity = [] # here we keep the filtered humidity values after removing the outliers
+
+lock = threading.Lock() # we are using locks so we don't have conflicts while accessing the shared variables
+event = threading.Event() # we are using an event so we can close the thread as soon as KeyboardInterrupt is raised
+mean = 0
+standard_deviation = 0
+
+# function which eliminates the noise
+# by using a statistical model
+# we determine the standard normal deviation and we exclude anything that goes beyond a threshold
+# think of a probability distribution plot - we remove the extremes
+# the greater the std_factor, the more "forgiving" is the algorithm with the extreme values
+def eliminateNoise(values, std_factor = 2):
+  mean = numpy.mean(values)
+  standard_deviation = numpy.std(values)
+  
+  print 'Status: mean: %.2f   standar_desviation: %.2f' % (mean,standard_deviation)
+
+  # If < 0,2 grados
+  if standard_deviation < {{ DHT22.measure_allowed_desviation }}:
+    print ''+str(values)[1:-1]
+    return values
+  else:
+    print 'WARNING - Bad standar desviation: %.2f' % (standard_deviation)
+
+  final_values = [element for element in values if element > mean - std_factor * standard_deviation]
+  final_values = [element for element in final_values if element < mean + std_factor * standard_deviation]
+        
+  return final_values
+
+# function for processing the data
+# filtering, periods of time, yada yada
+def readingValues():
+  min_measurements = {{ DHT22.samples_size }} # min measuremts array lentgh to
+  values = []
+
+  while not event.is_set():
+    measures = 0
+    while measures < min_measurements and not event.is_set():
+      rawTemperature = None
+      rawHumidity = None
+      try:
+        rawHumidity, rawTemperature = Adafruit_DHT.read_retry( Adafruit_DHT.DHT22 , {{ DHT22_taps.pin }} )
+
+      except IOError as e:
+        print 'ERROR - IO error' 
+        if hasattr(e, 'message'):
+          print(e.message)
+        else:
+          print(e)
+                
+      try:
+        if math.isnan(rawTemperature) == False and math.isnan(rawHumidity) == False:
+          temperature = round(rawTemperature, 2)
+          humidity = round(rawHumidity, 2)
+          print "%d Temp: %f   Hum: %f" % (measures,temperature,humidity)
+          values.append({"temperature" : temperature, "humidity" : humidity})
+          measures += 1
+        else:
+          print 'ERROR - NaN'
+      except TypeError as e:
+        print 'ERROR - Type Error' 
+        if hasattr(e, 'message'):
+          print(e.message)
+        else:
+          print(e)
+        
+      time.sleep({{ DHT22.delay }})
+      
+    if (rawHumidity > 100):
+      print 'ERROR - Hum > 100 -> rawHumidity'
+    else:  
+      lock.acquire()
+      filtered_temperature.append(numpy.mean(eliminateNoise([x["temperature"] for x in values])))
+      filtered_humidity.append(numpy.mean(eliminateNoise([x["humidity"] for x in values])))
+      lock.release()
+  #    print 'filtered_temperature '+str(filtered_temperature)[1:-1]
+  #    print 'filtered_humidity '+str(filtered_humidity)[1:-1]
+    values = []
+    
+def Main():
+  data_collector = threading.Thread(target = readingValues)
+  data_collector.start()
+
+  while not event.is_set():
+    if len(filtered_temperature) > 0 and len(filtered_humidity) > 0: # or we could have used filtered_humidity instead
+      lock.acquire()
+
+      # here you can do whatever you want with the variables: print them, file them out, anything
+      temperature = filtered_temperature.pop()
+      humidity = filtered_humidity.pop()
+      print "Send " + time.strftime("%Y-%m-%d %H:%M:%S")
+      print 'Send Temp: %.2f - Hum: %.2f' % (temperature,humidity)
+      command = "echo 'dht22_taps,name=temp,host=%s value=%.2f' | curl -s -XPOST 'http://{{ pi.network.ip }}:{{ dht22.influx.port }}/write?db={{ influx.db.name }}' --data-binary @-" % (hostname,temperature)
+      print command
+      res = subprocess.check_output(['bash','-c', command])
+      for line in res.splitlines():
+        print line
+
+      command = "echo 'dht22,name=hum,host=%s value=%.2f' | curl -s -XPOST 'http://{{ pi.network.ip }}:{{ dht22.influx.port }}/write?db={{ influx.db.name }}' --data-binary @-" % (hostname,humidity) 
+      print command
+      res = subprocess.check_output(['bash','-c', command])
+      for line in res.splitlines():
+        print line
+
+      lock.release()
+    # wait a second before the next check
+    time.sleep(5)
+  # wait until the thread is finished
+  data_collector.join()
+
+if __name__ == "__main__":
+  try:
+    Main()
+
+  except KeyboardInterrupt:
+    event.set()

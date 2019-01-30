@@ -27,10 +27,8 @@
 
   roles:
     - storeAccounts
-      - firstTime
+    - firstTime
     - common
-#    - security
-#    - metricsCollector
 #    - dht22
 #    - createCalderapiDash_Dht22
 

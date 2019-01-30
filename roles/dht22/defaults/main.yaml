@@ -6,11 +6,10 @@ additional_packages:
   - python-openssl
   - git
 
-meteoUpdatePicturesPath: /home/pi/meteoUpdatePictures
-
 DHT22:
   present: true
-  pin: 23
+  taps_pin: 22
+  heating_pin: 23
   path: /home/pi/dht22
   delay: 20
   samples_size: 10

@@ -61,7 +61,8 @@
 - name: Change hostname
   become: yes
   shell: echo {{ pi.hostname }} > /etc/hostname
-
+  register: changedHostname
+  
 - name: Change etc hosts
   become: yes
   shell: sed -i "s/raspberrypi/{{ pi.hostname }}/g" /etc/hosts
@@ -115,4 +116,15 @@
 
 - name: Reboot raspi
   become: yes
-  shell: sudo reboot -h now
+  shell: "sleep 5 && sudo reboot -h now"
+  async: 1
+  poll: 0
+  when: changedHostname.changed
+
+- name: Wait for the reboot.
+  wait_for_connection:
+    connect_timeout: 10
+    sleep: 3
+    delay: 3
+    timeout: 5
+  when: changedHostname.changed
