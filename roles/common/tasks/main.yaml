@@ -95,8 +95,8 @@
 - name: Change pi ip at /etc/ansible/hosts
   become: yes
   become_user: root
-  local_action: command sed -i 's/\(.*\) ansible_user=\(.*\)/{{ pi.network.ip }} ansible_user=\2/g' /etc/ansible/hosts
-
+  local_action: command sed -i 's/{{ ip_from_install }} ansible_user=\(.*\)/{{ pi.network.ip }} ansible_user=\1/g' /etc/ansible/hosts
+  
 - name: Delete previous known_hosts user
   local_action: command ssh-keygen -f "/home/emontero/.ssh/known_hosts" -R {{ pi.network.ip }}
   ignore_errors: yes

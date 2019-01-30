@@ -9,12 +9,12 @@
 
 - name: Save duckdns token to file
   shell: echo "{{ duckDnsToken }}" > /home/pi/.duckDnsToken && chmod 644 /home/pi/.duckDnsToken && chown pi:pi /home/pi/.duckDnsToken
-  when: duckDnsToken != ""
+  when: calderapi_present is not defined and duckDnsToken != ""
 
 - name: Save duckdns url to file
   shell: echo "{{ duckDnsUrl }}" > /home/pi/.duckDnsUrl && chmod 644 /home/pi/.duckDnsUrl && chown pi:pi /home/pi/.duckDnsUrl
-  when: duckDnsUrl != ""
-
+  when: calderapi_present is not defined and duckDnsUrl != ""
+  
 - name: Save opendata aemet api key to file
   shell: echo "{{ aemet_opendata_apikey }}" > /home/pi/.aemet_opendata_apikey && chmod 644 /home/pi/.aemet_opendata_apikey && chown pi:pi /home/pi/.aemet_opendata_apikey
   when: aemet_opendata_apikey != ""

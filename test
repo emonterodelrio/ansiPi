@@ -1,0 +1,4 @@
+[meteopi]
+192.168.1.11 ansible_user=pi ansible_ssh_pass=5IQLVk0kvJehS28Wyr59c5hlPcu2tDv1JPIUVWreOfQ4Iy7h7d
+[calderapi]
+192.168.1.39 ansible_user=pi ansible_ssh_pass=raspberry

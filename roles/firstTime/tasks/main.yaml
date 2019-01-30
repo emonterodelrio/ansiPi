@@ -65,7 +65,7 @@
 - name: Ansible - Change pi password at /etc/ansible/hosts
   become: yes
   become_user: root
-  local_action: shell sed -i 's/\(.*\)ansible_user=\(.*\) ansible_ssh_pass=\(.*\)/\1ansible_user=\2 ansible_ssh_pass={{ pass.stdout }}/g' /etc/ansible/hosts
+  local_action: shell sed -i 's/{{ ip_from_install }} ansible_user=\(.*\) ansible_ssh_pass=\(.*\)/{{ ip_from_install }} ansible_user=\1 ansible_ssh_pass={{ pass.stdout }}/g' /etc/ansible/hosts
 
 - name: Ansible - Enable callback_whitelists
   become: yes

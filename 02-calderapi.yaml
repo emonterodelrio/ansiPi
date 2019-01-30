@@ -1,0 +1,36 @@
+---
+- hosts: calderapi
+  remote_user: pi
+  gather_facts: false
+  vars_prompt:
+  - name: advisor
+    prompt: "\n\nCAUTION! This will re-password your raspberry pi at current lastpass logged in account.\n\n\nFollowing variable prompts will be stored as hidden files inside /home/pi folder.\nIf you have enter any of them before you don't need to do it again (simply press enter), unless you want to change it.\nPress enter to continue:"
+    default: ""
+    private: no
+
+  - name: gmailUser
+    prompt: "\n\nPlease type valid gmail account for emails sending from raspberry"
+    default: ""
+    private: no
+
+  - name: gmailPass
+    prompt: "\n\nNow, that gmail password."
+    default: ""
+
+  - name: aemet_opendata_apikey
+    prompt: "\n\nInsert your opendata aemet api key, if haven't yet go to https://opendata.aemet.es"
+    default: ""
+    private: no
+
+  vars_files:
+  - vars/calderapiStuff.yaml
+
+  roles:
+    - storeAccounts
+      - firstTime
+    - common
+#    - security
+#    - metricsCollector
+#    - dht22
+#    - createCalderapiDash_Dht22
+
