@@ -1,4 +1,5 @@
 ---
+
 - name: Install - Create temp folder
   local_action:
     module: file
@@ -61,11 +62,11 @@
   become: yes
   become_user: root
   user: name=pi password={{ pass512.stdout }} update_password=always
-
-- name: Ansible - Change pi password at /etc/ansible/hosts
+    
+- name: Ansible - Change pi password at /etc/ansible/hosts from ansible hosts file
   become: yes
   become_user: root
-  local_action: shell sed -i 's/{{ ip_from_install }} ansible_user=\(.*\) ansible_ssh_pass=\(.*\)/{{ ip_from_install }} ansible_user=\1 ansible_ssh_pass={{ pass.stdout }}/g' /etc/ansible/hosts
+  local_action: shell sed -i 's/{{ ansible_default_ipv4.address }} ansible_user=\(.*\) ansible_ssh_pass=\(.*\)/{{ ansible_default_ipv4.address }} ansible_user=\1 ansible_ssh_pass={{ pass.stdout }}/g' /etc/ansible/hosts
 
 - name: Ansible - Enable callback_whitelists
   become: yes

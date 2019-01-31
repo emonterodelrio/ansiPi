@@ -7,8 +7,8 @@ cat >$BASE_PATH/temp.json <<EOL
 	"folderId": 0,
 	"overwrite": true,
 	"dashboard": {
-		"uid": "MeteoPi",
-		"title": "MeteoPi",
+		"uid": "{{ pi.pretty_name }}",
+		"title": "{{ pi.pretty_name }}",
 		"tags": [],
 		"timezone": "browser",
 		"version": 0,
@@ -678,11 +678,9 @@ PASS="{{ grafanaAdminPassReaded.stdout }}"
 
 
 INTERVAL='$__interval'
-HOST="{{ pi.hostname }}"
 SENSOR_NAME="dht22"
 INFLUX_DS="{{ influx.db.name }}"
 
-DASHBOARD_TITLE="MeteoPi"
 Y_AXIS="short"
 
 ##########################################################

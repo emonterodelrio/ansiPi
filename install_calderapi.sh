@@ -56,7 +56,7 @@ fi
 if ! ansible-playbook -vvvv 02-calderapi.yaml --extra-vars "ip_from_install=$IP"; then
   printf "\033[1;31m\n\nFail!, maybe your aren't logged in lastpass?\033[0m\n"
   printf "\033[1;32m\n\nType this once you have been loged:\nansible-playbook 02-calderapi.yaml --start-at-task=\"Lastpass - Ensure user loged in\"\033[0m\n"
-  printf "\033[1;32m\n\nor this if you are already logged :p\nansible-playbook 02-calderapi.yaml --start-at-task=\"security : Install software via apt\"\033[0m\n"
+  printf "\033[1;32m\n\nor this if you are already logged :p\nansible-playbook 02-calderapi.yaml --start-at-task=\"dht22 : Install software via apt\"\033[0m\n"
   exit 1;
 fi
 

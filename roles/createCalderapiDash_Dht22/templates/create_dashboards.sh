@@ -7,8 +7,8 @@ cat >$BASE_PATH/temp.json <<EOL
 	"folderId": 0,
 	"overwrite": true,
 	"dashboard": {
-		"uid": "{{ pi.hostname }}",
-		"title": "{{ pi.hostname }}",
+		"uid": "{{ pi.pretty_name }}",
+		"title": "{{ pi.pretty_name }}",
 		"tags": [],
 		"timezone": "browser",
 		"version": 0,
@@ -16,69 +16,6 @@ cat >$BASE_PATH/temp.json <<EOL
 		"gnetId": null,
 		"graphTooltip": 0,
 		"links": [],
-EOL
-}
-
-function setupDashAemetMeteobars() {
-#Create dashboard json temp file
-cat >>$BASE_PATH/temp.json <<EOL
-      {
-        "content": "<style>\n.forward {\n  position: absolute;\n  opacity: 0;\n  width: 50%;\n  height: 100%;\n  margin: -70% 0 0 50%;\n  padding: 30% 0 0 0;\n  background-color: #0000ff;\n  font-size: 25pt;\n  text-align: center;\n  font-weight: bold;\n  color: #ffffff;\n  cursor: pointer;\n}\n\n.back {\n  position: absolute;\n  opacity: 0;\n  width: 50%;\n  height: 100%;\n  margin: -70% 0 0 0;\n  padding: 30% 0 0 0;\n  background-color: #ff0000;\n  font-size: 25pt;\n  text-align: center;\n  font-weight: bold;\n  color: #ffffff;\n  cursor: pointer;\n}\n\n.mymeteobars {\n  display: none;\n}\n\n.meteobars_txt {\n  position: absolute;\n  bottom: 10%;\n  left: 10%;\n  color: #0000aa;\n  font-weight: bold;\n}\n\n.meteobars_img {\n  margin:0 0 0 0;\n}\n\n.meteobars_slideshow-container {\n  max-width: 1000px;\n  position: relative;\n  margin: auto;\n}\n\n.meteobars_fade {\n  -webkit-animation-name: fade;\n  -webkit-animation-duration: 0.2s;\n  animation-name: fade;\n  animation-duration: 0.2s;\n  -webkit-user-select: none; /* Safari 3.1+ */\n  -moz-user-select: none; /* Firefox 2+ */\n  -ms-user-select: none; /* IE 10+ */\n  user-select: none; /* Standard syntax */\n}\n\n@-webkit-keyframes meteobars_fade {\n  from {opacity: .4} \n  to {opacity: 1}\n}\n\n@keyframes meteobars_fade {\n  from {opacity: .4} \n  to {opacity: 1}\n}\n\n@media only screen and (max-width: 500px) {\n  .meteobars_text {font-size: 11px}\n}\n\n</style>\n\n<div class=\"meteobars_slideshow-container\">\n\n  <div class=\"mymeteobars meteobars_fade\">\n    <img class=\"meteobars_img\" src=\"/sharedFiles/map_meteobars_0.gif?dummy=123\" alt=\"\">\n    <span class=\"back\" onclick=\"less_meteobars()\">i</span><span class=\"meteobars_txt\">Now</span><span class=\"forward\" onclick=\"more_meteobars()\">d</span>\n  </div>\n\n  <div class=\"mymeteobars meteobars_fade\">\n    <img class=\"meteobars_img\" src=\"/sharedFiles/map_meteobars_1.gif?dummy=123\" alt=\"\">\n    <span class=\"back\" onclick=\"less_meteobars()\">i</span><span class=\"meteobars_txt\">12h</span><span class=\"forward\" onclick=\"more_meteobars()\">d</span>\n  </div>\n\n  <div class=\"mymeteobars meteobars_fade\">\n    <img class=\"meteobars_img\" src=\"/sharedFiles/map_meteobars_2.gif?dummy=123\" alt=\"\">\n    <span class=\"back\" onclick=\"less_meteobars()\">i</span><span class=\"meteobars_txt\">24h</span><span class=\"forward\" onclick=\"more_meteobars()\">d</span>\n  </div>\n\n  <div class=\"mymeteobars meteobars_fade\">\n    <img class=\"meteobars_img\" src=\"/sharedFiles/map_meteobars_3.gif?dummy=123\" alt=\"\">\n    <span class=\"back\" onclick=\"less_meteobars()\">i</span><span class=\"meteobars_txt\">36h</span><span class=\"forward\" onclick=\"more_meteobars()\">d</span>\n  </div>\n\n  <div class=\"mymeteobars meteobars_fade\">\n    <img class=\"meteobars_img\" src=\"/sharedFiles/map_meteobars_4.gif?dummy=123\" alt=\"\">\n    <span class=\"back\" onclick=\"less_meteobars()\">i</span><span class=\"meteobars_txt\">48h</span><span class=\"forward\" onclick=\"more_meteobars()\">d</span>\n  </div>\n\n  <div class=\"mymeteobars meteobars_fade\">\n    <img class=\"meteobars_img\" src=\"/sharedFiles/map_meteobars_5.gif?dummy=123\" alt=\"\">\n    <span class=\"back\" onclick=\"less_meteobars()\">i</span><span class=\"meteobars_txt\">60h</span><span class=\"forward\" onclick=\"more_meteobars()\">d</span>\n  </div>\n\n  <div class=\"mymeteobars meteobars_fade\">\n    <img class=\"meteobars_img\" src=\"/sharedFiles/map_meteobars_6.gif?dummy=123\" alt=\"\">\n    <span class=\"back\" onclick=\"less_meteobars()\">i</span><span class=\"meteobars_txt\">72h</span><span class=\"forward\" onclick=\"more_meteobars()\">d</span>\n  </div>\n\n</div>\n\n<script>\nvar meteobar_slideIndex = 0;\nvar numExecution = 0;\nvar loops = 10;\nvar isEnd = false;\nvar clicks = 0;\nmeteobar_showSlides()\n\nfunction changeOpacity() {\n  var back_span = document.getElementsByClassName(\"back\");\n  var forward_span = document.getElementsByClassName(\"forward\");\n\n  if (clicks == 0) {\n    for (back_span_i = 0; back_span_i < back_span.length; back_span_i++) {\n      back_span[back_span_i].style.opacity = \"0.4\";\n    }\n    for (forward_span_i = 0; forward_span_i < forward_span.length; forward_span_i++) {\n      forward_span[forward_span_i].style.opacity = \"0.4\";\n    }\n  }\n  if (clicks == 1) {\n    for (back_span_i = 0; back_span_i < back_span.length; back_span_i++) {\n      back_span[back_span_i].style.opacity = \"0.2\";\n    }\n    for (forward_span_i = 0; forward_span_i < forward_span.length; forward_span_i++) {\n      forward_span[forward_span_i].style.opacity = \"0.2\";\n    }\n  }\n  if (clicks > 1) {\n    for (back_span_i = 0; back_span_i < back_span.length; back_span_i++) {\n      back_span[back_span_i].style.opacity = \"0\";\n    }\n    for (forward_span_i = 0; forward_span_i < forward_span.length; forward_span_i++) {\n      forward_span[forward_span_i].style.opacity = \"0\";\n    }\n  }\n  clicks++;\n}\n\nfunction more_meteobars() {\n  var meteobar_i;\n  var meteobar_slides = document.getElementsByClassName(\"mymeteobars\");\n  \n  changeOpacity();\n  \n  if (meteobar_slideIndex >= meteobar_slides.length-1) {\n    meteobar_slideIndex = 0\n  }else{\n    meteobar_slideIndex++;\n  }\n\n  for (meteobar_i = 0; meteobar_i < meteobar_slides.length; meteobar_i++) {\n    meteobar_slides[meteobar_i].style.display = \"none\";\n  }\n  meteobar_slides[meteobar_slideIndex].style.display = \"block\";\n  \n}\n\nfunction less_meteobars() {\n  var meteobar_i;\n  var meteobar_slides = document.getElementsByClassName(\"mymeteobars\");\n\n  changeOpacity();\n  \n  if (meteobar_slideIndex == 0) {\n    meteobar_slideIndex = meteobar_slides.length-1\n  }else{\n    meteobar_slideIndex--;\n  }\n\n  for (meteobar_i = 0; meteobar_i < meteobar_slides.length; meteobar_i++) {\n    meteobar_slides[meteobar_i].style.display = \"none\";  \n  }\n  meteobar_slides[meteobar_slideIndex].style.display = \"block\";\n}\n\nfunction meteobar_showSlides() {\n  var meteobar_i;\n  var meteobar_slides = document.getElementsByClassName(\"mymeteobars\");\n  var back_span = document.getElementsByClassName(\"back\");\n  var forward_span = document.getElementsByClassName(\"forward\");\n  \n  for (meteobar_i = 0; meteobar_i < meteobar_slides.length; meteobar_i++) {\n    meteobar_slides[meteobar_i].style.display = \"none\";  \n  }\n\n  if (meteobar_slideIndex >= meteobar_slides.length) {\n    meteobar_slideIndex = 0;\n    numExecution++;\n    for (back_span_i = 0; back_span_i < back_span.length; back_span_i++) {\n      back_span[back_span_i].style.opacity = \"0.2\";\n    }\n    for (forward_span_i = 0; forward_span_i < forward_span.length; forward_span_i++) {\n      forward_span[forward_span_i].style.opacity = \"0.2\";\n    }\n  }\n  \n  if (numExecution == loops) {\n    isEnd=true;\n    var back_span = document.getElementsByClassName(\"back\");\n    var forward_span = document.getElementsByClassName(\"forward\");\n\n    for (back_span_i = 0; back_span_i < back_span.length; back_span_i++) {\n      back_span[back_span_i].style.backgroundColor = \"#ff0000\";\n      back_span[back_span_i].innerHTML = \"<--\";\n      back_span[back_span_i].style.opacity = \"0.4\";\n    }\n    for (forward_span_i = 0; forward_span_i < forward_span.length; forward_span_i++) {\n      forward_span[forward_span_i].style.backgroundColor = \"#0000ff\";\n      forward_span[forward_span_i].innerHTML = \"-->\";\n      forward_span[forward_span_i].style.opacity = \"0.4\";\n    }\n  }\n\n  if ((meteobar_slideIndex == 0) && (isEnd === true)) {\n    meteobar_slides[0].style.display = \"block\";\n  }else{\n    meteobar_slides[meteobar_slideIndex].style.display = \"block\";\n    if (meteobar_slideIndex == 0) {\n      for (back_span_i = 0; back_span_i < back_span.length; back_span_i++) {\n        back_span[back_span_i].style.backgroundColor = \"#0044ff\";\n        back_span[back_span_i].innerHTML = \"\";\n        back_span[back_span_i].style.opacity = \"0.2\";\n      }\n      for (forward_span_i = 0; forward_span_i < forward_span.length; forward_span_i++) {\n        forward_span[forward_span_i].style.backgroundColor = \"#0044ff\";\n        forward_span[forward_span_i].innerHTML = \"\";\n        forward_span[forward_span_i].style.opacity = \"0.2\";\n      }\n    }else{\n      for (back_span_i = 0; back_span_i < back_span.length; back_span_i++) {\n        back_span[back_span_i].style.opacity = \"0\";\n        back_span[back_span_i].style.opacity = \"0\";\n      }\n      for (forward_span_i = 0; forward_span_i < forward_span.length; forward_span_i++) {\n        forward_span[forward_span_i].style.opacity = \"0\";\n        forward_span[forward_span_i].style.opacity = \"0\";\n      }\n    }        \n    if ((meteobar_slideIndex == 0) && (numExecution == 0)) {\n      meteobar_slideIndex++;\n      setTimeout(meteobar_showSlides, 200);\n    }else{\n      meteobar_slideIndex++;\n      setTimeout(meteobar_showSlides, 200);\n    }\n  }\n}\n</script>",
-        "gridPos": {
-          "h": 7,
-          "w": 7,
-          "x": 0,
-          "y": 0
-        },
-        "id": 1,
-        "links": [],
-        "mode": "html",
-        "title": "",
-        "transparent": true,
-        "type": "text"
-      },
-EOL
-}
-
-function setupDashAemetPrediction() {
-#Create dashboard json temp file
-cat >>$BASE_PATH/temp.json <<EOL
-      {
-        "content": "<style>\n\n.forward_pred {\n  position: absolute;\n  opacity: 0;\n  width: 50%;\n  height: 100%;\n  margin: -72% 0 0 50%;\n  padding: 30% 0 0 0;\n  background-color: #0000ff;\n  font-size: 25pt;\n  text-align: center;\n  font-weight: bold;\n  color: #ffffff;\n  cursor: pointer;\n}\n\n.back_pred {\n  position: absolute;\n  opacity: 0;\n  width: 50%;\n  height: 100%;\n  margin: -72% 0 0 0;\n  padding: 30% 0 0 0;\n  background-color: #ff0000;\n  font-size: 25pt;\n  text-align: center;\n  font-weight: bold;\n  color: #ffffff;\n  cursor: pointer;\n}\n\n.mypredictions {\n  display: none;\n}\n\n.predictions_txt {\n  position: absolute;\n  bottom: 10%;\n  left: 10%;\n  color: #0000aa;\n  font-weight: bold;\n}\n\n.predictions_img {\n  margin:0 0 0 0;\n}\n\n.predictions_slideshow-container {\n  max-width: 1000px;\n  position: relative;\n  margin: auto;\n}\n\n.predictions_fade {\n  -webkit-animation-name: fade;\n  -webkit-animation-duration: 0.2s;\n  animation-name: fade;\n  animation-duration: 0.2s;\n  -webkit-user-select: none; /* Safari 3.1+ */\n  -moz-user-select: none; /* Firefox 2+ */\n  -ms-user-select: none; /* IE 10+ */\n  user-select: none; /* Standard syntax */\n}\n\n@-webkit-keyframes predictions_fade {\n  from {opacity: .4} \n  to {opacity: 1}\n}\n\n@keyframes predictions_fade {\n  from {opacity: .4} \n  to {opacity: 1}\n}\n\n@media only screen and (max-width: 500px) {\n  .predictions_text {font-size: 11px}\n}\n\n</style>\n<div class=\"predictions_slideshow-container\">\n\n  <div class=\"mypredictions predictions_fade\">\n    <img class=\"predictions_img\" src=\"/sharedFiles/map_pred_0.jpg?dummy=123\" alt=\"\">\n    <span class=\"back_pred\" onclick=\"less()\">i</span><span class=\"predictions_txt\"></span><span class=\"forward_pred\" onclick=\"more()\">d</span>\n  </div>\n\n  <div class=\"mypredictions predictions_fade\">\n    <img class=\"predictions_img\" src=\"/sharedFiles/map_pred_1.jpg?dummy=123\" alt=\"\">\n    <span class=\"back_pred\" onclick=\"less()\">i</span><span class=\"predictions_txt\"></span><span class=\"forward_pred\" onclick=\"more()\">d</span>\n  </div>\n\n  <div class=\"mypredictions predictions_fade\">\n    <img class=\"predictions_img\" src=\"/sharedFiles/map_pred_2.jpg?dummy=123\" alt=\"\">\n    <span class=\"back_pred\" onclick=\"less()\">i</span><span class=\"predictions_txt\"></span><span class=\"forward_pred\" onclick=\"more()\">d</span>\n  </div>\n\n  <div class=\"mypredictions predictions_fade\">\n    <img class=\"predictions_img\" src=\"/sharedFiles/map_pred_3.jpg?dummy=123\" alt=\"\">\n          <span class=\"back_pred\" onclick=\"less()\">i</span><span class=\"predictions_txt\"></span><span class=\"forward_pred\" onclick=\"more()\">d</span>\n  </div>\n\n</div>\n<script>\nvar prediction_slideIndex = 0;\nvar numExecution_pred = 0;\nvar loops_pred = 3;\nvar isEnd_pred = false;\nvar clicks_pred = 0;\nprediction_showSlides()\n\nfunction changeOpacity_pred() {\n  var back_pred_span = document.getElementsByClassName(\"back_pred\");\n  var forward_pred_span = document.getElementsByClassName(\"forward_pred\");\n\n  if (clicks_pred == 0) {\n    for (back_pred_span_i = 0; back_pred_span_i < back_pred_span.length; back_pred_span_i++) {\n      back_pred_span[back_pred_span_i].style.opacity = \"0.2\";\n    }\n    for (forward_pred_span_i = 0; forward_pred_span_i < forward_pred_span.length; forward_pred_span_i++) {\n      forward_pred_span[forward_pred_span_i].style.opacity = \"0.2\";\n    }\n  }\n  if (clicks_pred == 1) {\n    for (back_pred_span_i = 0; back_pred_span_i < back_pred_span.length; back_pred_span_i++) {\n      back_pred_span[back_pred_span_i].style.opacity = \"0.1\";\n    }\n    for (forward_pred_span_i = 0; forward_pred_span_i < forward_pred_span.length; forward_pred_span_i++) {\n      forward_pred_span[forward_pred_span_i].style.opacity = \"0.1\";\n    }\n  }\n  if (clicks_pred > 1) {\n    for (back_pred_span_i = 0; back_pred_span_i < back_pred_span.length; back_pred_span_i++) {\n      back_pred_span[back_pred_span_i].style.opacity = \"0\";\n    }\n    for (forward_pred_span_i = 0; forward_pred_span_i < forward_pred_span.length; forward_pred_span_i++) {\n      forward_pred_span[forward_pred_span_i].style.opacity = \"0\";\n    }\n  }\n  clicks_pred++;\n}\n\nfunction more() {\n  var prediction_i;\n  var prediction_slides = document.getElementsByClassName(\"mypredictions\");\n  \n  changeOpacity_pred();\n  \n  if (prediction_slideIndex >= prediction_slides.length-1) {\n    prediction_slideIndex = 0\n  }else{\n    prediction_slideIndex++;\n  }\n\n  for (prediction_i = 0; prediction_i < prediction_slides.length; prediction_i++) {\n    prediction_slides[prediction_i].style.display = \"none\";\n  }\n  prediction_slides[prediction_slideIndex].style.display = \"block\";\n  \n}\n\nfunction less() {\n  var prediction_i;\n  var prediction_slides = document.getElementsByClassName(\"mypredictions\");\n\n  changeOpacity_pred();\n  \n  if (prediction_slideIndex == 0) {\n    prediction_slideIndex = prediction_slides.length-1\n  }else{\n    prediction_slideIndex--;\n  }\n\n  for (prediction_i = 0; prediction_i < prediction_slides.length; prediction_i++) {\n    prediction_slides[prediction_i].style.display = \"none\";  \n  }\n  prediction_slides[prediction_slideIndex].style.display = \"block\";\n}\n\nfunction prediction_showSlides() {\n  var prediction_i;\n  var prediction_slides = document.getElementsByClassName(\"mypredictions\");\n  var back_pred_span = document.getElementsByClassName(\"back_pred\");\n  var forward_pred_span = document.getElementsByClassName(\"forward_pred\");\n  \n  for (prediction_i = 0; prediction_i < prediction_slides.length; prediction_i++) {\n    prediction_slides[prediction_i].style.display = \"none\";  \n  }\n\n  if (prediction_slideIndex >= prediction_slides.length) {\n    prediction_slideIndex = 0;\n    numExecution_pred++;\n    for (back_pred_span_i = 0; back_pred_span_i < back_pred_span.length; back_pred_span_i++) {\n      back_pred_span[back_pred_span_i].style.opacity = \"0.4\";\n    }\n    for (forward_pred_span_i = 0; forward_pred_span_i < forward_pred_span.length; forward_pred_span_i++) {\n      forward_pred_span[forward_pred_span_i].style.opacity = \"0.4\";\n    }\n  }\n  \n  if (numExecution_pred == loops_pred) {\n    isEnd_pred=true;\n    var back_pred_span = document.getElementsByClassName(\"back_pred\");\n    var forward_pred_span = document.getElementsByClassName(\"forward_pred\");\n\n    for (back_pred_span_i = 0; back_pred_span_i < back_pred_span.length; back_pred_span_i++) {\n      back_pred_span[back_pred_span_i].style.backgroundColor = \"#ff0000\";\n      back_pred_span[back_pred_span_i].innerHTML = \"<--\";\n      back_pred_span[back_pred_span_i].style.opacity = \"0.4\";\n    }\n    for (forward_pred_span_i = 0; forward_pred_span_i < forward_pred_span.length; forward_pred_span_i++) {\n      forward_pred_span[forward_pred_span_i].style.backgroundColor = \"#0000ff\";\n      forward_pred_span[forward_pred_span_i].innerHTML = \"-->\";\n      forward_pred_span[forward_pred_span_i].style.opacity = \"0.4\";\n    }\n  }\n\n  if ((prediction_slideIndex == 0) && (isEnd_pred === true)) {\n    prediction_slides[0].style.display = \"block\";\n  }else{\n    prediction_slides[prediction_slideIndex].style.display = \"block\";\n    if (prediction_slideIndex == 0) {\n      for (back_pred_span_i = 0; back_pred_span_i < back_pred_span.length; back_pred_span_i++) {\n        back_pred_span[back_pred_span_i].style.backgroundColor = \"#0044ff\";\n        back_pred_span[back_pred_span_i].innerHTML = \"\";\n        back_pred_span[back_pred_span_i].style.opacity = \"0.4\";\n      }\n      for (forward_pred_span_i = 0; forward_pred_span_i < forward_pred_span.length; forward_pred_span_i++) {\n        forward_pred_span[forward_pred_span_i].style.backgroundColor = \"#0044ff\";\n        forward_pred_span[forward_pred_span_i].innerHTML = \"\";\n        forward_pred_span[forward_pred_span_i].style.opacity = \"0.4\";\n      }\n    }else{\n      for (back_pred_span_i = 0; back_pred_span_i < back_pred_span.length; back_pred_span_i++) {\n        back_pred_span[back_pred_span_i].style.opacity = \"0\";\n        back_pred_span[back_pred_span_i].style.opacity = \"0\";\n      }\n      for (forward_pred_span_i = 0; forward_pred_span_i < forward_pred_span.length; forward_pred_span_i++) {\n        forward_pred_span[forward_pred_span_i].style.opacity = \"0\";\n        forward_pred_span[forward_pred_span_i].style.opacity = \"0\";\n      }\n    }        \n    if ((prediction_slideIndex == 0) && (numExecution_pred == 0)) {\n      prediction_slideIndex++;\n      setTimeout(prediction_showSlides, 500);\n    }else{\n      prediction_slideIndex++;\n      setTimeout(prediction_showSlides, 500);\n    }\n  }\n}\n</script>",
-        "gridPos": {
-          "h": 7,
-          "w": 7,
-          "x": 7,
-          "y": 0
-        },
-        "id": 2,
-        "links": [],
-        "mode": "html",
-        "title": "",
-        "transparent": true,
-        "type": "text"
-      },
-EOL
-}
-
-function setupDashAemetForecastPrediction() {
-
-cat >>$BASE_PATH/temp.json <<EOL
-      {
-        "content": "<iframe id=\"forecast_embed\" frameborder=\"0\" src=\"//forecast.io/embed/#lat=40.3232129&lon=-3.8676291&name=M&oacute;stoles&color=#2222ff&text-color=#cccccc&font=Georgia&units=ca\" style=\"margin: 1% 0 0 0; padding: 0; border: none; width:100%; height:100%;\"></iframe>",
-        "gridPos": {
-          "h": 7,
-          "w": 10,
-          "x": 14,
-          "y": 0
-        },
-        "id": 3,
-        "links": [],
-        "mode": "html",
-        "title": "",
-        "transparent": true,
-        "type": "text"
-      },
 EOL
 }
 
@@ -124,7 +61,7 @@ cat >>$BASE_PATH/temp.json <<EOL
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "{{ influx.db.name }}",
+        "datasource": "{{ DHT22.influxdb.db }}",
         "fill": 0,
         "gridPos": {
           "h": 7,
@@ -393,7 +330,7 @@ cat >>$BASE_PATH/temp.json <<EOL
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "{{ influx.db.name }}",
+        "datasource": "{{ DHT22.influxdb.db }}",
         "fill": 0,
         "gridPos": {
           "h": 7,
@@ -616,9 +553,6 @@ function setupDashPanels() {
 cat >>$BASE_PATH/temp.json <<EOL
     "panels": [
 EOL
-setupDashAemetMeteobars;
-setupDashAemetPrediction;
-setupDashAemetForecastPrediction;
 setupDashMeasures;
 setupDashMeasuresTimeline;
 
@@ -639,7 +573,7 @@ EOL
 function setupDashOptions() {
 #Create dashboard json temp file
 cat >>$BASE_PATH/temp.json <<EOL
-		"refresh": "120s",
+		"refresh": "30s",
 		"schemaVersion": 16,
 		"style": "dark",
 		"templating": {
@@ -651,7 +585,7 @@ cat >>$BASE_PATH/temp.json <<EOL
 		},
 		"timepicker": {
 			"refresh_intervals": [
-				"120s"
+				"30s"
 			],
 			"time_options": [
 				"5m",
@@ -672,17 +606,15 @@ EOL
 
 
 ###    MAIN    #####################################
-BASE_PATH="/tmp/dht22_temp"
+BASE_PATH="/tmp/dht22_dash_temp"
 USER="{{ grafanaAdminUserReaded.stdout }}"
 PASS="{{ grafanaAdminPassReaded.stdout }}"
 
 
 INTERVAL='$__interval'
-HOST="{{ pi.hostname }}"
-SENSOR_NAME="dht22"
-INFLUX_DS="{{ influx.db.name }}"
+SENSOR_NAME="dht22_heating"
+INFLUX_DS="{{ DHT22.influxdb.db }}"
 
-DASHBOARD_TITLE="{{ pi.hostname }}"
 Y_AXIS="short"
 
 ##########################################################
@@ -717,13 +649,13 @@ setupDashOptions;
 
 echo $USER
 echo $PASS
-echo "curl -s -X POST 'http://$USER:$PASS@{{ pi.network.ip }}:3000/api/dashboards/db' \
+echo "curl -s -X POST 'http://$USER:$PASS@{{ grafana.ip }}:3000/api/dashboards/db' \
 -H 'Accept: application/json' \
 -H 'Content-Type:application/json' \
 -d @$BASE_PATH/temp.json | jq ."
 
 #Create dashboard from json file
-curl -s -X POST "http://$USER:$PASS@{{ pi.network.ip }}:3000/api/dashboards/db" \
+curl -s -X POST "http://$USER:$PASS@{{ grafana.ip }}:3000/api/dashboards/db" \
 -H "Accept: application/json" \
 -H "Content-Type:application/json" \
 -d @$BASE_PATH/temp.json | jq . > $BASE_PATH/dashboard-create.log
@@ -731,4 +663,4 @@ curl -s -X POST "http://$USER:$PASS@{{ pi.network.ip }}:3000/api/dashboards/db" 
 #Star dashboard
 DASH_ID=$(cat $BASE_PATH/dashboard-create.log | grep "\"id\"" | awk '{print $2}' | tr -d ",")
 echo "Star to $DASH_ID"
-curl -s -X POST "http://$USER:$PASS@{{ pi.network.ip }}:3000/api/user/stars/dashboard/$DASH_ID"
+curl -s -X POST "http://$USER:$PASS@{{ grafana.ip }}:3000/api/user/stars/dashboard/$DASH_ID"

@@ -1,7 +1,7 @@
 ---
 - hosts: calderapi
   remote_user: pi
-  gather_facts: false
+  gather_facts: true
   vars_prompt:
   - name: advisor
     prompt: "\n\nCAUTION! This will re-password your raspberry pi at current lastpass logged in account.\n\n\nFollowing variable prompts will be stored as hidden files inside /home/pi folder.\nIf you have enter any of them before you don't need to do it again (simply press enter), unless you want to change it.\nPress enter to continue:"
@@ -29,6 +29,6 @@
     - storeAccounts
     - firstTime
     - common
-#    - dht22
-#    - createCalderapiDash_Dht22
+    - dht22
+    - createCalderapiDash_Dht22
 

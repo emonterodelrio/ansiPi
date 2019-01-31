@@ -62,7 +62,7 @@
 
 - name: Crontab DHT22 scripts
   cron:
-    name: "dht22"
+    name: "dht22_{{ item }}"
     minute: "*"
     hour: "*"
     day: "*"
