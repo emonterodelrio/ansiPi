@@ -55,7 +55,7 @@ def readingValues():
       rawTemperature = None
       rawHumidity = None
       try:
-        rawHumidity, rawTemperature = Adafruit_DHT.read_retry( Adafruit_DHT.DHT22 , {{ DHT22.taps_pin }} )
+        rawHumidity, rawTemperature = Adafruit_DHT.read_retry( Adafruit_DHT.DHT11 , {{ DHT22.taps_pin }} )
 
       except IOError as e:
         print 'ERROR - IO error' 

@@ -27,10 +27,10 @@ DHT22:
   taps_pin: 22
   heating_pin: 23
   path: /home/pi/dht22
-  delay: 20
+  delay: 10
   samples_size: 10
   #3 \ºC
-  measure_allowed_desviation: 1
+  measure_allowed_desviation: 20
 
 grafana:
   ip: 192.168.1.11
