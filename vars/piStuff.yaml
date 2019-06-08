@@ -13,13 +13,14 @@ pi:
 
 lpass:
   piId: meteopi
+  meteopiId: meteopi
 
 influx:
-  port: 8088
-  admin:
-    port: 8083
   http:
     port: 8086
+  admin:
+    port: 8083
+  port: 8088
   db:
     name: piMonitorDb
 

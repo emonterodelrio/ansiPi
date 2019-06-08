@@ -1,0 +1,38 @@
+---
+calderapi_present: true
+
+pi:
+  user: pi
+  hostname: calderapi
+  pretty_name: CalderaPi
+  swappiness: 10
+  bluetoothEnabled: false
+  network:
+    ip: 192.168.1.12
+    prefix: 192.168.1
+    dns1: 8.8.8.8
+    dns2: 8.8.4.4
+    maskLength: 24
+
+lpass:
+  piId: calderapi
+  meteopiId: meteopi
+
+DHT22:
+  influxdb:
+    ip: 192.168.1.11
+    port: 8086
+    db: piMonitorDb
+  present: true
+  taps_pin: 22
+  heating_pin: 23
+  path: /home/pi/dht22
+  delay: 10
+  samples_size: 10
+  #3 \ºC
+  measure_allowed_desviation: 20
+
+grafana:
+  ip: 192.168.1.11
+
+production_mode: false

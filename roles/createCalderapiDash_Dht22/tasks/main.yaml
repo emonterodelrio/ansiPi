@@ -1,0 +1,44 @@
+---
+- name: Check existing grafana
+  become: yes
+  shell: curl -s {{ grafana.ip }}:3000
+  register: existGrafana
+  ignore_errors: yes
+
+- name: Lastpass - Ensure user loged in
+  local_action: shell lpass ls
+  when: existGrafana.rc == 0
+
+- name: Lastpass - Load credentials
+  local_action: shell lpass show {{ lpass.meteopiId }}/grafanaAdmin | grep Username | awk '{print $2}'
+  register: grafanaAdminUserReaded
+  when: existGrafana.rc == 0
+
+- name: Lastpass - Load password
+  local_action: shell lpass show {{ lpass.meteopiId }}/grafanaAdmin | grep Password | awk '{print $2}'
+  register: grafanaAdminPassReaded
+  when: existGrafana.rc == 0
+
+- name: Create temp folder
+  file:
+    path: /tmp/dht22_dash_temp
+    mode: 0777
+    state: directory
+  when: existGrafana.rc == 0
+
+- name: Setup create dashboards script
+  template:
+    src: create_dashboards.sh
+    dest: "/tmp/dht22_dash_temp/create_dashboards.sh"
+    mode: 0777
+  when: existGrafana.rc == 0
+
+- name: Execute script
+  shell: /tmp/dht22_dash_temp/create_dashboards.sh
+  when: existGrafana.rc == 0
+
+#- name: Delete temp folder
+#  file:
+#    path: /tmp/dht22_temp
+#    state: absent
+#  when: existGrafana.rc == 2
