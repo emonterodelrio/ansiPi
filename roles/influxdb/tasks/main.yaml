@@ -47,3 +47,7 @@
     name: influxdb
     state: restarted 
     enabled: yes
+
+- name: Create database
+  shell: "sleep 15 && curl -i -XPOST http://127.0.0.1:{{ influx.http.port }}/query --data-urlencode \"q=CREATE DATABASE {{ influx.db.name }}\""
+  when: existInfluxdb.rc != 0

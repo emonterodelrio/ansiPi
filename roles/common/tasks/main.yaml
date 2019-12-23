@@ -92,10 +92,10 @@
       nameserver {{ pi.network.dns1 }}
       nameserver {{ pi.network.dns2 }}
 
-- name: Change pi ip at /etc/ansible/hosts
+- name: Change pi ip at conf/inventory
   become: yes
   become_user: root
-  local_action: command sed -i 's/\(.*\) ansible_user=\(.*\)/{{ pi.network.ip }} ansible_user=\2/g' /etc/ansible/hosts
+  local_action: command sed -i 's/\(.*\) ansible_user=\(.*\)/{{ pi.network.ip }} ansible_user=\2/g' conf/inventory
 
 - name: Delete previous known_hosts user
   local_action: command ssh-keygen -f "/home/emontero/.ssh/known_hosts" -R {{ pi.network.ip }}
@@ -113,6 +113,9 @@
    state: absent
   with_items: "{{ toCleanDirectories }}"
 
-- name: Reboot raspi
+- debug:
+    msg: "Raspberry is going to be rebooted, continue from this executing: ansipi 02-meteopi.yaml --start-at-task='security : Install software via apt'"
+
+- name: Reboot raspi 
   become: yes
   shell: sudo reboot -h now

@@ -54,6 +54,11 @@
     state: restarted 
     enabled: yes
 
+- name: Wait for grafana 3000 port
+  wait_for:
+    port: 3000
+    delay: 10
+
 - name: Link influxdb datasource
   shell: "sleep 15 && curl 'http://admin:admin@{{ pi.network.ip }}:3000/api/datasources' -X POST -H 'Content-Type: application/json;charset=UTF-8' --data-binary '{\"name\":\"{{ influx.db.name }}\",\"type\":\"influxdb\",\"url\":\"http://{{ pi.network.ip }}:8086\",\"access\":\"proxy\",\"isDefault\":true,\"database\":\"{{ influx.db.name }}\"}'"
   when: existGrafana.rc != 2
@@ -101,7 +106,7 @@
 - name: Creates grafana load dashboards folder
   become: yes
   file:
-    path: /var/lib/grafana/dashboards
+    path: "{{ grafana.dashboards_folder }}"
     owner: root
     group: grafana
     mode: 0755
@@ -158,11 +163,11 @@
     - /tmp/grafana_temp/apiStuff.sh
     - /tmp/grafana_temp/create_faq.sh
 
-#- name: Delete temp folder
-#  file:
-#    path: /tmp/grafana_temp
-#    state: absent
-#  when: existGrafana.rc == 2
+- name: Delete temp folder
+  file:
+    path: /tmp/grafana_temp
+    state: absent
+  when: existGrafana.rc == 2
 
 - name: Restart grafana-server
   become: yes 

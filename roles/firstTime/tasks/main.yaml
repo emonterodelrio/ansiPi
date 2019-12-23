@@ -62,10 +62,10 @@
   become_user: root
   user: name=pi password={{ pass512.stdout }} update_password=always
 
-- name: Ansible - Change pi password at /etc/ansible/hosts
+- name: Ansible - Change pi password at conf/inventory
   become: yes
   become_user: root
-  local_action: shell sed -i 's/\(.*\)ansible_user=\(.*\) ansible_ssh_pass=\(.*\)/\1ansible_user=\2 ansible_ssh_pass={{ pass.stdout }}/g' /etc/ansible/hosts
+  local_action: shell sed -i 's/\(.*\)ansible_user=\(.*\) ansible_ssh_pass=\(.*\)/\1ansible_user=\2 ansible_ssh_pass={{ pass.stdout }}/g' conf/inventory
 
 - name: Ansible - Enable callback_whitelists
   become: yes

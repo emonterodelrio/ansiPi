@@ -1,7 +1,7 @@
 ---
 
 additional_packages:
-  - nginx=1.10.3-1+deb9u2
+  - nginx
   - openssl
 
 nginx:

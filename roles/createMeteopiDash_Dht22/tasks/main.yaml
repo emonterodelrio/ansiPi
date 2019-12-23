@@ -1,7 +1,7 @@
 ---
 - name: Check existing grafana
   become: yes
-  shell: grafana-server -h
+  shell: grafana-server -v
   register: existGrafana
   ignore_errors: yes
 
@@ -37,11 +37,11 @@
   shell: /tmp/dht22_temp/create_dashboards.sh
   when: existGrafana.rc == 2
 
-#- name: Delete temp folder
-#  file:
-#    path: /tmp/dht22_temp
-#    state: absent
-#  when: existGrafana.rc == 2
+- name: Delete temp folder
+  file:
+    path: /tmp/dht22_temp
+    state: absent
+  when: existGrafana.rc == 2
 
 - name: Restart grafana-server
   become: yes 
