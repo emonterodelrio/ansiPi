@@ -167,59 +167,9 @@ collectors:
     command: "sleep 10 && sudo netstat -putan | grep ESTABLISHED | wc -l"
     delay: "20"
 
-  - name: syn_sent
-    group: network
-    command: "sleep 10 && sudo netstat -putan | grep SYN_SENT | wc -l"
-    delay: "20"
-
-  - name: syn_recv
-    group: network
-    command: "sleep 10 && sudo netstat -putan | grep SYN_RECV | wc -l"
-    delay: "20"
-
-  - name: fin_wait1
-    group: network
-    command: "sleep 10 && sudo netstat -putan | grep FIN_WAIT1 | wc -l"
-    delay: "20"
-
-  - name: fin_wait2
-    group: network
-    command: "sleep 10 && sudo netstat -putan | grep FIN_WAIT2 | wc -l"
-    delay: "20"
-
-  - name: time_wait
-    group: network
-    command: "sleep 10 && sudo netstat -putan | grep TIME_WAIT | wc -l"
-    delay: "20"
-
-  - name: close
-    group: network
-    command: "sleep 10 && sudo netstat -putan | grep CLOSE | wc -l"
-    delay: "20"
-
-  - name: close_wait
-    group: network
-    command: "sleep 10 && sudo netstat -putan | grep CLOSE_WAIT | wc -l"
-    delay: "20"
-
-  - name: closing
-    group: network
-    command: "sleep 10 && sudo netstat -putan | grep CLOSING | wc -l"
-    delay: "20"
-
-  - name: last_ack
-    group: network
-    command: "sleep 10 && sudo netstat -putan | grep LAST_ACK | wc -l"
-    delay: "20"
-
   - name: listen
     group: network
     command: "sleep 10 && sudo netstat -putan | grep LISTEN | wc -l"
-    delay: "20"
-
-  - name: unknow
-    group: network
-    command: "sleep 10 && sudo netstat -putan  | grep UNKNOWN | wc -l"
     delay: "20"
   
 ##@@@   nginx

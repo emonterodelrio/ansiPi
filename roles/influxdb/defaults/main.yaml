@@ -1,8 +1,8 @@
 ---
 
 additional_packages:
-  - influxdb=1.6.4
-  - influxdb-client=1.6.4
+  - influxdb=1.6.4-1
+  - influxdb-client=1.6.4-1
 
 influx:
   port: 8088

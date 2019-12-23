@@ -1,7 +1,7 @@
 ---
 - name: Check exists
   become: yes
-  shell: grafana-server -h
+  shell: grafana-server -v
   register: existGrafana
   ignore_errors: yes
 
@@ -16,20 +16,20 @@
     dest: /home/pi/{{ grafana.deb }}
     mode: 0644
     timeout: 60
-  when: existGrafana.rc != 2
+  when: existGrafana.rc != 0
 
 - name: Install grafana deb
   become: yes
   apt:
     deb: /home/pi/{{ grafana.deb }}
-  when: existGrafana.rc != 2
+  when: existGrafana.rc != 0
 
 - name: Delete grafana deb
   become: yes
   file:
     path: /home/pi/{{ grafana.deb }}
     state: absent
-  when: existGrafana.rc != 2
+  when: existGrafana.rc != 0
 
 - name: Load gmail credentials from file
   shell: cat /home/pi/.gmailUser
@@ -61,29 +61,29 @@
 
 - name: Link influxdb datasource
   shell: "sleep 15 && curl 'http://admin:admin@{{ pi.network.ip }}:3000/api/datasources' -X POST -H 'Content-Type: application/json;charset=UTF-8' --data-binary '{\"name\":\"{{ influx.db.name }}\",\"type\":\"influxdb\",\"url\":\"http://{{ pi.network.ip }}:8086\",\"access\":\"proxy\",\"isDefault\":true,\"database\":\"{{ influx.db.name }}\"}'"
-  when: existGrafana.rc != 2
+  when: existGrafana.rc != 0
 
 - name: Create grafana admin credentials at lpass
   local_action: shell lpass generate --no-symbols --username admin --url="{{ duckDnsUrlReaded.stdout }}" {{ lpass.piId }}/grafanaAdmin 50
   register: grafanaPassAdmin
-  when: existGrafana.rc != 2
+  when: existGrafana.rc != 0
 
 - name: Change grafana admin password	
   shell: "curl -X PUT -H 'Content-Type: application/json' -d '{\"oldPassword\":\"admin\",\"newPassword\":\"{{ grafanaPassAdmin.stdout }}\",\"confirmNew\":\"{{ grafanaPassAdmin.stdout }}\"}' 'http://admin:admin@192.168.1.11:3000/api/user/password'"
   register: resultGrafanaPassAdmin
   failed_when: '"changed" not in resultGrafanaPassAdmin.stdout'
-  when: existGrafana.rc != 2
+  when: existGrafana.rc != 0
 
 - name: Create grafana user credentials at lpass
   local_action: shell lpass generate --no-symbols --username read --url={{duckDnsUrlReaded.stdout }} {{ lpass.piId }}/grafanaUser 50
   register: grafanaPassUser
-  when: existGrafana.rc != 2
+  when: existGrafana.rc != 0
 
 - name: Change grafana user password	
   shell: "curl -XPOST -H 'Content-Type: application/json' -d '{\"name\":\"read\",\"email\":\"{{ lookup('pipe', 'date +%s') }}@email.com\",\"login\":\"read\",\"password\":\"{{ grafanaPassUser.stdout }}\"}' 'http://admin:{{ grafanaPassAdmin.stdout }}@localhost:3000/api/admin/users'"
   register: resultGrafanaPassUser
   failed_when: '"created" not in resultGrafanaPassUser.stdout'
-  when: existGrafana.rc != 2
+  when: existGrafana.rc != 0
 
 - name: Setup dashboards load folder
   become: yes
@@ -124,6 +124,15 @@
     - piStatus
     - networkStatus
 
+- name: Fill /usr/share/grafana/public/home.json with template
+  become: yes
+  template:
+    src: home.json
+    dest: /usr/share/grafana/public/dashboards/home.json
+    owner: root
+    group: root
+    mode: 0644
+
 - name: Lastpass - Ensure user loged in
   local_action: shell lpass ls
 
@@ -150,27 +159,20 @@
     dest: "/tmp/grafana_temp/apiStuff.sh"
     mode: 0777
 
-- name: Setup create dashboards script
-  template:
-    src: create_faq.sh
-    dest: "/tmp/grafana_temp/create_faq.sh"
-    mode: 0777
-
 - name: Execute scripts
   shell: "{{ item }}"
-  when: existGrafana.rc == 2
+  when: existGrafana.rc != 0
   with_items:
     - /tmp/grafana_temp/apiStuff.sh
-    - /tmp/grafana_temp/create_faq.sh
 
 - name: Delete temp folder
   file:
     path: /tmp/grafana_temp
     state: absent
-  when: existGrafana.rc == 2
+  when: existGrafana.rc != 0
 
 - name: Restart grafana-server
   become: yes 
   service:
     name: grafana-server
-    state: restarted  
+    state: restarted
