@@ -61,6 +61,7 @@
 - name: Change hostname
   become: yes
   shell: echo {{ pi.hostname }} > /etc/hostname
+  register: changedHostname
 
 - name: Change etc hosts
   become: yes
@@ -95,7 +96,7 @@
 - name: Change pi ip at conf/inventory
   become: yes
   become_user: root
-  local_action: command sed -i 's/\(.*\) ansible_user=\(.*\)/{{ pi.network.ip }} ansible_user=\2/g' conf/inventory
+  local_action: command sed -i 's/{{ ansible_default_ipv4.address }} ansible_user=\(.*\)/{{ pi.network.ip }} ansible_user=\1/g' conf/inventory
 
 - name: Delete previous known_hosts user
   local_action: command ssh-keygen -f "/home/emontero/.ssh/known_hosts" -R {{ pi.network.ip }}
@@ -118,4 +119,15 @@
 
 - name: Reboot raspi 
   become: yes
-  shell: sudo reboot -h now
+  shell: "sleep 5 && sudo reboot -h now"
+  async: 1
+  poll: 0
+  when: changedHostname.changed
+
+- name: Wait for the reboot.
+  wait_for_connection:
+    connect_timeout: 10
+    sleep: 5
+    delay: 5
+    timeout: 10
+  when: changedHostname.changed
