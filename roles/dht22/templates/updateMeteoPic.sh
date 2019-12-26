@@ -44,3 +44,21 @@ done
 #Go out
 cd ..
 rm -r /tmp/meteotemp
+
+
+#Air mass
+mkdir -p /var/www/html/sharedFiles/masasAire
+
+cd /var/www/html/sharedFiles/masasAire
+
+echo "Download zip"
+wget https://eumetview.eumetsat.int/static-images/MSG/RGB/AIRMASS/WESTERNEUROPE/IMAGESDisplay/2FramesAIRMASS-WESTERNEUROPE.zip -O myZip.zip
+
+unzip -o myZip.zip
+
+rm myZip.zip
+
+echo "Delete files older than 2 days"
+find /var/www/html/sharedFiles/masasAire/ -type f -mtime +2 -exec rm {} \;
+
+

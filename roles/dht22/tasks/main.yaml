@@ -47,7 +47,7 @@
     dest: "{{ meteoUpdatePicturesPath }}/updateMeteoPic.sh"
     mode: 0777
   when: DHT22.present
-
+  
 - name: Setup dht22 stop script
   template:
     src: stop_dht22.j2
@@ -88,8 +88,8 @@
 - name: Crontab meteo-update-pictures script
   cron:
     name: "UpdateMeteoPictures"
-    minute: "*"
-    hour: "*/2"
+    minute: "0"
+    hour: "*"
     day: "*"
     month: "*"
     weekday: "*" 
