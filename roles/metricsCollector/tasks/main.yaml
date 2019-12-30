@@ -28,17 +28,6 @@
     mode: 0777
   with_items: "{{ collectors }}"
 
-- name: Setup stop script
-  template:
-    src: stop_collectors.j2
-    dest: "{{ metricsCollectors.path }}/stop_collectors.sh"
-    mode: 0777
-
-- name: Stop all scripts
-  become: yes
-  shell: "{{ metricsCollectors.path }}/stop_collectors.sh"
-  ignore_errors: yes
-
 - name: Setup logrotate.d logs
   become: yes
   template:
@@ -52,8 +41,8 @@
 - name: Crontab scripts
   cron:
     name: "{{ item.group }}_{{ item.name }}"
-    minute: "*"
-    hour: "*"
+    minute: "{{ item.cron_minute }}"
+    hour: "{{ item.cron_hour }}"
     day: "*"
     month: "*"
     weekday: "*"

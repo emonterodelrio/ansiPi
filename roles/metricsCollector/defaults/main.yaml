@@ -11,6 +11,9 @@ collectors:
     group: monitor
     command: "LC_ALL=en_EN.utf8 myDate=$(date \"+%b %-d\");myDate=\"${myDate^}\";grep -a \"$myDate\" /var/log/syslog | grep -a \"Booting Linux on physical\" | wc -l"
     delay: "30"
+    times: "2"
+    cron_minute: "*"
+    cron_hour: "*"
 
 ##@@@   temperatures
 
@@ -18,11 +21,17 @@ collectors:
     group: temperature
     command: "cpuTemp0=$(cat /sys/class/thermal/thermal_zone0/temp);cpuTemp1=$(($cpuTemp0/1000));cpuTemp2=$(($cpuTemp0/100));cpuTempM=$(($cpuTemp2 % $cpuTemp1));echo $cpuTemp1\".\"$cpuTempM"
     delay: "1"
+    times: "60"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: gpu
     group: temperature
     command: "/opt/vc/bin/vcgencmd measure_temp | cut -d\"=\" -f2 | cut -d\"'\" -f1"
     delay: "1"
+    times: "60"
+    cron_minute: "*"
+    cron_hour: "*"
 
 ##@@@   voltages
 
@@ -30,21 +39,33 @@ collectors:
     group: voltage
     command: "vcgencmd measure_volts core | cut -d\"=\" -f2 | cut -d'V' -f1"
     delay: "1"
+    times: "60"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: sdram_c
     group: voltage
     command: "vcgencmd measure_volts sdram_c | cut -d\"=\" -f2 | cut -d'V' -f1"
     delay: "1"
+    times: "60"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: sdram_i
     group: voltage
     command: "vcgencmd measure_volts sdram_i | cut -d\"=\" -f2 | cut -d'V' -f1"
     delay: "1"
+    times: "60"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: sdram_p
     group: voltage
     command: "vcgencmd measure_volts sdram_p | cut -d\"=\" -f2 | cut -d'V' -f1"
     delay: "1"
+    times: "60"
+    cron_minute: "*"
+    cron_hour: "*"
 
 ##@@@   cpu
 
@@ -52,52 +73,82 @@ collectors:
     group: cpu
     command: "cat /proc/loadavg | awk '{print $1}'"
     delay: "5"
+    times: "12"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: load_5
     group: cpu
     command: "cat /proc/loadavg | awk '{print $2}'"
     delay: "5"
+    times: "12"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: load_15
     group: cpu
     command: "cat /proc/loadavg | awk '{print $3}'"
     delay: "5"
+    times: "12"
+    cron_minute: "*"
+    cron_hour: "*"
 
 ##@@@   memory
   - name: used_percent
     group: memory
     command: "free -m | grep Mem | awk '{userPercent=$3/$2}; {split(userPercent,a,\".\"); print a[1]\".\"substr(a[2],1,2)}'"
     delay: "30"
+    times: "2"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: total
     group: memory
     command: "free -m | grep -i mem | awk '{print $2}'"
     delay: "30"
+    times: "2"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: used
     group: memory
     command: "free -m | grep -i mem | awk '{print $3}'"
     delay: "30"
+    times: "2"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: free
     group: memory
     command: "free -m | grep -i mem | awk '{print $4}'"
     delay: "30"
+    times: "2"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: shared
     group: memory
     command: "free -m | grep -i mem | awk '{print $5}'"
     delay: "30"
+    times: "2"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: buff_cache
     group: memory
     command: "free -m | grep -i mem | awk '{print $6}'"
     delay: "30"
+    times: "2"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: available
     group: memory
     command: "free -m | grep -i mem | awk '{print $7}'"
     delay: "30"
+    times: "2"
+    cron_minute: "*"
+    cron_hour: "*"
 
 ##@@@   swap
 
@@ -105,38 +156,59 @@ collectors:
     group: swap
     command: "free -m | grep -i swap | awk '{print $2}'"
     delay: "30"
+    times: "2"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: used
     group: swap
     command: "free -m | grep -i swap | awk '{print $3}'"
     delay: "30"
+    times: "2"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: free
     group: swap
     command: "free -m | grep -i swap | awk '{print $4}'"
     delay: "30"
+    times: "2"
+    cron_minute: "*"
+    cron_hour: "*"
 
 ##@@@   disk
 
   - name: used_percent
     group: disk
     command: "sleep 10 && echo \"0.$(expr \"$(df -h | grep \"/dev/root\" | awk '{print $5}' | tr -d \"%\")\")\""
-    delay: "50"
+    delay: "0"
+    times: "1"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: total_KB
     group: disk
     command: "sleep 10 && df |grep \"/dev/root\" | awk '{print $2}'"
-    delay: "50"
+    delay: "0"
+    times: "1"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: used_KB
     group: disk
     command: "sleep 10 && df |grep \"/dev/root\" | awk '{print $3}'"
-    delay: "50"
+    delay: "0"
+    times: "1"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: free_KB
     group: disk
     command: "sleep 10 && df |grep \"/dev/root\" | awk '{print $4}'"
-    delay: "50"
+    delay: "0"
+    times: "1"
+    cron_minute: "*"
+    cron_hour: "*"
 
 
 ##   Security   ############################################################
@@ -146,7 +218,10 @@ collectors:
   - name: current_sessions
     group: sessions
     command: "ps aux | grep -a ssh | grep -v \"grep\\|metricsCollectors\\|/sshd\" | grep @ | wc -l"
-    delay: 10"
+    delay: "10"
+    times: "6"
+    cron_minute: "*"
+    cron_hour: "*"
 
 ##@@@   ssh
 
@@ -154,11 +229,17 @@ collectors:
     group: ssh
     command: "LC_ALL=en_EN.utf8 myDate=$(date \"+%b %-d\");myDate=\"${myDate^}\";grep -a \"$myDate\" /var/log/auth.log | grep -a sshd | grep -a \"session opened for user\" | wc -l"
     delay: "10"
+    times: "6"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: login_ko
     group: ssh
     command: "LC_ALL=en_EN.utf8 myDate=$(date \"+%b %-d\");myDate=\"${myDate^}\";grep -a \"$myDate\" /var/log/auth.log | grep -a sshd | grep -a \"authentication failure\" | wc -l"
     delay: "10"
+    times: "6"
+    cron_minute: "*"
+    cron_hour: "*"
 
 ##   Network   ############################################################
 
@@ -166,11 +247,17 @@ collectors:
     group: network
     command: "sleep 10 && sudo netstat -putan | grep ESTABLISHED | wc -l"
     delay: "20"
+    times: "3"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: listen
     group: network
     command: "sleep 10 && sudo netstat -putan | grep LISTEN | wc -l"
     delay: "20"
+    times: "3"
+    cron_minute: "*"
+    cron_hour: "*"
   
 ##@@@   nginx
 
@@ -178,29 +265,47 @@ collectors:
     group: nginx
     command: "sleep 11 && LC_ALL=en_EN.utf8 myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | grep -v \"{{ pi.network.prefix }}\" | wc -l"
     delay: "30"
+    times: "2"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: local_acceses
     group: nginx
     command: "sleep 11 && LC_ALL=en_EN.utf8 myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | grep \"{{ pi.network.prefix }}\" | wc -l"
     delay: "30"
+    times: "2"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: get
     group: nginx
     command: "sleep 11 && LC_ALL=en_EN.utf8 myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep GET | wc -l"
     delay: "30"
+    times: "2"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: post
     group: nginx
     command: "sleep 11 && LC_ALL=en_EN.utf8 myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep POST | wc -l"
     delay: "30"
+    times: "2"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: put
     group: nginx
     command: "sleep 11 && LC_ALL=en_EN.utf8 myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep PUT | wc -l"
     delay: "30"
+    times: "2"
+    cron_minute: "*"
+    cron_hour: "*"
 
   - name: other
     group: nginx
     command: "sleep 11 && LC_ALL=en_EN.utf8 myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep -v \"POST\\|GET\\|PUT\" | wc -l"
     delay: "30"
+    times: "2"
+    cron_minute: "*"
+    cron_hour: "*"
 

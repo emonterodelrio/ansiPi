@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: Verdana, sans-serif;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.row > .column {
+  padding: 0 8px;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.column {
+  float: left;
+  width: 25%;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: black;
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: black;
+  margin: auto;
+  padding: 0;
+  width: 90%;
+  max-width: 1200px;
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #999;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.mySlides {
+  display: none;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+img {
+  margin-bottom: -4px;
+}
+
+.caption-container {
+  text-align: center;
+  background-color: black;
+  padding: 2px 16px;
+  color: white;
+}
+
+.demo {
+  opacity: 0.6;
+}
+
+.active,
+.demo:hover {
+  opacity: 1;
+}
+
+img.hover-shadow {
+  transition: 0.3s;
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+</style>
+<body>
+<div class="row">
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_0.jpg" style="width:100%" onclick="openModal();currentSlide(1)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_1.jpg" style="width:100%" onclick="openModal();currentSlide(2)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_2.jpg" style="width:100%" onclick="openModal();currentSlide(3)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_3.jpg" style="width:100%" onclick="openModal();currentSlide(4)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_4.jpg" style="width:100%" onclick="openModal();currentSlide(5)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_5.jpg" style="width:100%" onclick="openModal();currentSlide(6)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_6.jpg" style="width:100%" onclick="openModal();currentSlide(7)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_7.jpg" style="width:100%" onclick="openModal();currentSlide(8)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_8.jpg" style="width:100%" onclick="openModal();currentSlide(9)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_9.jpg" style="width:100%" onclick="openModal();currentSlide(10)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_10.jpg" style="width:100%" onclick="openModal();currentSlide(11)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_11.jpg" style="width:100%" onclick="openModal();currentSlide(12)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_12.jpg" style="width:100%" onclick="openModal();currentSlide(13)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_13.jpg" style="width:100%" onclick="openModal();currentSlide(14)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_14.jpg" style="width:100%" onclick="openModal();currentSlide(15)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_15.jpg" style="width:100%" onclick="openModal();currentSlide(16)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_16.jpg" style="width:100%" onclick="openModal();currentSlide(17)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_17.jpg" style="width:100%" onclick="openModal();currentSlide(18)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_18.jpg" style="width:100%" onclick="openModal();currentSlide(19)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_19.jpg" style="width:100%" onclick="openModal();currentSlide(20)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_20.jpg" style="width:100%" onclick="openModal();currentSlide(21)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_21.jpg" style="width:100%" onclick="openModal();currentSlide(22)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_22.jpg" style="width:100%" onclick="openModal();currentSlide(23)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_23.jpg" style="width:100%" onclick="openModal();currentSlide(24)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_24.jpg" style="width:100%" onclick="openModal();currentSlide(25)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_25.jpg" style="width:100%" onclick="openModal();currentSlide(26)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_26.jpg" style="width:100%" onclick="openModal();currentSlide(27)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_27.jpg" style="width:100%" onclick="openModal();currentSlide(28)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_28.jpg" style="width:100%" onclick="openModal();currentSlide(29)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_29.jpg" style="width:100%" onclick="openModal();currentSlide(30)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_30.jpg" style="width:100%" onclick="openModal();currentSlide(31)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_31.jpg" style="width:100%" onclick="openModal();currentSlide(32)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_32.jpg" style="width:100%" onclick="openModal();currentSlide(33)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_33.jpg" style="width:100%" onclick="openModal();currentSlide(34)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_34.jpg" style="width:100%" onclick="openModal();currentSlide(35)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_35.jpg" style="width:100%" onclick="openModal();currentSlide(36)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_36.jpg" style="width:100%" onclick="openModal();currentSlide(37)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_37.jpg" style="width:100%" onclick="openModal();currentSlide(38)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_38.jpg" style="width:100%" onclick="openModal();currentSlide(39)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_39.jpg" style="width:100%" onclick="openModal();currentSlide(40)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_40.jpg" style="width:100%" onclick="openModal();currentSlide(41)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_41.jpg" style="width:100%" onclick="openModal();currentSlide(42)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_42.jpg" style="width:100%" onclick="openModal();currentSlide(43)" class="hover-shadow cursor"></div>
+<div class="column"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/mini_airMass_43.jpg" style="width:100%" onclick="openModal();currentSlide(44)" class="hover-shadow cursor"></div>
+</div>
+
+<div id="myModal" class="modal">
+  <span class="close cursor" onclick="closeModal()">&times;</span>
+  <div class="modal-content">
+
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_0.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_1.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_2.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_3.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_4.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_5.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_6.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_7.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_8.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_9.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_10.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_11.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_12.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_13.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_14.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_15.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_16.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_17.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_18.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_19.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_20.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_21.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_22.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_23.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_24.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_25.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_26.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_27.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_28.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_29.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_30.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_31.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_32.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_33.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_34.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_35.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_36.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_37.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_38.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_39.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_40.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_41.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_42.jpg" style="width:100%"></div>
+    <div class="mySlides"><img src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_43.jpg" style="width:100%"></div>    
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+    <div class="caption-container">
+      <p id="caption"></p>
+    </div>
+
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_0.jpg" style="width:100%" onclick="currentSlide(1)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_1.jpg" style="width:100%" onclick="currentSlide(2)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_2.jpg" style="width:100%" onclick="currentSlide(3)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_3.jpg" style="width:100%" onclick="currentSlide(4)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_4.jpg" style="width:100%" onclick="currentSlide(5)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_5.jpg" style="width:100%" onclick="currentSlide(6)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_6.jpg" style="width:100%" onclick="currentSlide(7)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_7.jpg" style="width:100%" onclick="currentSlide(8)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_8.jpg" style="width:100%" onclick="currentSlide(9)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_9.jpg" style="width:100%" onclick="currentSlide(10)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_10.jpg" style="width:100%" onclick="currentSlide(11)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_11.jpg" style="width:100%" onclick="currentSlide(12)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_12.jpg" style="width:100%" onclick="currentSlide(13)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_13.jpg" style="width:100%" onclick="currentSlide(14)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_14.jpg" style="width:100%" onclick="currentSlide(15)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_15.jpg" style="width:100%" onclick="currentSlide(16)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_16.jpg" style="width:100%" onclick="currentSlide(17)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_17.jpg" style="width:100%" onclick="currentSlide(18)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_18.jpg" style="width:100%" onclick="currentSlide(19)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_19.jpg" style="width:100%" onclick="currentSlide(20)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_20.jpg" style="width:100%" onclick="currentSlide(21)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_21.jpg" style="width:100%" onclick="currentSlide(22)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_22.jpg" style="width:100%" onclick="currentSlide(23)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_23.jpg" style="width:100%" onclick="currentSlide(24)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_24.jpg" style="width:100%" onclick="currentSlide(25)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_25.jpg" style="width:100%" onclick="currentSlide(26)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_26.jpg" style="width:100%" onclick="currentSlide(27)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_27.jpg" style="width:100%" onclick="currentSlide(28)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_28.jpg" style="width:100%" onclick="currentSlide(29)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_29.jpg" style="width:100%" onclick="currentSlide(30)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_30.jpg" style="width:100%" onclick="currentSlide(31)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_31.jpg" style="width:100%" onclick="currentSlide(32)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_32.jpg" style="width:100%" onclick="currentSlide(33)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_33.jpg" style="width:100%" onclick="currentSlide(34)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_34.jpg" style="width:100%" onclick="currentSlide(35)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_35.jpg" style="width:100%" onclick="currentSlide(36)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_36.jpg" style="width:100%" onclick="currentSlide(37)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_37.jpg" style="width:100%" onclick="currentSlide(38)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_38.jpg" style="width:100%" onclick="currentSlide(39)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_39.jpg" style="width:100%" onclick="currentSlide(40)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_40.jpg" style="width:100%" onclick="currentSlide(41)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_41.jpg" style="width:100%" onclick="currentSlide(42)"></div>
+<div class="column"><img class="demo cursor" src="http://meteopi.duckdns.org/sharedFiles/airMasses/airMass_42.jpg" style="width:100%" onclick="currentSlide(43)"></div>
+
+
+</div>
+
+<script>
+function openModal() {
+  document.getElementById("myModal").style.display = "block";
+}
+
+function closeModal() {
+  document.getElementById("myModal").style.display = "none";
+}
+
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("demo");
+  var captionText = document.getElementById("caption");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+  captionText.innerHTML = dots[slideIndex-1].alt;
+}
+</script>
+    
+</body>
+</html>
+

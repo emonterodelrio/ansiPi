@@ -35,10 +35,7 @@ done
 #echo "Cut bottom of predictions original images"
 for i in $(ls temp_map_pred*); do
   echo $i | cut -d"_" -f2- | cut -d"." -f1
-#  convert -crop 500x333 $i mv $(echo $i | cut -d"_" -f2- | cut -d"." -f1).jpg
-#  echo $i | cut -d"_" -f2- | cut -d"." -f1
-  mv $i /var/www/html/sharedFiles/$(echo $i | cut -d"_" -f2- | cut -d"." -f1).jpg
-#  rm $(echo $i | cut -d"_" -f2- | cut -d"." -f1)-*.jpg
+  mv $i /var/www/html/sharedFiles/$(echo $i | cut -d"_" -f2- | cut -d"." -f1).png
 done
 
 #Go out
@@ -46,19 +43,78 @@ cd ..
 rm -r /tmp/meteotemp
 
 
-#Air mass
-mkdir -p /var/www/html/sharedFiles/masasAire
 
-cd /var/www/html/sharedFiles/masasAire
+echo
+echo
+echo
+echo
+echo
+echo
+echo
+echo
+echo
+echo
+echo
+echo
+echo
+echo
+echo
+
+#Air mass
+rm -r /tmp/meteoAirMasses
+mkdir -p /tmp/meteoAirMasses /var/www/html/sharedFiles/airMasses/
+cd /tmp/meteoAirMasses
 
 echo "Download zip"
-wget https://eumetview.eumetsat.int/static-images/MSG/RGB/AIRMASS/WESTERNEUROPE/IMAGESDisplay/2FramesAIRMASS-WESTERNEUROPE.zip -O myZip.zip
-
+wget https://eumetview.eumetsat.int/static-images/MSG/RGB/AIRMASS/WESTERNEUROPE/IMAGESDisplay/24FramesAIRMASS-WESTERNEUROPE.zip -O myZip.zip
 unzip -o myZip.zip
-
 rm myZip.zip
 
-echo "Delete files older than 2 days"
-find /var/www/html/sharedFiles/masasAire/ -type f -mtime +2 -exec rm {} \;
+#Change name
+counter=0
+for i in $(ls -r ); do
+  echo "mv $i airMass_$counter.jpg and convert to png"
+  mv $i airMass_$counter.jpg
+#  convert airMass_$counter.jpg -quality 50 airMass_$counter.jpg
+  convert airMass_$counter.jpg airMass_$counter.png
+  convert airMass_$counter.png -resize 600 -colors 255 airMass_$counter.png
+#  ls
+  counter=$((counter+1))
+done
+rm *.jpg
 
+if ! cmp --silent airMass_0.png /var/www/html/sharedFiles/airMasses/airMass_0.png; then
+
+  cd /var/www/html/sharedFiles/airMasses/
+
+#  #Delete 2
+#  echo "Delete"
+#  rm -f $(ls -v | tail -n1)
+#  rm -f $(ls -v | tail -n1)
+
+#  echo "Move 2 back images"
+##  pwd
+##  ls -la
+#  total=$(ls | wc -l)
+#  for (( i=$total; i>=1; i-- )); do
+#    original=$(($i-1))
+#    destiny=$(($i+1))
+##    echo Antes 
+##    ls -lvl
+#    echo "mv ./airMass_$original.png ./airMass_$destiny.png"
+#    mv ./airMass_$original.png ./airMass_$destiny.png
+##    echo Despues 
+##    ls -lvl
+#  done
+
+  #Move
+  ls "/tmp/meteoAirMasses/"
+  rm /var/www/html/sharedFiles/airMasses/*
+  echo "cp /tmp/meteoAirMasses/* /var/www/html/sharedFiles/airMasses/"
+  cp /tmp/meteoAirMasses/* /var/www/html/sharedFiles/airMasses/
+fi
+
+echo "Delete files older than 2 days"
+echo $(find /var/www/html/sharedFiles/airMasses/ -type f -mtime +1 -exec rm {} \;)  
+find /var/www/html/sharedFiles/airMasses/ -type f -mtime +1 -exec rm {} \;
 
