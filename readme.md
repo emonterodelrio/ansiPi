@@ -29,11 +29,11 @@ This is the central server, it requires a powerfull raspberry like [Raspberry Pi
 
 3-. Power on your raspberry
 
-4-. Start GUI typing <pre>startx</pre> at terminal prompt, if not started by default
+4-. Start GUI, if not autoload, typing <pre>startx</pre> at terminal prompt, if not started by default
 
 4-. Follow first-time-menu prompts for initial setup of your raspberry pi:
-    Setup country, Language, Timezone...
-    Setup password, must be the same you setup at install_meteopi.sh
+    Setup country, Language, Timezone...leave ENGLISH language
+    Setup password, [same as here](https://github.com/emonterodelrio/ansiPi/blob/develop/install_meteopi.sh#L2).
     Setup wifi connection
 
 5-. Open a terminal (Ctrl+Alt+t) and run <pre>raspi-config</pre> and edit some settings:
@@ -43,6 +43,8 @@ This is the central server, it requires a powerfull raspberry like [Raspberry Pi
     Enable autologin to console mode at: Boot options -> Desktop/Cli -> Console autologin
 
     Expand filesystem at: Advanced options -> Expand filesystem
+    
+    Disable bluetooth
 
 6-. find your raspberry pi at network:
 
