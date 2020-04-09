@@ -44,8 +44,6 @@ This is the central server, it requires a powerfull raspberry like [Raspberry Pi
 
     Expand filesystem at: Advanced options -> Expand filesystem
     
-    Disable bluetooth
-
 6-. find your raspberry pi at network:
 
     nmap -sP 192.168.1.1/24
