@@ -56,13 +56,13 @@ until ansible ${NAME} -m ping -i `pwd`/conf/inventory --extra-vars "ansible_user
 done
 
 printf "\033[1;32m\n\nNow going to exec this\033[0m\n"
-printf "\033[1;32m\n\nansible-playbook 01-setCredentials.yaml\033[0m\n"
+printf "\033[1;32m\n\nansipi 01-setCredentials.yaml\033[0m\n"
 if export ANSIBLE_CONFIG=$(pwd)/conf/ansible.cfg && ansible-playbook -i $(pwd)/conf/inventory 02-meteopi.yaml; then
     echo "Done!"
 else
   printf "\033[1;31m\n\nFail!, maybe your aren't logged in lastpass?\033[0m\n"
-  printf "\033[1;32m\n\nType this once you have been loged:\nansible-playbook 02-meteopi.yaml --start-at-task=\"Lastpass - Ensure user loged in\"\033[0m\n"
-  printf "\033[1;32m\n\nor this if you are already logged :p\nansible-playbook 02-meteopi.yaml --start-at-task=\"security : Install software via apt\"\033[0m\n"
+  printf "\033[1;32m\n\nType this once you have been loged:\nansipi 02-meteopi.yaml --start-at-task=\"Lastpass - Ensure user loged in\"\033[0m\n"
+  printf "\033[1;32m\n\nor this if you are already logged :p\nansipi 02-meteopi.yaml --start-at-task=\"security : Install software via apt\"\033[0m\n"
 exit 1;
 fi
 

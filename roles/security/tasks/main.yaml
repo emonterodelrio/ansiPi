@@ -74,20 +74,6 @@
     state: absent
     line: 'include /etc/monit/conf-enabled/*'
 
-- name: Copy conf to jail.conf
-  shell: awk '{ printf "# "; print; }' /etc/fail2ban/jail.conf | sudo tee /etc/fail2ban/jail.local
- 
-- name: Configure fail2ban
-  become: yes
-  blockinfile:
-    path: /etc/fail2ban/jail.local
-    block: |
-      [DEFAULT]
-      ignoreip = 127.0.0.1/8
-      bantime = {{ fail2ban.bantime }}
-      findtime = {{ fail2ban.findtime }}
-      maxretry = {{ fail2ban.maxretry }}
-
 - name: Add ssh login monit alert
   become: yes
   blockinfile:
@@ -110,22 +96,6 @@
   become: yes
   service:
     name: monit
-    state: stopped 
-    enabled: no
-  when: not production_mode
-
-- name: Make sure fail2ban is enabled and restarted
-  become: yes
-  service:
-    name: fail2ban
-    state: restarted 
-    enabled: yes 
-  when: production_mode
-
-- name: Disable and stop fail2ban if no production mode
-  become: yes
-  service:
-    name: fail2ban
     state: stopped 
     enabled: no
   when: not production_mode

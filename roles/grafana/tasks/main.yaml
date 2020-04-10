@@ -60,7 +60,7 @@
     delay: 10
 
 - name: Link influxdb datasource
-  shell: "sleep 15 && curl 'http://admin:admin@{{ pi.network.ip }}:3000/api/datasources' -X POST -H 'Content-Type: application/json;charset=UTF-8' --data-binary '{\"name\":\"{{ influx.db.name }}\",\"type\":\"influxdb\",\"url\":\"http://{{ pi.network.ip }}:8086\",\"access\":\"proxy\",\"isDefault\":true,\"database\":\"{{ influx.db.name }}\"}'"
+  shell: "sleep 15 && curl 'http://admin:admin@{{ pi.network.ip }}:3000/api/datasources' -X POST -H 'Content-Type: application/json;charset=UTF-8' --data-binary '{\"name\":\"{{ influx.db.name }}\",\"type\":\"influxdb\",\"url\":\"http://{{ pi.network.ip }}:{{ influx.http.port }}\",\"access\":\"proxy\",\"isDefault\":true,\"database\":\"{{ influx.db.name }}\"}'"
   when: existGrafana.rc != 0
 
 - name: Create grafana admin credentials at lpass

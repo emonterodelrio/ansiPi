@@ -15,20 +15,20 @@ lpass:
   piId: meteopi
 
 influx:
-  port: 8088
+  port: 8888
   admin:
-    port: 8083
+    port: 8883
   http:
-    port: 8086
+    port: 8886
   db:
     name: piMonitorDb
 
 metricCollectors:
   influx:
-    port: 8086
+    port: 8886
 
 dht22:
   influx:
-    port: 8086
+    port: 8886
 
 production_mode: false

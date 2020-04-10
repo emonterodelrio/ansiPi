@@ -4,12 +4,6 @@ additional_packages:
   - mailutils
   - ssmtp
   - openssh-server
-  - fail2ban
   
-fail2ban:
-  bantime: 600
-  findtime: 60
-  maxretry: 6
-
 monitTimeout: 10
 production_mode: false
