@@ -1,64 +1,47 @@
 #!/bin/bash
 API_KEY=$( cat /home/pi/.aemet_opendata_apikey )
 
-mkdir -p /tmp/meteotemp
 
-cd /tmp/meteotemp
+#Predictions
+#wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/mapassignificativos/esp/c/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O temp_map_pred_0.gif
+#wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/mapassignificativos/esp/d/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O temp_map_pred_1.gif
+#wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/mapassignificativos/esp/e/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O temp_map_pred_2.gif
+#wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/mapassignificativos/esp/f/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O temp_map_pred_3.gif
 
-wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/mapassignificativos/esp/c/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O temp_map_pred_0.gif
 
-wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/mapassignificativos/esp/d/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O temp_map_pred_1.gif
 
-wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/mapassignificativos/esp/e/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O temp_map_pred_2.gif
+#Meteobars
+rm -r /tmp/meteobar_tmp
+mkdir -p /var/www/html/sharedFiles/meteobar /tmp/meteobar_tmp
+cd /tmp/meteobar_tmp
 
-wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/mapassignificativos/esp/f/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O temp_map_pred_3.gif
-
-wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/analisis/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O temp_map_meteobars_0.gif
-
-wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/previstos/h12/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O temp_map_meteobars_1.gif
-
-wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/previstos/h24/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O temp_map_meteobars_2.gif
-
-wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/previstos/h36/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O temp_map_meteobars_3.gif
-
-wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/previstos/h48/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O temp_map_meteobars_4.gif
-
-wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/previstos/h60/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O temp_map_meteobars_5.gif
-
-wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/previstos/h72/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O temp_map_meteobars_6.gif  
+wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/analisis/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O tmp_meteobar_0.gif
+wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/previstos/h12/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O tmp_meteobar_1.gif
+wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/previstos/h24/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O tmp_meteobar_2.gif
+wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/previstos/h36/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O tmp_meteobar_3.gif
+wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/previstos/h48/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O tmp_meteobar_4.gif
+wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/previstos/h60/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O tmp_meteobar_5.gif
+wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/previstos/h72/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O tmp_meteobar_6.gif  
 
 echo "Rotate meteobar original images"
-for i in $(ls temp_map_meteobars* | grep temp); do
-  convert $i -rotate 90 /var/www/html/sharedFiles/$(echo $i | cut -d"_" -f2-)
+for i in $(ls tmp_meteobar* | grep tmp); do
+  convert $i -rotate 90 /var/www/html/sharedFiles/meteobar/$(echo $i | cut -d"_" -f2-)
 done
-
-#echo "Cut bottom of predictions original images"
-for i in $(ls temp_map_pred*); do
-  echo $i | cut -d"_" -f2- | cut -d"." -f1
-#  convert -crop 500x333 $i mv $(echo $i | cut -d"_" -f2- | cut -d"." -f1).jpg
-#  echo $i | cut -d"_" -f2- | cut -d"." -f1
-  mv $i /var/www/html/sharedFiles/$(echo $i | cut -d"_" -f2- | cut -d"." -f1).jpg
-#  rm $(echo $i | cut -d"_" -f2- | cut -d"." -f1)-*.jpg
-done
-
-#Go out
-cd ..
-rm -r /tmp/meteotemp
 
 
 #Air mass
-mkdir -p /var/www/html/sharedFiles/masasAire
-
-cd /var/www/html/sharedFiles/masasAire
+rm -r /tmp/airMass_tmp
+mkdir -p /var/www/html/sharedFiles/airMass /tmp/airMass_tmp
+cd /tmp/airMass_tmp
 
 echo "Download zip"
-wget https://eumetview.eumetsat.int/static-images/MSG/RGB/AIRMASS/WESTERNEUROPE/IMAGESDisplay/2FramesAIRMASS-WESTERNEUROPE.zip -O myZip.zip
+wget https://eumetview.eumetsat.int/static-images/MSG/RGB/AIRMASS/WESTERNEUROPE/IMAGESDisplay/24FramesAIRMASS-WESTERNEUROPE.zip -O airMass.zip;
+unzip -o airMass.zip;
+rm airMass.zip $(ls | head -n 1)
 
-unzip -o myZip.zip
-
-rm myZip.zip
-
-echo "Delete files older than 2 days"
-find /var/www/html/sharedFiles/masasAire/ -type f -mtime +2 -exec rm {} \;
-
-
+it=0
+for i in $(ls); do
+  echo "mv $i /var/www/html/sharedFiles/airMass/airMass_$it.jpg"
+  convert $i -strip -quality 60 /var/www/html/sharedFiles/airMass/airMass_$it.jpg
+  ((it++))
+done

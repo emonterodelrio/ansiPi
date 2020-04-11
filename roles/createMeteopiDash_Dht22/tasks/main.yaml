@@ -35,7 +35,6 @@
 
 - name: Execute script
   shell: /tmp/dht22_temp/create_dashboards.sh
-  when: existGrafana.rc == 0
 
 - name: Delete temp folder
   file:

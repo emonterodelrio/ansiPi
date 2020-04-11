@@ -1,0 +1,340 @@
+<style>
+    .airMass_img {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .airMass_back {
+      z-index:9;
+      width: 50%;
+      margin-left: 0;
+      opacity: 0;
+      background-color: #ff0000;
+      font-size: 25pt;
+      text-align: center;
+      font-weight: bold;
+      color: #ffffff;
+      cursor: pointer;
+    }
+
+    .airMass_forward {
+      z-index:9;
+      width: 50%;
+      margin-left: 50%;
+      opacity: 0;
+      background-color: #0000ff;
+      font-size: 25pt;
+      text-align: center;
+      font-weight: bold;
+      color: #ffffff;
+      cursor: pointer;
+    }
+
+    .arrow {
+      margin-top: 50%;
+    }
+
+    .airMass_div {
+      display: none;
+    }
+
+    .airMass_slideshow-container {
+      margin: auto;
+    }
+
+    .airMass_fade_effect {
+      -webkit-animation-name: fade;
+      -webkit-animation-duration: 0.2s;
+      animation-name: fade;
+      animation-duration: 0.2s;
+      -webkit-user-select: none; /* Safari 3.1+ */
+      -moz-user-select: none; /* Firefox 2+ */
+      -ms-user-select: none; /* IE 10+ */
+      user-select: none; /* Standard syntax */
+    }
+
+    @-webkit-keyframes airMass_fade_effect {
+      from {opacity: .4} 
+      to {opacity: 1}
+    }
+
+    @keyframes airMass_fade_effect {
+      from {opacity: .4} 
+      to {opacity: 1}
+    }
+
+    @media only screen and (max-width: 500px) {
+      .airMass_text {font-size: 11px}
+    }
+
+    </style>
+
+    <div class="airMass_slideshow-container">
+
+      <div class="airMass_div airMass_fade_effect">
+        <img class="airMass_img img_scale" src="/sharedFiles/airMass/airMass_0.jpg?dummy=123" alt="">
+        <div class="airMass_img airMass_back" onclick="less_airMass()">i</div><div class="airMass_forward airMass_img" onclick="more_airMass()">d</div>
+      </div>
+
+      <div class="airMass_div airMass_fade_effect">
+        <img class="airMass_img img_scale" src="/sharedFiles/airMass/airMass_1.jpg?dummy=123" alt="">
+        <div class="airMass_img airMass_back" onclick="less_airMass()">i</div><div class="airMass_forward airMass_img" onclick="more_airMass()">d</div>
+      </div>
+
+      <div class="airMass_div airMass_fade_effect">
+        <img class="airMass_img img_scale" src="/sharedFiles/airMass/airMass_2.jpg?dummy=123" alt="">
+        <div class="airMass_img airMass_back" onclick="less_airMass()">i</div><div class="airMass_forward airMass_img" onclick="more_airMass()">d</div>
+      </div>
+
+      <div class="airMass_div airMass_fade_effect">
+        <img class="airMass_img img_scale" src="/sharedFiles/airMass/airMass_3.jpg?dummy=123" alt="">
+        <div class="airMass_img airMass_back" onclick="less_airMass()">i</div><div class="airMass_forward airMass_img" onclick="more_airMass()">d</div>
+      </div>
+
+      <div class="airMass_div airMass_fade_effect">
+        <img class="airMass_img img_scale" src="/sharedFiles/airMass/airMass_4.jpg?dummy=123" alt="">
+        <div class="airMass_img airMass_back" onclick="less_airMass()">i</div><div class="airMass_forward airMass_img" onclick="more_airMass()">d</div>
+      </div>
+
+      <div class="airMass_div airMass_fade_effect">
+        <img class="airMass_img img_scale" src="/sharedFiles/airMass/airMass_5.jpg?dummy=123" alt="">
+        <div class="airMass_img airMass_back" onclick="less_airMass()">i</div><div class="airMass_forward airMass_img" onclick="more_airMass()">d</div>
+      </div>
+
+      <div class="airMass_div airMass_fade_effect">
+        <img class="airMass_img img_scale" src="/sharedFiles/airMass/airMass_6.jpg?dummy=123" alt="">
+        <div class="airMass_img airMass_back" onclick="less_airMass()">i</div><div class="airMass_forward airMass_img" onclick="more_airMass()">d</div>
+      </div>
+
+      <div class="airMass_div airMass_fade_effect">
+        <img class="airMass_img img_scale" src="/sharedFiles/airMass/airMass_7.jpg?dummy=123" alt="">
+        <div class="airMass_img airMass_back" onclick="less_airMass()">i</div><div class="airMass_forward airMass_img" onclick="more_airMass()">d</div>
+      </div>
+
+      <div class="airMass_div airMass_fade_effect">
+        <img class="airMass_img img_scale" src="/sharedFiles/airMass/airMass_8.jpg?dummy=123" alt="">
+        <div class="airMass_img airMass_back" onclick="less_airMass()">i</div><div class="airMass_forward airMass_img" onclick="more_airMass()">d</div>
+      </div>
+
+      <div class="airMass_div airMass_fade_effect">
+        <img class="airMass_img img_scale" src="/sharedFiles/airMass/airMass_9.jpg?dummy=123" alt="">
+        <div class="airMass_img airMass_back" onclick="less_airMass()">i</div><div class="airMass_forward airMass_img" onclick="more_airMass()">d</div>
+      </div>
+
+      <div class="airMass_div airMass_fade_effect">
+        <img class="airMass_img img_scale" src="/sharedFiles/airMass/airMass_10.jpg?dummy=123" alt="">
+        <div class="airMass_img airMass_back" onclick="less_airMass()">i</div><div class="airMass_forward airMass_img" onclick="more_airMass()">d</div>
+      </div>
+
+      <div class="airMass_div airMass_fade_effect">
+        <img class="airMass_img img_scale" src="/sharedFiles/airMass/airMass_11.jpg?dummy=123" alt="">
+        <div class="airMass_img airMass_back" onclick="less_airMass()">i</div><div class="airMass_forward airMass_img" onclick="more_airMass()">d</div>
+      </div>
+
+      <div class="airMass_div airMass_fade_effect">
+        <img class="airMass_img img_scale" src="/sharedFiles/airMass/airMass_12.jpg?dummy=123" alt="">
+        <div class="airMass_img airMass_back" onclick="less_airMass()">i</div><div class="airMass_forward airMass_img" onclick="more_airMass()">d</div>
+      </div>
+
+      <div class="airMass_div airMass_fade_effect">
+        <img class="airMass_img img_scale" src="/sharedFiles/airMass/airMass_13.jpg?dummy=123" alt="">
+        <div class="airMass_img airMass_back" onclick="less_airMass()">i</div><div class="airMass_forward airMass_img" onclick="more_airMass()">d</div>
+      </div>
+
+      <div class="airMass_div airMass_fade_effect">
+        <img class="airMass_img img_scale" src="/sharedFiles/airMass/airMass_14.jpg?dummy=123" alt="">
+        <div class="airMass_img airMass_back" onclick="less_airMass()">i</div><div class="airMass_forward airMass_img" onclick="more_airMass()">d</div>
+      </div>
+
+      <div class="airMass_div airMass_fade_effect">
+        <img class="airMass_img img_scale" src="/sharedFiles/airMass/airMass_15.jpg?dummy=123" alt="">
+        <div class="airMass_img airMass_back" onclick="less_airMass()">i</div><div class="airMass_forward airMass_img" onclick="more_airMass()">d</div>
+      </div>
+
+      <div class="airMass_div airMass_fade_effect">
+        <img class="airMass_img img_scale" src="/sharedFiles/airMass/airMass_16.jpg?dummy=123" alt="">
+        <div class="airMass_img airMass_back" onclick="less_airMass()">i</div><div class="airMass_forward airMass_img" onclick="more_airMass()">d</div>
+      </div>
+
+      <div class="airMass_div airMass_fade_effect">
+        <img class="airMass_img img_scale" src="/sharedFiles/airMass/airMass_17.jpg?dummy=123" alt="">
+        <div class="airMass_img airMass_back" onclick="less_airMass()">i</div><div class="airMass_forward airMass_img" onclick="more_airMass()">d</div>
+      </div>
+
+      <div class="airMass_div airMass_fade_effect">
+        <img class="airMass_img img_scale" src="/sharedFiles/airMass/airMass_18.jpg?dummy=123" alt="">
+        <div class="airMass_img airMass_back" onclick="less_airMass()">i</div><div class="airMass_forward airMass_img" onclick="more_airMass()">d</div>
+      </div>
+
+      <div class="airMass_div airMass_fade_effect">
+        <img class="airMass_img img_scale" src="/sharedFiles/airMass/airMass_19.jpg?dummy=123" alt="">
+        <div class="airMass_img airMass_back" onclick="less_airMass()">i</div><div class="airMass_forward airMass_img" onclick="more_airMass()">d</div>
+      </div>
+
+      <div class="airMass_div airMass_fade_effect">
+        <img class="airMass_img img_scale" src="/sharedFiles/airMass/airMass_20.jpg?dummy=123" alt="">
+        <div class="airMass_img airMass_back" onclick="less_airMass()">i</div><div class="airMass_forward airMass_img" onclick="more_airMass()">d</div>
+      </div>
+
+      <div class="airMass_div airMass_fade_effect">
+        <img class="airMass_img img_scale" src="/sharedFiles/airMass/airMass_21.jpg?dummy=123" alt="">
+        <div class="airMass_img airMass_back" onclick="less_airMass()">i</div><div class="airMass_forward airMass_img" onclick="more_airMass()">d</div>
+      </div>
+
+      <div class="airMass_div airMass_fade_effect">
+        <img class="airMass_img img_scale" src="/sharedFiles/airMass/airMass_22.jpg?dummy=123" alt="">
+        <div class="airMass_img airMass_back" onclick="less_airMass()">i</div><div class="airMass_forward airMass_img" onclick="more_airMass()">d</div>
+      </div>
+
+    </div>
+
+    <script>
+    var airMass_slideIndex = 0;
+    var airMass_numExecution = 0;
+    var airMass_loops = 1;
+    var airMass_isEnd = false;
+    var airMass_clicks = 0;
+    airMass_showSlides()
+
+    function changeOpacity() {
+      var airMass_back_div = document.getElementsByClassName("airMass_back");
+      var airMass_forward_div = document.getElementsByClassName("airMass_forward");
+
+      if (airMass_clicks == 0) {
+        for (airMass_back_div_i = 0; airMass_back_div_i < airMass_back_div.length; airMass_back_div_i++) {
+          airMass_back_div[airMass_back_div_i].style.opacity = "0.4";
+        }
+        for (airMass_forward_div_i = 0; airMass_forward_div_i < airMass_forward_div.length; airMass_forward_div_i++) {
+          airMass_forward_div[airMass_forward_div_i].style.opacity = "0.4";
+        }
+      }
+      if (airMass_clicks == 1) {
+        for (airMass_back_div_i = 0; airMass_back_div_i < airMass_back_div.length; airMass_back_div_i++) {
+          airMass_back_div[airMass_back_div_i].style.opacity = "0.2";
+        }
+        for (airMass_forward_div_i = 0; airMass_forward_div_i < airMass_forward_div.length; airMass_forward_div_i++) {
+          airMass_forward_div[airMass_forward_div_i].style.opacity = "0.2";
+        }
+      }
+      if (airMass_clicks > 1) {
+        for (airMass_back_div_i = 0; airMass_back_div_i < airMass_back_div.length; airMass_back_div_i++) {
+          airMass_back_div[airMass_back_div_i].style.opacity = "0";
+        }
+        for (airMass_forward_div_i = 0; airMass_forward_div_i < airMass_forward_div.length; airMass_forward_div_i++) {
+          airMass_forward_div[airMass_forward_div_i].style.opacity = "0";
+        }
+      }
+      airMass_clicks++;
+    }
+
+    function more_airMass() {
+      var airMass_i;
+      var airMass_slides = document.getElementsByClassName("airMass_div");
+      
+      changeOpacity();
+      
+      if (airMass_slideIndex >= airMass_slides.length-1) {
+        airMass_slideIndex = 0
+      }else{
+        airMass_slideIndex++;
+      }
+
+      for (airMass_i = 0; airMass_i < airMass_slides.length; airMass_i++) {
+        airMass_slides[airMass_i].style.display = "none";
+      }
+      airMass_slides[airMass_slideIndex].style.display = "block";
+      
+    }
+
+    function less_airMass() {
+      var airMass_i;
+      var airMass_slides = document.getElementsByClassName("airMass_div");
+
+      changeOpacity();
+      
+      if (airMass_slideIndex == 0) {
+        airMass_slideIndex = airMass_slides.length-1
+      }else{
+        airMass_slideIndex--;
+      }
+
+      for (airMass_i = 0; airMass_i < airMass_slides.length; airMass_i++) {
+        airMass_slides[airMass_i].style.display = "none";  
+      }
+      airMass_slides[airMass_slideIndex].style.display = "block";
+    }
+
+    function airMass_showSlides() {
+      var airMass_i;
+      var airMass_slides = document.getElementsByClassName("airMass_div");
+      var airMass_back_div = document.getElementsByClassName("airMass_back");
+      var airMass_forward_div = document.getElementsByClassName("airMass_forward");
+      
+      for (airMass_i = 0; airMass_i < airMass_slides.length; airMass_i++) {
+        airMass_slides[airMass_i].style.display = "none";  
+      }
+
+      if (airMass_slideIndex >= airMass_slides.length) {
+        airMass_slideIndex = 0;
+        airMass_numExecution++;
+        for (airMass_back_div_i = 0; airMass_back_div_i < airMass_back_div.length; airMass_back_div_i++) {
+          airMass_back_div[airMass_back_div_i].style.opacity = "0.2";
+        }
+        for (airMass_forward_div_i = 0; airMass_forward_div_i < airMass_forward_div.length; airMass_forward_div_i++) {
+          airMass_forward_div[airMass_forward_div_i].style.opacity = "0.2";
+        }
+      }
+      
+      if (airMass_numExecution == airMass_loops) {
+        airMass_isEnd=true;
+        var airMass_back_div = document.getElementsByClassName("airMass_back");
+        var airMass_forward_div = document.getElementsByClassName("airMass_forward");
+
+        for (airMass_back_div_i = 0; airMass_back_div_i < airMass_back_div.length; airMass_back_div_i++) {
+          airMass_back_div[airMass_back_div_i].style.backgroundColor = "#ff0000";
+          airMass_back_div[airMass_back_div_i].style.opacity = "0.4";
+        }
+        for (airMass_forward_div_i = 0; airMass_forward_div_i < airMass_forward_div.length; airMass_forward_div_i++) {
+          airMass_forward_div[airMass_forward_div_i].style.backgroundColor = "#0000ff";
+          airMass_forward_div[airMass_forward_div_i].style.opacity = "0.4";
+        }
+      }
+
+      if ((airMass_slideIndex == 0) && (airMass_isEnd === true)) {
+        airMass_slides[0].style.display = "block";
+      }else{
+        airMass_slides[airMass_slideIndex].style.display = "block";
+        if (airMass_slideIndex == 0) {
+          for (airMass_back_div_i = 0; airMass_back_div_i < airMass_back_div.length; airMass_back_div_i++) {
+            airMass_back_div[airMass_back_div_i].style.backgroundColor = "#0044ff";
+            airMass_back_div[airMass_back_div_i].innerHTML = "";
+            airMass_back_div[airMass_back_div_i].style.opacity = "0.2";
+          }
+          for (airMass_forward_div_i = 0; airMass_forward_div_i < airMass_forward_div.length; airMass_forward_div_i++) {
+            airMass_forward_div[airMass_forward_div_i].style.backgroundColor = "#0044ff";
+            airMass_forward_div[airMass_forward_div_i].innerHTML = "";
+            airMass_forward_div[airMass_forward_div_i].style.opacity = "0.2";
+          }
+        }else{
+          for (airMass_back_div_i = 0; airMass_back_div_i < airMass_back_div.length; airMass_back_div_i++) {
+            airMass_back_div[airMass_back_div_i].style.opacity = "0";
+            airMass_back_div[airMass_back_div_i].style.opacity = "0";
+          }
+          for (airMass_forward_div_i = 0; airMass_forward_div_i < airMass_forward_div.length; airMass_forward_div_i++) {
+            airMass_forward_div[airMass_forward_div_i].style.opacity = "0";
+            airMass_forward_div[airMass_forward_div_i].style.opacity = "0";
+          }
+        }        
+        if ((airMass_slideIndex == 0) && (airMass_numExecution == 0)) {
+          airMass_slideIndex++;
+          setTimeout(airMass_showSlides, 200);
+        }else{
+          airMass_slideIndex++;
+          setTimeout(airMass_showSlides, 200);
+        }
+      }
+    }
+    </script>

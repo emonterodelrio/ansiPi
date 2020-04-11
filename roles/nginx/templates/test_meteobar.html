@@ -1,0 +1,260 @@
+<style>
+    .meteobar_img {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .meteobar_back {
+      z-index:9;
+      width: 50%;
+      margin-left: 0;
+      opacity: 0;
+      background-color: #ff0000;
+      font-size: 25pt;
+      text-align: center;
+      font-weight: bold;
+      color: #ffffff;
+      cursor: pointer;
+    }
+
+    .meteobar_forward {
+      z-index:9;
+      width: 50%;
+      margin-left: 50%;
+      opacity: 0;
+      background-color: #0000ff;
+      font-size: 25pt;
+      text-align: center;
+      font-weight: bold;
+      color: #ffffff;
+      cursor: pointer;
+    }
+
+    .arrow {
+      margin-top: 50%;
+    }
+
+    .meteobar_div {
+      display: none;
+    }
+
+    .meteobar_slideshow-container {
+      margin: auto;
+    }
+
+    .meteobar_fade_effect {
+      -webkit-animation-name: fade;
+      -webkit-animation-duration: 0.2s;
+      animation-name: fade;
+      animation-duration: 0.2s;
+      -webkit-user-select: none; /* Safari 3.1+ */
+      -moz-user-select: none; /* Firefox 2+ */
+      -ms-user-select: none; /* IE 10+ */
+      user-select: none; /* Standard syntax */
+    }
+
+    @-webkit-keyframes meteobar_fade_effect {
+      from {opacity: .4} 
+      to {opacity: 1}
+    }
+
+    @keyframes meteobar_fade_effect {
+      from {opacity: .4} 
+      to {opacity: 1}
+    }
+
+    @media only screen and (max-width: 500px) {
+      .meteobar_text {font-size: 11px}
+    }
+
+    </style>
+
+    <div class="meteobar_slideshow-container">
+
+      <div class="meteobar_div meteobar_fade_effect">
+        <img class="meteobar_img img_scale" src="/sharedFiles/meteobar/meteobar_0.gif?dummy=123" alt="">
+        <div class="meteobar_img meteobar_back" onclick="less_meteobar()">i</div><div class="meteobar_forward meteobar_img" onclick="more_meteobar()">d</div>
+      </div>
+
+      <div class="meteobar_div meteobar_fade_effect">
+        <img class="meteobar_img img_scale" src="/sharedFiles/meteobar/meteobar_1.gif?dummy=123" alt="">
+        <div class="meteobar_img meteobar_back" onclick="less_meteobar()">i</div><div class="meteobar_forward meteobar_img" onclick="more_meteobar()">d</div>
+      </div>
+
+      <div class="meteobar_div meteobar_fade_effect">
+        <img class="meteobar_img img_scale" src="/sharedFiles/meteobar/meteobar_2.gif?dummy=123" alt="">
+        <div class="meteobar_img meteobar_back" onclick="less_meteobar()">i</div><div class="meteobar_forward meteobar_img" onclick="more_meteobar()">d</div>
+      </div>
+
+      <div class="meteobar_div meteobar_fade_effect">
+        <img class="meteobar_img img_scale" src="/sharedFiles/meteobar/meteobar_3.gif?dummy=123" alt="">
+        <div class="meteobar_img meteobar_back" onclick="less_meteobar()">i</div><div class="meteobar_forward meteobar_img" onclick="more_meteobar()">d</div>
+      </div>
+
+      <div class="meteobar_div meteobar_fade_effect">
+        <img class="meteobar_img img_scale" src="/sharedFiles/meteobar/meteobar_4.gif?dummy=123" alt="">
+        <div class="meteobar_img meteobar_back" onclick="less_meteobar()">i</div><div class="meteobar_forward meteobar_img" onclick="more_meteobar()">d</div>
+      </div>
+
+      <div class="meteobar_div meteobar_fade_effect">
+        <img class="meteobar_img img_scale" src="/sharedFiles/meteobar/meteobar_5.gif?dummy=123" alt="">
+        <div class="meteobar_img meteobar_back" onclick="less_meteobar()">i</div><div class="meteobar_forward meteobar_img" onclick="more_meteobar()">d</div>
+      </div>
+
+      <div class="meteobar_div meteobar_fade_effect">
+        <img class="meteobar_img img_scale" src="/sharedFiles/meteobar/meteobar_6.gif?dummy=123" alt="">
+        <div class="meteobar_img meteobar_back" onclick="less_meteobar()">i</div><div class="meteobar_forward meteobar_img" onclick="more_meteobar()">d</div>
+      </div>
+
+    </div>
+
+    <script>
+    var meteobar_slideIndex = 0;
+    var meteobar_numExecution = 0;
+    var meteobar_loops = 1;
+    var meteobar_isEnd = false;
+    var meteobar_clicks = 0;
+    meteobar_showSlides()
+
+    function changeOpacity() {
+      var meteobar_back_div = document.getElementsByClassName("meteobar_back");
+      var meteobar_forward_div = document.getElementsByClassName("meteobar_forward");
+
+      if (meteobar_clicks == 0) {
+        for (meteobar_back_div_i = 0; meteobar_back_div_i < meteobar_back_div.length; meteobar_back_div_i++) {
+          meteobar_back_div[meteobar_back_div_i].style.opacity = "0.4";
+        }
+        for (meteobar_forward_div_i = 0; meteobar_forward_div_i < meteobar_forward_div.length; meteobar_forward_div_i++) {
+          meteobar_forward_div[meteobar_forward_div_i].style.opacity = "0.4";
+        }
+      }
+      if (meteobar_clicks == 1) {
+        for (meteobar_back_div_i = 0; meteobar_back_div_i < meteobar_back_div.length; meteobar_back_div_i++) {
+          meteobar_back_div[meteobar_back_div_i].style.opacity = "0.2";
+        }
+        for (meteobar_forward_div_i = 0; meteobar_forward_div_i < meteobar_forward_div.length; meteobar_forward_div_i++) {
+          meteobar_forward_div[meteobar_forward_div_i].style.opacity = "0.2";
+        }
+      }
+      if (meteobar_clicks > 1) {
+        for (meteobar_back_div_i = 0; meteobar_back_div_i < meteobar_back_div.length; meteobar_back_div_i++) {
+          meteobar_back_div[meteobar_back_div_i].style.opacity = "0";
+        }
+        for (meteobar_forward_div_i = 0; meteobar_forward_div_i < meteobar_forward_div.length; meteobar_forward_div_i++) {
+          meteobar_forward_div[meteobar_forward_div_i].style.opacity = "0";
+        }
+      }
+      meteobar_clicks++;
+    }
+
+    function more_meteobar() {
+      var meteobar_i;
+      var meteobar_slides = document.getElementsByClassName("meteobar_div");
+      
+      changeOpacity();
+      
+      if (meteobar_slideIndex >= meteobar_slides.length-1) {
+        meteobar_slideIndex = 0
+      }else{
+        meteobar_slideIndex++;
+      }
+
+      for (meteobar_i = 0; meteobar_i < meteobar_slides.length; meteobar_i++) {
+        meteobar_slides[meteobar_i].style.display = "none";
+      }
+      meteobar_slides[meteobar_slideIndex].style.display = "block";
+      
+    }
+
+    function less_meteobar() {
+      var meteobar_i;
+      var meteobar_slides = document.getElementsByClassName("meteobar_div");
+
+      changeOpacity();
+      
+      if (meteobar_slideIndex == 0) {
+        meteobar_slideIndex = meteobar_slides.length-1
+      }else{
+        meteobar_slideIndex--;
+      }
+
+      for (meteobar_i = 0; meteobar_i < meteobar_slides.length; meteobar_i++) {
+        meteobar_slides[meteobar_i].style.display = "none";  
+      }
+      meteobar_slides[meteobar_slideIndex].style.display = "block";
+    }
+
+    function meteobar_showSlides() {
+      var meteobar_i;
+      var meteobar_slides = document.getElementsByClassName("meteobar_div");
+      var meteobar_back_div = document.getElementsByClassName("meteobar_back");
+      var meteobar_forward_div = document.getElementsByClassName("meteobar_forward");
+      
+      for (meteobar_i = 0; meteobar_i < meteobar_slides.length; meteobar_i++) {
+        meteobar_slides[meteobar_i].style.display = "none";  
+      }
+
+      if (meteobar_slideIndex >= meteobar_slides.length) {
+        meteobar_slideIndex = 0;
+        meteobar_numExecution++;
+        for (meteobar_back_div_i = 0; meteobar_back_div_i < meteobar_back_div.length; meteobar_back_div_i++) {
+          meteobar_back_div[meteobar_back_div_i].style.opacity = "0.2";
+        }
+        for (meteobar_forward_div_i = 0; meteobar_forward_div_i < meteobar_forward_div.length; meteobar_forward_div_i++) {
+          meteobar_forward_div[meteobar_forward_div_i].style.opacity = "0.2";
+        }
+      }
+      
+      if (meteobar_numExecution == meteobar_loops) {
+        meteobar_isEnd=true;
+        var meteobar_back_div = document.getElementsByClassName("meteobar_back");
+        var meteobar_forward_div = document.getElementsByClassName("meteobar_forward");
+
+        for (meteobar_back_div_i = 0; meteobar_back_div_i < meteobar_back_div.length; meteobar_back_div_i++) {
+          meteobar_back_div[meteobar_back_div_i].style.backgroundColor = "#ff0000";
+          meteobar_back_div[meteobar_back_div_i].style.opacity = "0.4";
+        }
+        for (meteobar_forward_div_i = 0; meteobar_forward_div_i < meteobar_forward_div.length; meteobar_forward_div_i++) {
+          meteobar_forward_div[meteobar_forward_div_i].style.backgroundColor = "#0000ff";
+          meteobar_forward_div[meteobar_forward_div_i].style.opacity = "0.4";
+        }
+      }
+
+      if ((meteobar_slideIndex == 0) && (meteobar_isEnd === true)) {
+        meteobar_slides[0].style.display = "block";
+      }else{
+        meteobar_slides[meteobar_slideIndex].style.display = "block";
+        if (meteobar_slideIndex == 0) {
+          for (meteobar_back_div_i = 0; meteobar_back_div_i < meteobar_back_div.length; meteobar_back_div_i++) {
+            meteobar_back_div[meteobar_back_div_i].style.backgroundColor = "#0044ff";
+            meteobar_back_div[meteobar_back_div_i].innerHTML = "";
+            meteobar_back_div[meteobar_back_div_i].style.opacity = "0.2";
+          }
+          for (meteobar_forward_div_i = 0; meteobar_forward_div_i < meteobar_forward_div.length; meteobar_forward_div_i++) {
+            meteobar_forward_div[meteobar_forward_div_i].style.backgroundColor = "#0044ff";
+            meteobar_forward_div[meteobar_forward_div_i].innerHTML = "";
+            meteobar_forward_div[meteobar_forward_div_i].style.opacity = "0.2";
+          }
+        }else{
+          for (meteobar_back_div_i = 0; meteobar_back_div_i < meteobar_back_div.length; meteobar_back_div_i++) {
+            meteobar_back_div[meteobar_back_div_i].style.opacity = "0";
+            meteobar_back_div[meteobar_back_div_i].style.opacity = "0";
+          }
+          for (meteobar_forward_div_i = 0; meteobar_forward_div_i < meteobar_forward_div.length; meteobar_forward_div_i++) {
+            meteobar_forward_div[meteobar_forward_div_i].style.opacity = "0";
+            meteobar_forward_div[meteobar_forward_div_i].style.opacity = "0";
+          }
+        }        
+        if ((meteobar_slideIndex == 0) && (meteobar_numExecution == 0)) {
+          meteobar_slideIndex++;
+          setTimeout(meteobar_showSlides, 200);
+        }else{
+          meteobar_slideIndex++;
+          setTimeout(meteobar_showSlides, 200);
+        }
+      }
+    }
+    

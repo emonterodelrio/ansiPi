@@ -43,9 +43,12 @@
 
 - name: Setup tests html
   template:
-    src: tests.html
-    dest: "/var/www/html/sharedFiles/tests.html"
+    src: "{{ item }}"
+    dest: "/var/www/html/sharedFiles/{{ item }}"
     mode: 0644
+  with_items:
+    - test_airMass.html
+    - test_meteobar.html
 
 - name: Fill /etc/nginx/nginx.conf with template
   become: yes
