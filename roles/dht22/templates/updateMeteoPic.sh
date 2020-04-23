@@ -2,15 +2,21 @@
 API_KEY=$( cat /home/pi/.aemet_opendata_apikey )
 
 
-#Predictions
-#wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/mapassignificativos/esp/c/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O temp_map_pred_0.gif
-#wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/mapassignificativos/esp/d/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O temp_map_pred_1.gif
-#wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/mapassignificativos/esp/e/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O temp_map_pred_2.gif
-#wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/mapassignificativos/esp/f/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O temp_map_pred_3.gif
+##Prediction
+#rm -r /tmp/prediction_tmp
+#mkdir -p /var/www/html/sharedFiles/prediction /tmp/prediction_tmp
+#cd /tmp/prediction_tmp
+
+#wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/mapassignificativos/esp/c/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O tmp_pred_0.gif
+#wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/mapassignificativos/esp/d/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O tmp_pred_1.gif
+#wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/mapassignificativos/esp/e/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O tmp_pred_2.gif
+#wget $(curl -s -X GET "https://opendata.aemet.es/opendata/api/mapasygraficos/mapassignificativos/esp/f/?api_key=$API_KEY" | grep "\"datos\"" | awk '{print $3}' | tr -d "," | tr -d "\"") -O tmp_pred_3.gif
 
 
 
-#Meteobars
+
+
+#Meteobar
 rm -r /tmp/meteobar_tmp
 mkdir -p /var/www/html/sharedFiles/meteobar /tmp/meteobar_tmp
 cd /tmp/meteobar_tmp

@@ -55,8 +55,6 @@ until ansible ${NAME} -m ping -i `pwd`/conf/inventory --extra-vars "ansible_user
   sleep 3
 done
 
-printf "\033[1;32m\n\nNow going to exec this\033[0m\n"
-printf "\033[1;32m\n\nansipi 01-setCredentials.yaml\033[0m\n"
 if export ANSIBLE_CONFIG=$(pwd)/conf/ansible.cfg && ansible-playbook -i $(pwd)/conf/inventory 02-meteopi.yaml; then
     echo "Done!"
 else

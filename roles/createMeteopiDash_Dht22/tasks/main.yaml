@@ -47,3 +47,7 @@
   service:
     name: grafana-server
     state: restarted
+
+- name: Execute meteobars and airmass script
+  shell: /home/pi/meteoUpdatePictures/updateMeteoPic.sh
+
