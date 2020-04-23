@@ -113,6 +113,15 @@
   become_user: root
   command: sed -i '/CipherString = DEFAULT@SECLEVEL=2/d' /etc/ssl/openssl.cnf
 
+- name: Reboots every night
+  become: yes
+  become_user: root
+  cron:
+    name: "Reboot system"
+    minute: "58"
+    hour: "23"
+    job: "reboot -h now"
+
 - name: Delete unused stuff
   file:
    path: "{{item}}"
