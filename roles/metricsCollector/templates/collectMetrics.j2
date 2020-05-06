@@ -1,7 +1,4 @@
 #!/bin/bash
-while true; do
-  RESULT=$( {{ item.command }} )
-  echo "{{ item.group }},name={{ item.name }},host=$(hostname) value=$RESULT" | curl -s -XPOST 'http://{{ pi.network.ip }}:{{ metricCollectors.influx.port }}/write?db={{ influx.db.name }}' --data-binary @-
-  echo $RESULT
-  sleep {{ item.delay }}
-done
+RESULT=$( {{ item.command }} )
+echo "{{ item.group }},name={{ item.name }},host=$(hostname) value=$RESULT" | curl -s -XPOST 'http://{{ pi.network.ip }}:{{ metricCollectors.influx.port }}/write?db={{ influx.db.name }}' --data-binary @-
+echo $RESULT

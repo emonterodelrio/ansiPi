@@ -74,6 +74,15 @@
   ignore_errors: yes
   when: DHT22.present
 
+- name: Stop dht22 script every night
+  become: yes
+  become_user: root
+  cron:
+    name: "Stop dht22 script"
+    minute: "58"
+    hour: "23"
+    job: "{{ DHT22.path }}/stop_dht22.sh"
+
 - name: Crontab DHT22 scripts
   cron:
     name: "dht22"

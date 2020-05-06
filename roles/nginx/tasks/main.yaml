@@ -18,6 +18,26 @@
   apt:
     name: '{{ additional_packages }}'
 
+- name: Create geoip folder
+  become: yes
+  file:
+    owner: pi
+    group: pi
+    mode: 0775
+    path: /etc/nginx/geoIP
+    state: directory
+
+- name: Copy geoip dbs
+  copy:
+    src: "{{ item }}"
+    dest: /etc/nginx/geoIP
+    owner: pi
+    group: pi
+    mode: '0644'
+  with_items:
+    - GeoIP.dat
+    - GeoLiteCity.dat
+
 - name: Delete default stuff
   become: yes
   file:

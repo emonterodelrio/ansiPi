@@ -49,10 +49,19 @@
     group: root
   with_items: "{{ collectors }}"
 
+- name: Stop scripts every night
+  become: yes
+  become_user: root
+  cron:
+    name: "Stop metric collector scripts"
+    minute: "58"
+    hour: "23"
+    job: "{{ metricsCollectors.path }}/stop_collectors.sh"
+
 - name: Crontab scripts
   cron:
     name: "{{ item.group }}_{{ item.name }}"
-    minute: "*"
+    minute: "{{ item.delay }}"
     hour: "*"
     day: "*"
     month: "*"
