@@ -1,6 +1,7 @@
+#!/bin/bash
+
 DEFAULT_USER=pi
-DEFAULT_PASS=pi
-NAME=meteopi
+DEFAULT_PASS=raspberry
 
 if [ $(id -u) = 0 ]; then
    printf "\033[1;31m\n\nMust be run as normal user:\n$0 192.168.1.39\033[0m\n"
@@ -18,16 +19,18 @@ if [ $# -ne 1 ];then
 else
   IP=$1
 fi
+
 printf "\033[1;31m\n\nBefore use this script you must enable ssh at raspberry pi\033[0m\n"
 
 sudo apt-get update -y 
 sudo apt-get install -y software-properties-common
 
-sudo apt-add-repository --yes --update ppa:ansible/ansiblev
-sudo apt-get install -y ansible
+sudo apt-add-repository --yes --update ppa:ansible/ansible
+sudo apt-get install -y ansible sshpass
 
 printf "\033[1;32m\n\nSet ansible host $IP\033[0m\n"
-sudo sed -i "s/$IP ansible_ssh_host=.*/meteopi ansible_ssh_host=$IP ansible_user=$DEFAULT_USER ansible_ssh_pass=$DEFAULT_PASS/g" conf/inventory
+
+sudo sed -i "s/192.168.1.11 .*/$IP ansible_user=$DEFAULT_USER ansible_ssh_pass=$DEFAULT_PASS/g" conf/inventory
 
 printf "\033[1;32m\n\nSet ansible alias\033[0m\n"
 
@@ -47,10 +50,17 @@ sudo sed -i "s/#host_key_checking = False/host_key_checking = False/g" /etc/ansi
 sudo ssh-keygen -f "/root/.ssh/known_hosts" -R ${IP} || true
 ssh-keygen -f "/home/$(whoami)/.ssh/known_hosts" -R ${IP} || true
 
-printf "\033[1;32m\n\nTest conection to raspberry\033[0m\n"
+printf "\033[1;32m\n\nTest connection to raspberry\033[0m\n"
+
+
+
+echo AA
+echo "ansible -vv meteopi -m ping -i `pwd`/conf/inventory --extra-vars "ansible_user=${DEFAULT_USER} ansible_password=${DEFAULT_PASS} host_key_checking=False";"
+echo BBB
+
 
 #Use default raspibian password
-until ansible ${NAME} -m ping -i `pwd`/conf/inventory --extra-vars "ansible_user=${DEFAULT_USER} ansible_password=${DEFAULT_PASS} host_key_checking=False"; do
+until ansible -vv meteopi -m ping -i `pwd`/conf/inventory --extra-vars "ansible_user=${DEFAULT_USER} ansible_password=${DEFAULT_PASS} host_key_checking=False"; do
   echo "Wait for raspberry connection"
   sleep 3
 done
