@@ -54,6 +54,6 @@ This is the central server, it requires a powerfull raspberry like [Raspberry Pi
 
     ./install_meteopi.sh 192.168.1.38
 
-9-. Reaching meteopi from the internet requires you to open router 80 port to 192.168.1.11
+9-. Reaching meteopi from the internet requires you to open router 80 port to configured ([ip:https://github.com/emonterodelrio/ansiPi/blob/develop/vars/piStuff.yaml#L8])
 
 
