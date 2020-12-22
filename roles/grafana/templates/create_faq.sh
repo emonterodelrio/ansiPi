@@ -24,7 +24,7 @@ EOL
 function setupDashFaq() {
 cat >>$BASE_PATH/temp.json <<EOL
       {
-        "content": "# Welcome to faqs\n\n\n\n### First to do\n\nChange home dasboard, logged as admin user, [here](http://meteopi.duckdns.org/profile).",
+        "content": "# Welcome to faqs\n\n\n\n### First to do\n\nChange home dasboard, logged as admin user, [here](http://{{ duckDnsUrl }}.duckdns.org/profile).",
         "gridPos": {
           "h": 15,
           "w": 24,

@@ -26,7 +26,8 @@ sudo apt-get update -y
 sudo apt-get install -y software-properties-common
 
 sudo apt-add-repository --yes --update ppa:ansible/ansible
-sudo apt-get install -y ansible sshpass
+sudo apt-get install -y ansible sshpass lastpass-cli
+
 
 printf "\033[1;32m\n\nSet ansible host $IP\033[0m\n"
 
@@ -42,8 +43,12 @@ else
   echo "alias ansipi=\"export ANSIBLE_CONFIG=$(pwd)/conf/ansible.cfg && ansible-playbook -i $(pwd)/conf/inventory\"" >> ~/.bashrc
 fi
 
-export ANSIBLE_CONFIG=$(pwd)/conf/ansible.cfg
-alias ansipi="export ANSIBLE_CONFIG=$(pwd)/conf/ansible.cfg && ansible-playbook -i $(pwd)/conf/inventory"
+CURRENT=`pwd`
+. ~/.bashrc
+cd $CURRENT
+
+#export ANSIBLE_CONFIG=$(pwd)/conf/ansible.cfg
+#alias ansipi="export ANSIBLE_CONFIG=$(pwd)/conf/ansible.cfg && ansible-playbook -i $(pwd)/conf/inventory"
 
 printf "\033[1;32m\n\nDisable host key check\033[0m\n"
 sudo sed -i "s/#host_key_checking = False/host_key_checking = False/g" /etc/ansible/ansible.cfg
@@ -52,15 +57,8 @@ ssh-keygen -f "/home/$(whoami)/.ssh/known_hosts" -R ${IP} || true
 
 printf "\033[1;32m\n\nTest connection to raspberry\033[0m\n"
 
-
-
-echo AA
-echo "ansible -vv meteopi -m ping -i `pwd`/conf/inventory --extra-vars "ansible_user=${DEFAULT_USER} ansible_password=${DEFAULT_PASS} host_key_checking=False";"
-echo BBB
-
-
 #Use default raspibian password
-until ansible -vv meteopi -m ping -i `pwd`/conf/inventory --extra-vars "ansible_user=${DEFAULT_USER} ansible_password=${DEFAULT_PASS} host_key_checking=False"; do
+until ansible meteopi -m ping -i `pwd`/conf/inventory --extra-vars "ansible_user=${DEFAULT_USER} ansible_password=${DEFAULT_PASS} host_key_checking=False"; do
   echo "Wait for raspberry connection"
   sleep 3
 done

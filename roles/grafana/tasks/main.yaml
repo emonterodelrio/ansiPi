@@ -69,7 +69,7 @@
   when: existGrafana.rc != 0
 
 - name: Change grafana admin password	
-  shell: "curl -X PUT -H 'Content-Type: application/json' -d '{\"oldPassword\":\"admin\",\"newPassword\":\"{{ grafanaPassAdmin.stdout }}\",\"confirmNew\":\"{{ grafanaPassAdmin.stdout }}\"}' 'http://admin:admin@192.168.1.11:3000/api/user/password'"
+  shell: "curl -X PUT -H 'Content-Type: application/json' -d '{\"oldPassword\":\"admin\",\"newPassword\":\"{{ grafanaPassAdmin.stdout }}\",\"confirmNew\":\"{{ grafanaPassAdmin.stdout }}\"}' 'http://admin:admin@{{ pi.network.ip }}:3000/api/user/password'"
   register: resultGrafanaPassAdmin
   failed_when: '"changed" not in resultGrafanaPassAdmin.stdout'
   when: existGrafana.rc != 0

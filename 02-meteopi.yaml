@@ -23,7 +23,7 @@
     private: no
 
   - name: duckDnsUrl
-    prompt: "\n\nWhat url have you chosen at duckdns? It's for lastpass auto-fill credentials"
+    prompt: "\n\nWhat url have you chosen at duckdns? (ie:\n\n -> meteopi <- \n if http://meteopi.duckdns.org) It's for lastpass auto-fill credentials.\n"
     default: ""
     private: no
 
