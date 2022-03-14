@@ -64,7 +64,7 @@
   when: existGrafana.rc != 0
 
 - name: Create grafana admin credentials at lpass
-  local_action: shell lpass generate --no-symbols --username admin --url="{{ duckDnsUrlReaded.stdout }}" {{ lpass.piId }}/grafanaAdmin 50
+  local_action: shell lpass generate --no-symbols --username admin --url="{{ duckDnsUrlReaded.stdout }}" {{ duckDnsUrlReaded.stdout }}/grafanaAdmin 50
   register: grafanaPassAdmin
   when: existGrafana.rc != 0
 
@@ -75,7 +75,7 @@
   when: existGrafana.rc != 0
 
 - name: Create grafana user credentials at lpass
-  local_action: shell lpass generate --no-symbols --username read --url={{duckDnsUrlReaded.stdout }} {{ lpass.piId }}/grafanaUser 50
+  local_action: shell lpass generate --no-symbols --username read --url={{duckDnsUrlReaded.stdout }} {{ duckDnsUrlReaded.stdout }}/grafanaUser 50
   register: grafanaPassUser
   when: existGrafana.rc != 0
 
@@ -137,11 +137,11 @@
   local_action: shell lpass ls
 
 - name: Lastpass - Load credentials
-  local_action: shell lpass show {{ lpass.piId }}/grafanaAdmin | grep Username | awk '{print $2}'
+  local_action: shell lpass show {{ duckDnsUrlReaded.stdout }}/grafanaAdmin | grep Username | awk '{print $2}'
   register: grafanaAdminUserReaded
 
 - name: Lastpass - Load password
-  local_action: shell lpass show {{ lpass.piId }}/grafanaAdmin | grep Password | awk '{print $2}'
+  local_action: shell lpass show {{ duckDnsUrlReaded.stdout }}/grafanaAdmin | grep Password | awk '{print $2}'
   register: grafanaAdminPassReaded
 
 - debug:

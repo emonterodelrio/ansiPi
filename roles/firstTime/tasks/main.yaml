@@ -55,7 +55,7 @@
   delegate_to: 127.0.0.1
 
 - name: Lastpass - Create pi credentials
-  local_action: shell lpass generate --no-symbols --username {{ pi.user }} {{ lpass.piId }}/pi 50
+  local_action: shell lpass generate --no-symbols --username {{ pi.user }} {{ duckDnsUrlReaded.stdout }}/pi 50
   register: laspassPass
   delegate_to: 127.0.0.1
 

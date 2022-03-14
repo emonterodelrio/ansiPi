@@ -36,24 +36,23 @@ This is the central server, it requires a powerfull raspberry like [Raspberry Pi
     Setup password, [same as here](https://github.com/emonterodelrio/ansiPi/blob/develop/install_meteopi.sh#L2).
     Setup wifi connection
 
-5-. Open a terminal (Ctrl+Alt+t) and run <pre>raspi-config</pre> and edit some settings:
+5-. Connect wifi at your raspberry pi
+
+6-. Go to Raspberry-menu-icon/Preferences/Raspberry Pi Configuration
    
-    Enable ssh at: Interfacing options -> SSH
+    Enable ssh at: Interfaces/SSH
 
-    Enable autologin to console mode at: Boot options -> Desktop/Cli -> Console autologin
-
-    Expand filesystem at: Advanced options -> Expand filesystem
-    
-6-. find your raspberry pi at network:
+   
+7-. find your raspberry pi at network:
 
     nmap -sP 192.168.1.1/24
 
-7-. Setup ip and password properly at conf/inventory file
+8-. Setup ip and password properly at conf/inventory file
 
-8-. Launch install with that ip and follow instructions:
+9-. Launch install with that ip and follow instructions:
 
     ./install_meteopi.sh 192.168.1.38
 
-9-. Reaching meteopi from the internet requires you to open router 80 port to configured [ip](https://github.com/emonterodelrio/ansiPi/blob/develop/vars/piStuff.yaml#L8)
+10-. Reaching meteopi from the internet requires you to open router 80 port to configured [ip](https://github.com/emonterodelrio/ansiPi/blob/develop/vars/piStuff.yaml#L8)
 
 

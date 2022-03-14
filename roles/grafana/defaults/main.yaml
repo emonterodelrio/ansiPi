@@ -3,6 +3,7 @@ additional_packages:
   - phantomjs
 
 grafana:
-  deb: grafana_4.3.2_armhf.deb
+#  deb: grafana_5.3.2_armhf.deb
+  deb: grafana_5.1.4_armhf.deb
   url: https://dl.bintray.com/fg2it/deb-rpi-1b/main/g
   dashboards_folder: /var/lib/grafana/dashboards
