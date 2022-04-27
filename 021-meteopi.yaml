@@ -1,6 +1,5 @@
 ---
 - hosts: meteopi
-  remote_user: pi
   gather_facts: true
   vars_prompt:
 

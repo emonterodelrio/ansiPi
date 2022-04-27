@@ -1,12 +1,11 @@
 ---
 - hosts: meteopi
-  remote_user: pi
   gather_facts: true
   vars_files:
   - vars/piStuff.yaml
 
   roles:
-    - security
+    # - security
     - duckDns
     - nginx
     - influxdb

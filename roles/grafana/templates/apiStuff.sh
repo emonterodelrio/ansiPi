@@ -8,4 +8,4 @@ ID=$(curl -s -X GET http://$USER:$PASS@192.168.1.11:3000/api/users/lookup?loginO
 curl -s -X PUT "http://$USER:$PASS@{{ pi.network.ip }}:3000/api/users/$ID" \
 -H 'Accept: application/json' \
 -H 'Content-Type:application/json' \
--d '{"login":"admin","email":"{{ gmailUserReaded.stdout }}"}'
+-d '{"login":"admin","email":"admin@grafana.com"}'

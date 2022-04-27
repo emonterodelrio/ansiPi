@@ -26,10 +26,6 @@
     state: absent
   when: existGrafana.rc != 0
 
-- name: Load gmail credentials from file
-  shell: cat /home/pi/.gmailUser
-  register: gmailUserReaded
-
 - name: Load grafana admin password from file
   shell: cat /home/pi/.grafanaAdminPass
   register: grafanaAdminPassReaded

@@ -48,8 +48,13 @@ until export ANSIBLE_CONFIG=$REPOPATH/conf/ansible.cfg && ansible meteopi -m pin
   sleep 3
 done
 
-ansible-playbook 021-meteopi.yaml -v
+ansible-playbook 021-meteopi.yaml
 
-ansible-playbook 022-meteopi.yaml -v
+while ! nc -zv 192.168.1.11 22 &> /dev/null; do
+  echo "Waiting for host to reboot";
+  sleep 1;
+done
+
+ansible-playbook 022-meteopi.yaml -vv
 
 printf "\033[1;32m\n\nThat's all\033[0m\n"

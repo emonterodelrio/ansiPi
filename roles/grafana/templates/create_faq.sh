@@ -97,12 +97,6 @@ setupDashHeaders;
 setupDashPanels;
 setupDashOptions;
 
-#Create notifications group from json file
-curl -X POST "http://$USER:$PASS@{{ pi.network.ip }}:3000/api/alert-notifications" \
--H 'Accept: application/json' \
--H 'Content-Type:application/json' \
--d '{"name":"Notifications channel","type":"email","isDefault":true,"sendReminder":false,"settings":{"addresses": "{{ gmailUserReaded.stdout }}"}}' | jq . > $BASE_PATH/notificationsChanel-create.log
-
 #Create dashboard from json file
 curl -X POST "http://$USER:$PASS@{{ pi.network.ip }}:3000/api/dashboards/db" \
 -H "Accept: application/json" \

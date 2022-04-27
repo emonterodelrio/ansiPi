@@ -114,7 +114,7 @@
 - name: Change pi ip at conf/inventory
   become: yes
   become_user: root
-  local_action: command sed -i 's/{{ ansible_default_ipv4.address }} ansible_user/{{ pi.network.ip }} ansible_user=/g' conf/inventory/inventory
+  local_action: command sed -i 's/{{ ansible_default_ipv4.address }} ansible_user/{{ pi.network.ip }} ansible_user/g' conf/inventory/inventory
 
 - name: Delete previous known_hosts user
   local_action: command ssh-keygen -f "/home/emontero/.ssh/known_hosts" -R {{ pi.network.ip }}
@@ -146,12 +146,8 @@
    state: absent
   with_items: "{{ toCleanDirectories }}"
 
-- name: Reboot host and wait for it to restart
+- name: Reboot host
   become: yes
-  reboot:
-    msg: "Reboot initiated by Ansible"
-    connect_timeout: 5
-    reboot_timeout: 0
-    post_reboot_delay: 10
-    test_command: uptime
-  when: changedHostname.changed
+  shell: reboot -f
+  async: 5
+  poll: 0
