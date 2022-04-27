@@ -29,14 +29,14 @@ def eliminateNoise(values, std_factor = 2):
   mean = numpy.mean(values)
   standard_deviation = numpy.std(values)
   
-  print 'Status: mean: %.2f   standar_desviation: %.2f' % (mean,standard_deviation)
+  print ('Status: mean: %.2f   standar_desviation: %.2f' % (mean,standard_deviation))
 
   # If < 0,2 grados
   if standard_deviation < {{ DHT22.measure_allowed_desviation }}:
-    print ''+str(values)[1:-1]
+    print ('' + str(values)[1:-1])
     return values
   else:
-    print 'WARNING - Bad standar desviation: %.2f' % (standard_deviation)
+    print ('WARNING - Bad standar desviation: %.2f' % (standard_deviation))
 
   final_values = [element for element in values if element > mean - std_factor * standard_deviation]
   final_values = [element for element in final_values if element < mean + std_factor * standard_deviation]
@@ -58,32 +58,32 @@ def readingValues():
         rawHumidity, rawTemperature = Adafruit_DHT.read_retry( Adafruit_DHT.DHT22 , {{ DHT22.pin }} )
 
       except IOError as e:
-        print 'ERROR - IO error' 
+        print ('ERROR - IO error')
         if hasattr(e, 'message'):
-          print(e.message)
+          print (e.message)
         else:
-          print(e)
+          print (e)
                 
       try:
         if math.isnan(rawTemperature) == False and math.isnan(rawHumidity) == False:
           temperature = round(rawTemperature, 2)
           humidity = round(rawHumidity, 2)
-          print "%d Temp: %f   Hum: %f" % (measures,temperature,humidity)
+          print ('%d Temp: %f   Hum: %f' % (measures,temperature,humidity))
           values.append({"temperature" : temperature, "humidity" : humidity})
           measures += 1
         else:
-          print 'ERROR - NaN'
+          print ('ERROR - NaN')
       except TypeError as e:
-        print 'ERROR - Type Error' 
+        print ('ERROR - Type Error')
         if hasattr(e, 'message'):
-          print(e.message)
+          print (e.message)
         else:
-          print(e)
+          print (e)
         
       time.sleep({{ DHT22.delay }})
       
     if (rawHumidity > 100):
-      print 'ERROR - Hum > 100 -> rawHumidity'
+      print ('ERROR - Hum > 100 -> rawHumidity')
     else:  
       lock.acquire()
       filtered_temperature.append(numpy.mean(eliminateNoise([x["temperature"] for x in values])))
@@ -104,19 +104,19 @@ def Main():
       # here you can do whatever you want with the variables: print them, file them out, anything
       temperature = filtered_temperature.pop()
       humidity = filtered_humidity.pop()
-      print "Send " + time.strftime("%Y-%m-%d %H:%M:%S")
-      print 'Send Temp: %.2f - Hum: %.2f' % (temperature,humidity)
+      print ('Send ' + time.strftime("%Y-%m-%d %H:%M:%S"))
+      print ('Send Temp: %.2f - Hum: %.2f' % (temperature,humidity))
       command = "echo 'dht22,name=temp,host=%s value=%.2f' | curl -s -XPOST 'http://{{ pi.network.ip }}:{{ dht22.influx.port }}/write?db={{ influx.db.name }}' --data-binary @-" % (hostname,temperature)
-      print command
+      print (command)
       res = subprocess.check_output(['bash','-c', command])
       for line in res.splitlines():
-        print line
+        print (line)
 
       command = "echo 'dht22,name=hum,host=%s value=%.2f' | curl -s -XPOST 'http://{{ pi.network.ip }}:{{ dht22.influx.port }}/write?db={{ influx.db.name }}' --data-binary @-" % (hostname,humidity) 
-      print command
+      print (command)
       res = subprocess.check_output(['bash','-c', command])
       for line in res.splitlines():
-        print line
+        print (line)
 
       lock.release()
     # wait a second before the next check

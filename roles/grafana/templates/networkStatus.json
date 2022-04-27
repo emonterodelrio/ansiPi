@@ -1256,7 +1256,7 @@
       }
     }
   ],
-  "refresh": "30s",
+  "refresh": "off",
   "schemaVersion": 16,
   "style": "dark",
   "tags": [],
@@ -1268,9 +1268,6 @@
     "to": "now"
   },
   "timepicker": {
-    "refresh_intervals": [
-      "30s"
-    ],
     "time_options": [
       "30s",
       "1m",

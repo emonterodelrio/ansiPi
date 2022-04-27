@@ -673,7 +673,7 @@ EOL
 
 ###    MAIN    #####################################
 BASE_PATH="/tmp/dht22_temp"
-USER="{{ grafanaAdminUserReaded.stdout }}"
+USER="admin"
 PASS="{{ grafanaAdminPassReaded.stdout }}"
 
 

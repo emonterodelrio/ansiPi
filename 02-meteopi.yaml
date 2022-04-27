@@ -3,8 +3,12 @@
   remote_user: pi
   gather_facts: true
   vars_prompt:
+
   - name: advisor
-    prompt: "\n\nCAUTION! This will re-password your raspberry pi at current lastpass logged in account.\n\n\nFollowing variable prompts will be stored as hidden files inside /home/pi folder.\nIf you have enter any of them before you don't need to do it again (simply press enter), unless you want to change it.\nPress enter to continue:"
+    prompt: "\n\nCAUTION! This will re-password your raspberry pi.\n\n\nFollowing variable prompts will be stored as hidden files inside /home/pi folder.\nIf you have enter any of them before you don't need to do it again (simply press enter), unless you want to change it.\nPress enter to continue"
+
+  - name: piPass
+    prompt: "\n\nInsert your raspberry pi new password"
     default: ""
     private: no
 
@@ -13,8 +17,8 @@
     default: ""
     private: no
 
-  - name: gmailPass
-    prompt: "\n\nNow, that gmail password."
+  - name: grafanaAdminPass
+    prompt: "\n\nnInsert password to set up grafana admin account"
     default: ""
 
   - name: duckDnsToken
@@ -23,7 +27,7 @@
     private: no
 
   - name: duckDnsUrl
-    prompt: "\n\nWhat url have you chosen at duckdns? It's for lastpass auto-fill credentials"
+    prompt: "\n\nWhat url have you chosen at duckdns? Type \"something\" if \"something.duckdns.org\""
     default: ""
     private: no
 
@@ -36,10 +40,9 @@
   - vars/piStuff.yaml
 
   roles:
-    - firstTime
     - storeAccounts
     - common
-    - security
+    # - security
     - duckDns
     - nginx
     - influxdb

@@ -1,26 +1,12 @@
 ---
-- name: Install software via apt
+- name: Install software via pip
   become: yes
-  apt:
-    name: '{{ additional_packages }}'
-  when: DHT22.present
-
-- name: Download adafruit library
-  git:
-    repo: 'https://github.com/adafruit/Adafruit_Python_DHT.git'
-    dest: "{{ DHT22.path }}/Adafruit_Python_DHT"
-  when: DHT22.present
-
-- name: Install adafruit library
-  become: yes
-  shell: cd {{ DHT22.path }}/Adafruit_Python_DHT && python setup.py install
+  pip:
+    name:
+      - Adafruit_DHT
+      - numpy
   when: DHT22.present
   
-- name: Ensure numpy
-  become: yes
-  shell: pip install numpy
-  when: DHT22.present
-
 - name: Create folders
   become: yes
   file:

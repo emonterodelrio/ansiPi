@@ -1,19 +1,37 @@
 ---
 additional_packages:
-  - telnet
-  - wget
+  - cmake
   - git
-  - vim
-  - stress
   - imagemagick
   - jq
+  - libcurl4-openssl-dev
+  - libssl-dev
+  - libxml2
+  - libxml2-dev
+  - openssl
+  - pinentry-curses
+  - pkg-config
+  - stress
+  - stress
+  - telnet
+  - vim
+  - wget
+  - whois
+  - xclip
   
 toCleanDirectories:
   - Documents
-  - MagPi
+  - Documentos
   - Music
+  - Música
   - Pictures
+  - Imágenes
   - Public
-  - python_games
+  - Público
   - Templates
+  - Plantillas
   - Videos
+  - Vídeos
+  - Bookshelf
+  - MagPi
+  - python_games

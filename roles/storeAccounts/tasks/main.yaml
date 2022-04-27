@@ -1,11 +1,15 @@
 ---
+- name: Save raspberry password to file
+  shell: echo "{{ piPass }}" > /home/pi/.piPass && chmod 644 /home/pi/.piPass && chown pi:pi /home/pi/.piPass
+  when: piPass != ""
+
 - name: Save gmail credentials to file
   shell: echo "{{ gmailUser }}" > /home/pi/.gmailUser && chmod 644 /home/pi/.gmailUser && chown pi:pi /home/pi/.gmailUser
   when: gmailUser != ""
 
-- name: Save gmail pass to file
-  shell: echo "{{ gmailPass }}" > /home/pi/.gmailPass && chmod 644 /home/pi/.gmailPass && chown pi:pi /home/pi/.gmailPass
-  when: gmailPass != ""
+- name: Save grafana admin pass to file
+  shell: echo "{{ grafanaAdminPass }}" > /home/pi/.grafanaAdminPass && chmod 644 /home/pi/.grafanaAdminPass && chown pi:pi /home/pi/.grafanaAdminPass
+  when: grafanaAdminPass != ""
 
 - name: Save duckdns token to file
   shell: echo "{{ duckDnsToken }}" > /home/pi/.duckDnsToken && chmod 644 /home/pi/.duckDnsToken && chown pi:pi /home/pi/.duckDnsToken

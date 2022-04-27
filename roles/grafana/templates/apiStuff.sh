@@ -1,6 +1,6 @@
 #!/bin/bash
 
-USER="{{ grafanaAdminUserReaded.stdout }}"
+USER="admin"
 PASS="{{ grafanaAdminPassReaded.stdout }}"
 
 #Setup admin user email

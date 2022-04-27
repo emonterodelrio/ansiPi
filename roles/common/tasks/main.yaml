@@ -8,6 +8,24 @@
   become: yes
   shell: apt-get update
 
+- name: Load pi password from file
+  shell: cat /home/pi/.piPass
+  register: piPassReaded
+
+- name: Encrypt pi password
+  local_action: shell mkpasswd --method=sha-512 {{ piPassReaded.stdout }}
+  register: pass512
+
+- name: Change pi password
+  become: yes
+  become_user: root
+  user: name=pi password={{ pass512.stdout }} update_password=always
+
+- name: Change pi password at conf/inventory/inventory
+  become: yes
+  become_user: root
+  local_action: command sed -i 's/{{ ansible_default_ipv4.address }} ansible_user=\(.*\)/{{ pi.network.ip }} ansible_user=\1/g' conf/inventory/inventory
+
 - name: Setup alias at bash_profile
   become: yes
   lineinfile:
@@ -96,7 +114,7 @@
 - name: Change pi ip at conf/inventory
   become: yes
   become_user: root
-  local_action: command sed -i 's/{{ ansible_default_ipv4.address }} ansible_user=\(.*\)/{{ pi.network.ip }} ansible_user=\1/g' conf/inventory
+  local_action: command sed -i 's/{{ ansible_default_ipv4.address }} ansible_user/{{ pi.network.ip }} ansible_user=/g' conf/inventory/inventory
 
 - name: Delete previous known_hosts user
   local_action: command ssh-keygen -f "/home/emontero/.ssh/known_hosts" -R {{ pi.network.ip }}
@@ -128,20 +146,12 @@
    state: absent
   with_items: "{{ toCleanDirectories }}"
 
-- debug:
-    msg: "Raspberry is going to be rebooted, continue from this executing: ansipi 02-meteopi.yaml --start-at-task='security : Install software via apt'"
-
-- name: Reboot raspi 
+- name: Reboot host and wait for it to restart
   become: yes
-  shell: "sleep 5 && sudo reboot -h now"
-  async: 1
-  poll: 0
+  reboot:
+    msg: "Reboot initiated by Ansible"
+    connect_timeout: 5
+    reboot_timeout: 600
+    post_reboot_delay: 10
+    test_command: uptime
   when: changedHostname.changed
-
-#- name: Wait for the reboot.
-#  wait_for_connection:
-#    connect_timeout: 10
-#    sleep: 5
-#    delay: 5
-#    timeout: 10
-#  when: changedHostname.changed

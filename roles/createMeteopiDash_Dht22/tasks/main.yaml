@@ -5,17 +5,8 @@
   register: existGrafana
   ignore_errors: yes
 
-- name: Lastpass - Ensure user loged in
-  local_action: shell lpass ls
-  when: existGrafana.rc == 0
-
-- name: Lastpass - Load credentials
-  local_action: shell lpass show {{ lpass.piId }}/grafanaAdmin | grep Username | awk '{print $2}'
-  register: grafanaAdminUserReaded
-  when: existGrafana.rc == 0
-
-- name: Lastpass - Load password
-  local_action: shell lpass show {{ lpass.piId }}/grafanaAdmin | grep Password | awk '{print $2}'
+- name: Load grafana admin password from file
+  shell: cat /home/pi/.grafanaAdminPass
   register: grafanaAdminPassReaded
   when: existGrafana.rc == 0
 

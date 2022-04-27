@@ -5,11 +5,6 @@
   register: existGrafana
   ignore_errors: yes
 
-- name: Install software via apt
-  become: yes
-  apt:
-    name: '{{ additional_packages }}'
-
 - name: Download grafana deb
   get_url:
     url: "{{ grafana.url }}/{{ grafana.deb }}"
@@ -35,9 +30,9 @@
   shell: cat /home/pi/.gmailUser
   register: gmailUserReaded
 
-- name: Load gmail password from file
-  shell: cat /home/pi/.gmailPass
-  register: gmailPassReaded
+- name: Load grafana admin password from file
+  shell: cat /home/pi/.grafanaAdminPass
+  register: grafanaAdminPassReaded
 
 - name: Load duckDnsUrl from file
   shell: cat /home/pi/.duckDnsUrl
@@ -63,26 +58,10 @@
   shell: "sleep 15 && curl 'http://admin:admin@{{ pi.network.ip }}:3000/api/datasources' -X POST -H 'Content-Type: application/json;charset=UTF-8' --data-binary '{\"name\":\"{{ influx.db.name }}\",\"type\":\"influxdb\",\"url\":\"http://{{ pi.network.ip }}:{{ influx.http.port }}\",\"access\":\"proxy\",\"isDefault\":true,\"database\":\"{{ influx.db.name }}\"}'"
   when: existGrafana.rc != 0
 
-- name: Create grafana admin credentials at lpass
-  local_action: shell lpass generate --no-symbols --username admin --url="{{ duckDnsUrlReaded.stdout }}" {{ lpass.piId }}/grafanaAdmin 50
-  register: grafanaPassAdmin
-  when: existGrafana.rc != 0
-
 - name: Change grafana admin password	
-  shell: "curl -X PUT -H 'Content-Type: application/json' -d '{\"oldPassword\":\"admin\",\"newPassword\":\"{{ grafanaPassAdmin.stdout }}\",\"confirmNew\":\"{{ grafanaPassAdmin.stdout }}\"}' 'http://admin:admin@192.168.1.11:3000/api/user/password'"
+  shell: "curl -X PUT -H 'Content-Type: application/json' -d '{\"oldPassword\":\"admin\",\"newPassword\":\"{{ grafanaAdminPassReaded.stdout }}\",\"confirmNew\":\"{{ grafanaAdminPassReaded.stdout }}\"}' 'http://admin:admin@192.168.1.11:3000/api/user/password'"
   register: resultGrafanaPassAdmin
   failed_when: '"changed" not in resultGrafanaPassAdmin.stdout'
-  when: existGrafana.rc != 0
-
-- name: Create grafana user credentials at lpass
-  local_action: shell lpass generate --no-symbols --username read --url={{duckDnsUrlReaded.stdout }} {{ lpass.piId }}/grafanaUser 50
-  register: grafanaPassUser
-  when: existGrafana.rc != 0
-
-- name: Change grafana user password	
-  shell: "curl -XPOST -H 'Content-Type: application/json' -d '{\"name\":\"read\",\"email\":\"{{ lookup('pipe', 'date +%s') }}@email.com\",\"login\":\"read\",\"password\":\"{{ grafanaPassUser.stdout }}\"}' 'http://admin:{{ grafanaPassAdmin.stdout }}@localhost:3000/api/admin/users'"
-  register: resultGrafanaPassUser
-  failed_when: '"created" not in resultGrafanaPassUser.stdout'
   when: existGrafana.rc != 0
 
 - name: Setup dashboards load folder
@@ -132,20 +111,6 @@
     owner: root
     group: root
     mode: 0644
-
-- name: Lastpass - Ensure user loged in
-  local_action: shell lpass ls
-
-- name: Lastpass - Load credentials
-  local_action: shell lpass show {{ lpass.piId }}/grafanaAdmin | grep Username | awk '{print $2}'
-  register: grafanaAdminUserReaded
-
-- name: Lastpass - Load password
-  local_action: shell lpass show {{ lpass.piId }}/grafanaAdmin | grep Password | awk '{print $2}'
-  register: grafanaAdminPassReaded
-
-- debug:
-    msg: "{{ grafanaAdminUserReaded }} -- {{ grafanaAdminPassReaded }}"
 
 - name: Create temp folder
   file:

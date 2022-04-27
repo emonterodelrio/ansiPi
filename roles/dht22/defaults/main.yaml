@@ -1,11 +1,4 @@
 ---
-
-additional_packages:
-  - build-essential
-  - python-dev
-  - python-openssl
-  - git
-
 meteoUpdatePicturesPath: /home/pi/meteoUpdatePictures
 
 DHT22:
