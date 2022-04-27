@@ -7,9 +7,15 @@
   shell: echo "{{ gmailUser }}" > /home/pi/.gmailUser && chmod 644 /home/pi/.gmailUser && chown pi:pi /home/pi/.gmailUser
   when: gmailUser != ""
 
+- name: Check grafana admin pass exists
+  become: yes
+  shell: cat /home/pi/.grafanaAdminPass
+  register: existGrafanaPass
+  ignore_errors: yes
+
 - name: Save grafana admin pass to file
-  shell: echo "{{ grafanaAdminPass }}" > /home/pi/.grafanaAdminPass && chmod 644 /home/pi/.grafanaAdminPass && chown pi:pi /home/pi/.grafanaAdminPass
-  when: grafanaAdminPass != ""
+  shell: openssl rand -base64 14 > /home/pi/.grafanaAdminPass && chmod 644 /home/pi/.grafanaAdminPass && chown pi:pi /home/pi/.grafanaAdminPass
+  when: existGrafanaPass.rc != 0
 
 - name: Save duckdns token to file
   shell: echo "{{ duckDnsToken }}" > /home/pi/.duckDnsToken && chmod 644 /home/pi/.duckDnsToken && chown pi:pi /home/pi/.duckDnsToken

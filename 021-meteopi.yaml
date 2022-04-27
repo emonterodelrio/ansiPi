@@ -17,10 +17,6 @@
     default: ""
     private: no
 
-  - name: grafanaAdminPass
-    prompt: "\n\nnInsert password to set up grafana admin account"
-    default: ""
-
   - name: duckDnsToken
     prompt: "\n\nInsert your DuckDns token present at http://www.duckdns.org"
     default: ""
@@ -42,11 +38,3 @@
   roles:
     - storeAccounts
     - common
-    # - security
-    - duckDns
-    - nginx
-    - influxdb
-    - metricsCollector
-    - grafana
-    - dht22
-    - createMeteopiDash_Dht22

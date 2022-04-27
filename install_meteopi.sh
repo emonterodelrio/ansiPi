@@ -1,4 +1,6 @@
 #!/bin/bash
+  DEFAULT_USER=pi
+  DEFAULT_PASS=raspberry
 
 if [ $(id -u) = 0 ]; then
    printf "\033[1;31m\n\nMust be run as normal user:\n$0 192.168.1.39\033[0m\n"
@@ -10,13 +12,11 @@ if ! sudo echo "Testing sudo"; then
    exit 1
 fi
 
-if [ $# -ne 3 ];then
-  printf "\033[1;31m\n\n You have to pass RaspberryPi current ip , user and password, like:\nsudo $0 192.168.1.39 pi raspberry\033[0m\n"
+if [ $# -ne 1 ];then
+  printf "\033[1;31m\n\n You have to pass RaspberryPi current ip , user and password, like:\nsudo $0 192.168.1.39\033[0m\n"
   exit 1
 else
   IP=$1
-  DEFAULT_USER=$2
-  DEFAULT_PASS=$3
 fi
 
 printf "\033[1;31m\n\nBefore use this script you must enable ssh at raspberry pi\033[0m\n"
@@ -48,6 +48,8 @@ until export ANSIBLE_CONFIG=$REPOPATH/conf/ansible.cfg && ansible meteopi -m pin
   sleep 3
 done
 
-ansible-playbook 02-meteopi.yaml -v
+ansible-playbook 021-meteopi.yaml -v
+
+ansible-playbook 022-meteopi.yaml -v
 
 printf "\033[1;32m\n\nThat's all\033[0m\n"

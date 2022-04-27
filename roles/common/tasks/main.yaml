@@ -24,7 +24,7 @@
 - name: Change pi password at conf/inventory/inventory
   become: yes
   become_user: root
-  local_action: command sed -i 's/{{ ansible_default_ipv4.address }} ansible_user=\(.*\)/{{ pi.network.ip }} ansible_user=\1/g' conf/inventory/inventory
+  local_action: shell sed -i 's/{{ ansible_default_ipv4.address }} ansible_user=\(.*\) ansible_ssh_pass=\(.*\)/{{ ansible_default_ipv4.address }} ansible_user=\1 ansible_ssh_pass={{ piPassReaded.stdout }}/g' conf/inventory/inventory
 
 - name: Setup alias at bash_profile
   become: yes
@@ -151,7 +151,7 @@
   reboot:
     msg: "Reboot initiated by Ansible"
     connect_timeout: 5
-    reboot_timeout: 600
+    reboot_timeout: 0
     post_reboot_delay: 10
     test_command: uptime
   when: changedHostname.changed
