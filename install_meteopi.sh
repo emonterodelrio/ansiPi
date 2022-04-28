@@ -1,6 +1,6 @@
 #!/bin/bash
-  DEFAULT_USER=pi
-  DEFAULT_PASS=raspberry
+DEFAULT_USER=pi
+DEFAULT_PASS=raspberry
 
 if [ $(id -u) = 0 ]; then
    printf "\033[1;31m\n\nMust be run as normal user:\n$0 192.168.1.39\033[0m\n"
@@ -19,9 +19,7 @@ else
   IP=$1
 fi
 
-printf "\033[1;31m\n\nBefore use this script you must enable ssh at raspberry pi\033[0m\n"
-
-sudo apt-get update -y 
+sudo apt-get update -y
 sudo apt-get install -y software-properties-common
 
 sudo add-apt-repository --yes --update ppa:ansible/ansible
@@ -43,18 +41,25 @@ export INVENTORY_PATH=$REPOPATH/conf/inventory/
 printf "\033[1;32m\n\nTest connection to raspberry\033[0m\n"
 
 #Use default raspibian password
+RETRIES=5
 until export ANSIBLE_CONFIG=$REPOPATH/conf/ansible.cfg && ansible meteopi -m ping --extra-vars "ansible_user=${DEFAULT_USER} ansible_password=${DEFAULT_PASS} host_key_checking=False"; do
-  echo "Wait for raspberry connection"
-  sleep 3
+  RETRIES=$((RETRIES-1))
+  if [ "$RETRIES" -eq 0 ]; then
+    echo
+    printf "\033[1;31m¿Maybe you have to change password at install_meteopi.sh (DEFAULT_PASS=XXXXX)?\033[0m\n"
+    exit 1;
+  fi
+  printf "\033[1;32m\n\nWaiting for raspberry pi connection\033[0m\n"
+  sleep 2
 done
 
 ansible-playbook 021-meteopi.yaml
 
 while ! nc -zv 192.168.1.11 22 &> /dev/null; do
-  echo "Waiting for host to reboot";
+  printf "\033[1;32m\n\nWaiting for host to reboot\033[0m\n"
   sleep 1;
 done
 
 ansible-playbook 022-meteopi.yaml -vv
 
-printf "\033[1;32m\n\nThat's all\033[0m\n"
+printf "\033[1;32m\n\nDone\033[0m\n"

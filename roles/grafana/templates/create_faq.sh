@@ -98,7 +98,7 @@ setupDashPanels;
 setupDashOptions;
 
 #Create dashboard from json file
-curl -X POST "http://$USER:$PASS@{{ pi.network.ip }}:3000/api/dashboards/db" \
+curl -X POST "http://$USER:$PASS@127.0.0.1:3000/api/dashboards/db" \
 -H "Accept: application/json" \
 -H "Content-Type:application/json" \
 -d @$BASE_PATH/temp.json | jq . > $BASE_PATH/dashboard-create.log
@@ -110,7 +110,7 @@ cat >>$BASE_PATH/dashHomeSetup.json <<EOL
 {"homeDashboardId": $ID}
 EOL
 
-curl -X PUT "http://$USER:$PASS@{{ pi.network.ip }}:3000/api/user/preferences" \
+curl -X PUT "http://$USER:$PASS@127.0.0.1:3000/api/user/preferences" \
 -H 'Accept: application/json'  \
 -H 'Content-Type:application/json' \
 -d @$BASE_PATH/dashHomeSetup.json | jq . > $BASE_PATH/setupHomeDashboard.log

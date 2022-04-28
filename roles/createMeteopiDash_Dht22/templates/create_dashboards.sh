@@ -717,13 +717,13 @@ setupDashOptions;
 
 echo $USER
 echo $PASS
-echo "curl -s -X POST 'http://$USER:$PASS@{{ pi.network.ip }}:3000/api/dashboards/db' \
+echo "curl -s -X POST 'http://$USER:$PASS@127.0.0.1:3000/api/dashboards/db' \
 -H 'Accept: application/json' \
 -H 'Content-Type:application/json' \
 -d @$BASE_PATH/temp.json | jq ."
 
 #Create dashboard from json file
-curl -s -X POST "http://$USER:$PASS@{{ pi.network.ip }}:3000/api/dashboards/db" \
+curl -s -X POST "http://$USER:$PASS@127.0.0.1:3000/api/dashboards/db" \
 -H "Accept: application/json" \
 -H "Content-Type:application/json" \
 -d @$BASE_PATH/temp.json | jq . > $BASE_PATH/dashboard-create.log
@@ -731,4 +731,17 @@ curl -s -X POST "http://$USER:$PASS@{{ pi.network.ip }}:3000/api/dashboards/db" 
 #Star dashboard
 DASH_ID=$(cat $BASE_PATH/dashboard-create.log | grep "\"id\"" | awk '{print $2}' | tr -d ",")
 echo "Star to $DASH_ID"
-curl -s -X POST "http://$USER:$PASS@{{ pi.network.ip }}:3000/api/user/stars/dashboard/$DASH_ID"
+curl -s -X POST "http://$USER:$PASS@127.0.0.1:3000/api/user/stars/dashboard/$DASH_ID"
+
+#Setup as Home dashboard
+curl -s -X PUT "http://$USER:$PASS@127.0.0.1:3000/api/org/preferences" \
+-H 'Accept-Encoding: gzip, deflate, br' \
+-H 'X-Grafana-Org-Id: 1' \
+-H 'Accept-Language: en-IN,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,ml;q=0.6,mt;q=0.5' \
+-H 'Content-Type: application/json;charset=UTF-8' \
+-H 'Accept: application/json, text/plain, */*' \
+-H 'Cache-Control: no-cache' \
+-H 'Connection: keep-alive' \
+--data-binary '{"homeDashboardId":'" \
+$(curl -s "http://$USER:$PASS@127.0.0.1:3000/api/search/" | jq -c '.[] | select( .uid == "'${DASHBOARD_TITLE}'" )' | jq .id) \
+"'}'
