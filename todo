@@ -1,10 +1,6 @@
-Crear home dash con api para que salga en la lista
+Actualizar readme con img de drive
 
 Del día 1 al 9 no funcionan las metricas de syslog "ssh"
-
-Pasar las variables a los playbooks via fichero, rellenar fichero desde el install y pasarlo en vez del prompt de ansible, cuando falle el install tirar del fichero en lo que se muestra.
- 
-Buscar api para mapas mejor
 
 Licencia:
 Revisar lo que usas y https://creativecommons.org/choose/?lang=es_es#metadata
@@ -12,45 +8,25 @@ Revisar lo que usas y https://creativecommons.org/choose/?lang=es_es#metadata
 nginx:
 https
   
-40X 50X decentes
-
 Influx:
 Habilitar log
 Securizar
-https
 
 revisar reiniciar la raspi y los procesos, handlers?
 
 monit con mensajes de fail2ban, demasiado verboso ahora
 
-Idempotencia en el rol de firstTime cuando se crean las credenciales de la raspi, si existen actualizarlas en local, sino crear
-
-Hacer un readme
 Mejorar mensajes install
-
-
-En vez de sleep poner un loop esperando al api de grafana while (curl != 200) -> sleep
-- name: Link influxdb datasource
-  shell: sleep 15
-
 
 
 ####################################
 V2.0:
-
-Mensaje de lo que hay que hacer antes de instalar nada:
-dd if=...
-rellenar pompt de conf de la raspi
-raspi-config
-enable ssh
-
 
 1-.Crear dashboards via curls para ver dónde meter lo de meteoupdate, separar como dht22? en el fond es un sensor más
 
 Seguir:
 http://docs.grafana.org/tutorials/api_org_token_howto/
 roles/createDashExample
-
 
 
 
@@ -78,11 +54,6 @@ curl -s -X GET http://admin:@192.168.1.11:3000/api/orgs | jq .
 Delete orgs
   curl -s -X DELETE -H "Content-Type: application/json" http://admin:@192.168.1.11:3000/api/orgs6 | jq .
 
-
-
-
-
-2-.Hacer refactor en roles para ver que se necesita en los satelites
 
 3-.Trocear el common
 

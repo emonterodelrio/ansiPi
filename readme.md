@@ -18,41 +18,32 @@ This is the central server, it requires a powerfull raspberry like [Raspberry Pi
 
 * Create an account at google if haven't yet
 
-* Create an account at Lastpass if haven't yet
-
 **Installation:**
 
 
-1-. [Load your image to SD card](https://www.raspberrypi.org/documentation/installation/installing-images/)
+1-. [Download your image to SD card](https://drive.google.com/file/d/19iTuE1imGfB20s8R8KZgfg1UanPMVt46/view?usp=sharing)
 
-2-. Connect hdmi and a mouse/keyboard
+2-. Load your image to SD card
 
-3-. Power on your raspberry
+<pre>sudo umount /media/....</pre>
 
-4-. Start GUI, if not autoload, typing <pre>startx</pre> at terminal prompt, if not started by default
+<pre>sudo dd if=my-2022-04-04-raspios-bullseye-armhf.img of=/dev/mmcblk0 bs=4M conv=fsync status=progress</pre>
 
-4-. Follow first-time-menu prompts for initial setup of your raspberry pi:
-    Setup country, Language, Timezone...leave ENGLISH language
-    Setup password, [same as here](https://github.com/emonterodelrio/ansiPi/blob/develop/install_meteopi.sh#L2).
-    Setup wifi connection
+<pre>sync</pre>
 
-5-. Open a terminal (Ctrl+Alt+t) and run <pre>raspi-config</pre> and edit some settings:
-   
-    Enable ssh at: Interfacing options -> SSH
+3-. Connect hdmi and a mouse/keyboard
 
-    Enable autologin to console mode at: Boot options -> Desktop/Cli -> Console autologin
+4-. Power on your raspberry
 
-    Expand filesystem at: Advanced options -> Expand filesystem
-    
-6-. find your raspberry pi at network:
+5-. find your raspberry pi at network:
 
     nmap -sP 192.168.1.1/24
 
-7-. Setup ip and password properly at conf/inventory file
+6-. Setup ip and password properly at conf/inventory/inventory file
 
-8-. Launch install with that ip and follow instructions:
+7-. Launch install with that ip and follow instructions:
 
-    ./install_meteopi.sh 192.168.1.38
+    ./install_meteopi.sh RASPBERRYPI_IP
 
 9-. Reaching meteopi from the internet requires you to open router 80 port to configured [ip](https://github.com/emonterodelrio/ansiPi/blob/develop/vars/piStuff.yaml#L8)
 
