@@ -1,5 +1,5 @@
 ---
-- hosts: meteopi
+- hosts: eyepi
   gather_facts: true
   vars_prompt:
 
@@ -32,8 +32,7 @@
     private: no
 
   vars_files:
-  - vars/piStuff.yaml
+  - ../vars/eyepi.yaml
 
   roles:
-    - storeAccounts
     - common

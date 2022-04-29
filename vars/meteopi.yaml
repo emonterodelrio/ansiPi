@@ -11,9 +11,6 @@ pi:
     dns2: 8.8.4.4
     maskLength: 24
 
-lpass:
-  piId: meteopi
-
 influx:
   port: 8888
   admin:

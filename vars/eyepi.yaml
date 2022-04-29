@@ -1,0 +1,14 @@
+---
+pi:
+  user: pi
+  hostname: eyepi
+  swappiness: 10
+  bluetoothEnabled: false
+  network:
+    ip: 192.168.1.12
+    prefix: 192.168.1
+    dns1: 8.8.8.8
+    dns2: 8.8.4.4
+    maskLength: 24
+
+production_mode: false

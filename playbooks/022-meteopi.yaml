@@ -2,7 +2,7 @@
 - hosts: meteopi
   gather_facts: true
   vars_files:
-  - vars/piStuff.yaml
+  - ../vars/meteopi.yaml
 
   roles:
     # - security
