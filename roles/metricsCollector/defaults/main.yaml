@@ -9,7 +9,7 @@ collectors:
 
   - name: reboots
     group: monitor
-    command: "myDate=$(date \"+%b %-d\");myDate=\"${myDate^}\";grep -a \"$myDate\" /var/log/syslog | grep -a \"Booting Linux on physical\" | wc -l"
+    command: "myDate=$(date +%Y-%m-%d);grep -a \"$myDate\" /var/log/syslog | grep -a \"Booting Linux on physical\" | wc -l"
     delay: "*"
 
 ##@@@   temperatures
@@ -152,12 +152,12 @@ collectors:
 
   - name: login_ok
     group: ssh
-    command: "myDate=$(date \"+%b %-d\");myDate=\"${myDate^}\";grep -a \"$myDate\" /var/log/auth.log | grep -a sshd | grep -a \"session opened for user\" | wc -l"
+    command: "myDate=$(date +%Y-%m-%d);grep -a \"$myDate\" /var/log/auth.log | grep -a sshd | grep -a \"session opened for user\" | wc -l"
     delay: "*"
 
   - name: login_ko
     group: ssh
-    command: "myDate=$(date \"+%b %-d\");myDate=\"${myDate^}\";grep -a \"$myDate\" /var/log/auth.log | grep -a sshd | grep -a \"authentication failure\" | wc -l"
+    command: "myDate=$(date +%Y-%m-%d);grep -a \"$myDate\" /var/log/auth.log | grep -a sshd | grep -a \"authentication failure\" | wc -l"
     delay: "*"
 
 ##   Network   ############################################################
@@ -176,30 +176,30 @@ collectors:
 
   - name: external_acceses
     group: nginx
-    command: "sleep 20 && myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | grep -v \"{{ pi.network.prefix }}\" | wc -l"
+    command: "sleep 20 && myDate=$(date +%Y-%m-%d);grep -a \"$myDate\" {{ nginx.log.access.path }} | grep -v \"{{ pi.network.prefix }}\" | wc -l"
     delay: "*"
 
   - name: local_acceses
     group: nginx
-    command: "sleep 20 && myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | grep \"{{ pi.network.prefix }}\" | wc -l"
+    command: "sleep 20 && myDate=$(date +%Y-%m-%d);grep -a \"$myDate\" {{ nginx.log.access.path }} | grep \"{{ pi.network.prefix }}\" | wc -l"
     delay: "*"
 
   - name: get
     group: nginx
-    command: "sleep 20 && myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep GET | wc -l"
+    command: "sleep 20 && myDate=$(date +%Y-%m-%d);grep -a \"$myDate\" {{ nginx.log.access.path }} | awk '{print $1 \" \" $3}' | tr -d \"-\"  | tr -d \"\\\"\" | grep GET | wc -l"
     delay: "*"
 
   - name: post
     group: nginx
-    command: "sleep 20 && myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep POST | wc -l"
+    command: "sleep 20 && myDate=$(date +%Y-%m-%d);grep -a \"$myDate\" {{ nginx.log.access.path }} | awk '{print $1 \" \" $3}' | tr -d \"-\"  | tr -d \"\\\"\" | grep POST | wc -l"
     delay: "*"
 
   - name: put
     group: nginx
-    command: "sleep 20 && myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep PUT | wc -l"
+    command: "sleep 20 && myDate=$(date +%Y-%m-%d);grep -a \"$myDate\" {{ nginx.log.access.path }} | awk '{print $1 \" \" $3}' | tr -d \"-\"  | tr -d \"\\\"\" | grep PUT | wc -l"
     delay: "*"
 
   - name: other
     group: nginx
-    command: "sleep 20 && myDate=$(date \"+%-d/%b\");myDate=\"${myDate^}\";grep -a \"$myDate\" {{ nginx.log.access.path }} | awk '{print $1 \" \" $4}' | tr -d \"-\"  | tr -d \"\\\"\" | grep -v \"POST\\|GET\\|PUT\" | wc -l"
+    command: "sleep 20 && myDate=$(date +%Y-%m-%d);grep -a \"$myDate\" {{ nginx.log.access.path }} | awk '{print $1 \" \" $3}' | tr -d \"-\"  | tr -d \"\\\"\" | grep -v \"POST\\|GET\\|PUT\" | wc -l"
     delay: "*"

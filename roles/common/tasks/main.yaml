@@ -34,6 +34,13 @@
   with_items:
     - alias ll='ls -larth'
 
+- name: Change syslog date format
+  become: yes
+  lineinfile:
+    path: /etc/rsyslog.conf
+    regexp: '\$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat'
+    line: "#$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat"
+
 - name: Delete history stuff from pi user
   become: yes
   lineinfile:
