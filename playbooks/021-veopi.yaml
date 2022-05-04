@@ -1,5 +1,5 @@
 ---
-- hosts: eyepi
+- hosts: veopi
   gather_facts: true
   vars_prompt:
 
@@ -8,11 +8,6 @@
 
   - name: piPass
     prompt: "\n\nInsert your raspberry pi new password"
-    default: ""
-    private: no
-
-  - name: gmailUser
-    prompt: "\n\nPlease type valid gmail account for emails sending from raspberry"
     default: ""
     private: no
 
@@ -32,7 +27,8 @@
     private: no
 
   vars_files:
-  - ../vars/eyepi.yaml
+  - ../vars/meteopi.yaml
 
   roles:
+    - storeAccounts
     - common

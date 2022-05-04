@@ -1,11 +1,12 @@
 ---
-
 additional_packages:
   - influxdb=1.6.7~rc0-1
   - influxdb-client=1.6.7~rc0-1
 
 influx:
   port: 8888
+  admin:
+    port: 8883
   http:
     port: 8886
   db:

@@ -1,0 +1,93 @@
+---
+- name: Install software via apt
+  become: yes
+  apt:
+    name: '{{ additional_packages }}'
+
+- name: Create folder
+  become: yes
+  file:
+    path: /home/pi/autoHotSpot
+    state: directory
+    mode: 0755
+
+- name: Unmask and disable hostapd
+  become: yes
+  systemd:
+    name: hostapd
+    masked: no
+    enabled: no
+    
+- name: Disable dnsmasq
+  become: yes
+  systemd:
+    name: dnsmasq
+    enabled: no
+
+- name: Fill /etc/hostapd/hostapd.conf with template
+  become: yes
+  template:
+    src: hostapd.conf
+    dest: /etc/hostapd/hostapd.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Link /etc/hostapd/hostapd.conf to hotChanges folder
+  become: yes
+  file:
+    src: ../etc/hostapd/hostapd.conf
+    dest: /hotChanges/hostapd.conf
+    owner: root
+    group: root
+    state: link
+
+- name: Configure /etc/dnsmasq.conf
+  become: yes
+  blockinfile:
+    path: /etc/dnsmasq.conf
+    block: |
+      #AutoHotspot Config
+      #stop DNSmasq from using resolv.conf
+      interface=wlan0
+      no-resolv
+      bind-interfaces
+      dhcp-range=10.0.0.50,10.0.0.150,12h
+
+- name: Configure /etc/dhcpcd.conf
+  become: yes
+  lineinfile:
+    path: /etc/dhcpcd.conf
+    regexp: '^nohook wpa_supplicant'
+    line: nohook wpa_supplicant
+
+- name: Add autohotspot.service
+  become: yes
+  copy:
+    src: autohotspot.service
+    dest: /etc/systemd/system/autohotspot.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Enable autohotspot
+  become: yes
+  systemd:
+    name: autohotspot
+    enabled: yes
+
+- name: Add autohotspot script
+  become: yes
+  copy:
+    src: autoHotSpot
+    dest: /home/pi/autoHotSpot
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Crontab if hotspot is required to start
+  become: yes
+  become_user: root
+  cron:
+    name: "Check if hotspot is required to start"
+    job: "sudo /home/pi/autoHotSpot/autoHotSpot >/dev/null 2>&1"

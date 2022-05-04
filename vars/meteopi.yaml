@@ -28,4 +28,7 @@ dht22:
   influx:
     port: 8886
 
-production_mode: false
+hostapd:
+  ssid: PiHotspot
+  channel: 8
+  passphrase: 1234567890

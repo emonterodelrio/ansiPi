@@ -1,0 +1,14 @@
+[Unit]
+Description=Automatically generates a video stream
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/home/pi/streamCam/streamCam.py
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=%N
+
+[Install]
+WantedBy=multi-user.target

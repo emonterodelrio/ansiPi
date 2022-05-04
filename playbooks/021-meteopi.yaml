@@ -11,11 +11,6 @@
     default: ""
     private: no
 
-  - name: gmailUser
-    prompt: "\n\nPlease type valid gmail account for emails sending from raspberry"
-    default: ""
-    private: no
-
   - name: duckDnsToken
     prompt: "\n\nInsert your DuckDns token present at http://www.duckdns.org"
     default: ""

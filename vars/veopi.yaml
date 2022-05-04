@@ -1,7 +1,7 @@
 ---
 pi:
   user: pi
-  hostname: eyepi
+  hostname: veopi
   swappiness: 10
   bluetoothEnabled: false
   network:
@@ -11,4 +11,14 @@ pi:
     dns2: 8.8.4.4
     maskLength: 24
 
-production_mode: false
+hostapd:
+  ssid: PiHotspot
+  channel: 8
+  passphrase: 1234567890
+
+streamCam:
+  port: 8000
+  resolution:
+    x: 1920
+    y: 1080
+  framerate: 24

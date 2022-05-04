@@ -1,0 +1,40 @@
+---
+
+- name: Create folder
+  become: yes
+  file:
+    path: /home/pi/streamCam
+    state: directory
+    mode: 0755
+
+- name: Setup streamCam script
+  become: yes
+  template:
+    src: streamCam.py
+    dest: /home/pi/streamCam/streamCam.py
+    owner: pi
+    group: pi
+    mode: 0755
+
+- name: Add streamCam.service
+  become: yes
+  copy:
+    src: streamCam.service
+    dest: /etc/systemd/system/streamCam.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Disable camera led
+  become: yes
+  lineinfile:
+    path: /boot/config.txt
+    regexp: '^disable_camera_led=1'
+    line: disable_camera_led=1
+
+- name: Enable streamCam
+  become: yes
+  systemd:
+    name: streamCam
+    enabled: yes
+    state: restarted

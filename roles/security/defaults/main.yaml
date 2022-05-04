@@ -1,9 +1,0 @@
----
-additional_packages:
-  - monit
-  - mailutils
-  - ssmtp
-  - openssh-server
-  
-monitTimeout: 10
-production_mode: false

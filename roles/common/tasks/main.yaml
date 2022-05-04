@@ -78,7 +78,7 @@
 
 - name: Change hostname
   become: yes
-  shell: echo {{ pi.hostname }} > /etc/hostname
+  shell: hostnamectl set-hostname {{ pi.hostname }}
   register: changedHostname
 
 - name: Change etc hosts

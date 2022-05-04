@@ -5,7 +5,7 @@
   - ../vars/meteopi.yaml
 
   roles:
-    # - security
+    - autoHotSpot
     - duckDns
     - nginx
     - influxdb

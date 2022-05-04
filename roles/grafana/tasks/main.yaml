@@ -36,7 +36,12 @@
 
 - name: Fill /etc/grafana/grafana.ini with template
   become: yes
-  template: src=grafana.ini dest=/etc/grafana/grafana.ini owner=root group=grafana mode=0640
+  template:
+    src: grafana.ini
+    dest: /etc/grafana/grafana.ini
+    owner: root
+    group: grafana
+    mode: 0640
 
 - name: Make sure grafana-server is enabled and restarted
   become: yes
@@ -55,7 +60,7 @@
   when: existGrafana.rc != 0
 
 - name: Change grafana admin password	
-  shell: "curl -X PUT -H 'Content-Type: application/json' -d '{\"oldPassword\":\"admin\",\"newPassword\":\"{{ grafanaAdminPassReaded.stdout }}\",\"confirmNew\":\"{{ grafanaAdminPassReaded.stdout }}\"}' 'http://admin:admin@192.168.1.11:3000/api/user/password'"
+  shell: "curl -X PUT -H 'Content-Type: application/json' -d '{\"oldPassword\":\"admin\",\"newPassword\":\"{{ grafanaAdminPassReaded.stdout }}\",\"confirmNew\":\"{{ grafanaAdminPassReaded.stdout }}\"}' 'http://admin:admin@127.0.0.1:3000/api/user/password'"
   register: resultGrafanaPassAdmin
   failed_when: '"changed" not in resultGrafanaPassAdmin.stdout'
   when: existGrafana.rc != 0

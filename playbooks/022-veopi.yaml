@@ -1,0 +1,9 @@
+---
+- hosts: veopi
+  gather_facts: true
+  vars_files:
+  - ../vars/veopi.yaml
+
+  roles:
+    - autoHotSpot
+    - streamCam

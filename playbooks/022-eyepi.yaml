@@ -1,9 +1,0 @@
----
-- hosts: eyepi
-  gather_facts: true
-  vars_files:
-  - ../vars/eyepi.yaml
-
-  roles:
-    # - security
-    

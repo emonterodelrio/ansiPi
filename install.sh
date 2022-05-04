@@ -1,6 +1,6 @@
 #!/bin/bash
 if [ $(id -u) = 0 ]; then
-  printf "\033[1;31m\n\nMust be run as normal user:\n$0 192.168.1.39\033[0m\n"
+  printf "\033[1;31m\n\nMust be run as normal user"
   exit 1
 fi
 
@@ -36,14 +36,14 @@ fi
 if [ -z "$DEPLOY_TYPE" ]; then
   SELECTION_OK=false
   while ! $SELECTION_OK; do
-    printf "\033[1;32mChoose one [meteopi|eyepi]:\033[0m\n"
+    printf "\033[1;32mChoose one [meteopi|veopi]:\033[0m\n"
     read DEPLOY_TYPE
     case $DEPLOY_TYPE in
       meteopi)
         SELECTION_OK=true
         ;;
 
-      eyepi)
+      veopi)
         SELECTION_OK=true
         ;;
 
@@ -53,8 +53,8 @@ if [ -z "$DEPLOY_TYPE" ]; then
     esac
   done
 else
-  if [[ $DEPLOY_TYPE != "meteopi" ]] && [[ $DEPLOY_TYPE != "eyepi" ]]; then
-    printf "\033[1;31m\n\n Wrong deploy_type, possibles are: meteopi, eyepi\033[0m\n"
+  if [[ $DEPLOY_TYPE != "meteopi" ]] && [[ $DEPLOY_TYPE != "veopi" ]]; then
+    printf "\033[1;31m\n\n Wrong deploy_type, possibles are: meteopi, veopi\033[0m\n"
     exit 1
   fi
 fi
@@ -75,18 +75,16 @@ export ROLES_PATH=$REPOPATH/roles/
 case $DEPLOY_TYPE in
   meteopi)
     printf "\033[1;32m\n\nSet ansible host $IP\033[0m\n"
-    sudo sed -i "s/192.168.1.11 .*/$IP ansible_user=$DEFAULT_USER ansible_ssh_pass=$DEFAULT_PASS/g" conf/inventory/meteopi
+    sudo sed -i "s/192.*/$IP ansible_user=$DEFAULT_USER ansible_ssh_pass=$DEFAULT_PASS/g" conf/inventory/meteopi
     ;;
 
-  eyepi)
+  veopi)
+
     printf "\033[1;32m\n\nSet ansible host $IP\033[0m\n"
-    sudo sed -i "s/192.168.1.12 .*/$IP ansible_user=$DEFAULT_USER ansible_ssh_pass=$DEFAULT_PASS/g" conf/inventory/eyepi
+    sudo sed -i "s/192.*/$IP ansible_user=$DEFAULT_USER ansible_ssh_pass=$DEFAULT_PASS/g" conf/inventory/veopi
     ;;
 esac
 
-printf "\033[1;32m\n\nDisable host key check\033[0m\n"
-sudo sed -i "s/#host_key_checking = False/host_key_checking = False/g" /etc/ansible/ansible.cfg
-sudo ssh-keygen -f "/root/.ssh/known_hosts" -R ${IP} || true
 ssh-keygen -f "/home/$(whoami)/.ssh/known_hosts" -R ${IP} || true
 
 printf "\033[1;32m\n\nTest connection to raspberry\033[0m\n"
@@ -100,7 +98,7 @@ until export ANSIBLE_CONFIG=$REPOPATH/conf/ansible.cfg && ansible $DEPLOY_TYPE -
   RETRIES=$((RETRIES-1))
   if [ "$RETRIES" -eq 0 ]; then
     echo
-    printf "\033[1;31m¿Maybe you have to change password? $0 IP current_user current_password [deploy_type]\033[0m\n"
+    printf "\033[1;31m¿Maybe you have to change password at conf/inventory/$DEPLOY_TYPE? $0 IP current_user current_password [deploy_type]\033[0m\n"
     exit 1;
   fi
   printf "\033[1;32m\n\nWaiting for raspberry pi connection\033[0m\n"
@@ -111,24 +109,32 @@ case $DEPLOY_TYPE in
   meteopi)
     ansible-playbook playbooks/021-meteopi.yaml -vv
 
+    echo "Reboot"
+    sleep 5
     while ! nc -zv 192.168.1.11 22 &> /dev/null; do
-      printf "\033[1;32m\n\nWaiting for host to reboot\033[0m\n"
+      printf "\033[1;32m\n\nWaiting for host to reboot at 192.168.1.11\033[0m\n"
       sleep 1;
     done
 
     ansible-playbook playbooks/022-meteopi.yaml -vv
     ;;
 
-  eyepi)
-    ansible-playbook playbooks/021-eyepi.yaml -vv
+  veopi)
+    ansible-playbook playbooks/021-veopi.yaml -vv
 
+    echo "Reboot"
+    sleep 5
     while ! nc -zv 192.168.1.12 22 &> /dev/null; do
-      printf "\033[1;32m\n\nWaiting for host to reboot\033[0m\n"
+      printf "\033[1;32m\n\nWaiting for host to reboot at 192.168.1.12\033[0m\n"
       sleep 1;
     done
 
-    ansible-playbook playbooks/022-eyepi.yaml -vv
+    ansible-playbook playbooks/022-veopi.yaml -vv
     ;;
+
+  *)
+    echo "Wrong $DEPLOY_TYPE option"
+  ;;  
 esac
 
 
