@@ -27,7 +27,7 @@
     private: no
 
   vars_files:
-  - ../vars/meteopi.yaml
+    - ../vars/meteopi.yaml
 
   roles:
     - storeAccounts

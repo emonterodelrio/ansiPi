@@ -2,7 +2,7 @@
 - hosts: veopi
   gather_facts: true
   vars_files:
-  - ../vars/veopi.yaml
+    - ../vars/veopi.yaml
 
   roles:
     - autoHotSpot

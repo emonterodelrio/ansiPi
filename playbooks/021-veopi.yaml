@@ -11,23 +11,8 @@
     default: ""
     private: no
 
-  - name: duckDnsToken
-    prompt: "\n\nInsert your DuckDns token present at http://www.duckdns.org"
-    default: ""
-    private: no
-
-  - name: duckDnsUrl
-    prompt: "\n\nWhat url have you chosen at duckdns? Type \"something\" if \"something.duckdns.org\""
-    default: ""
-    private: no
-
-  - name: aemet_opendata_apikey
-    prompt: "\n\nInsert your opendata aemet api key, if haven't yet go to https://opendata.aemet.es"
-    default: ""
-    private: no
-
   vars_files:
-  - ../vars/meteopi.yaml
+    - ../vars/veopi.yaml
 
   roles:
     - storeAccounts
