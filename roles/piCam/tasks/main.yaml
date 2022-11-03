@@ -1,0 +1,59 @@
+---
+- name: Create piCam folder
+  file:
+    path: "/home/pi/piCam"
+    owner: pi
+    group: pi
+    state: directory
+
+- name: Create metric collectors log folder
+  file:
+    path: "/home/pi/piCam/logs"
+    owner: pi
+    group: pi
+    state: directory
+
+- name: Setup script
+  template:
+    src: piCam.py
+    dest: "/home/pi/piCam/piCam.py"
+    mode: 0777
+
+- name: Setup stop script
+  template:
+    src: stop_piCam.sh
+    dest: "/home/pi/piCam/stop_piCam.sh"
+    mode: 0777
+
+- name: Stop piCam
+  become: yes
+  shell: "/home/pi/piCam/stop_piCam.sh"
+  ignore_errors: yes
+
+- name: Setup logrotate.d log
+  become: yes
+  template:
+    src: logrotate.j2
+    dest: "/etc/logrotate.d/piCam"
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Stop scripts every night
+  become: yes
+  become_user: root
+  cron:
+    name: "Stop piCam script"
+    minute: "58"
+    hour: "23"
+    job: "/home/pi/piCam/stop_piCam.sh"
+
+- name: Crontab scripts
+  cron:
+    name: "piCam"
+    minute: "*"
+    hour: "*"
+    day: "*"
+    month: "*"
+    weekday: "*"
+    job: "bash -c 'if [ ! \"$(ps aux | grep piCam.py | grep -v grep)\" ]; then nohup /home/pi/piCam/piCam.py &>> /home/pi/piCam/logs/piCam.log& fi'"

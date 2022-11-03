@@ -1,2 +1,2 @@
 [meteopi]
-192.168.1.11 ansible_user=pi ansible_ssh_pass=miRaspberryPi16861686
+192.168.1.13 ansible_user=pi ansible_ssh_pass=miRaspberryPi

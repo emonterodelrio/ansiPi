@@ -5,7 +5,7 @@ pi:
   swappiness: 10
   bluetoothEnabled: false
   network:
-    ip: 192.168.1.11
+    ip: 192.168.1.13
     prefix: 192.168.1
     dns1: 8.8.8.8
     dns2: 8.8.4.4

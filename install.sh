@@ -111,8 +111,9 @@ case $DEPLOY_TYPE in
 
     echo "Reboot"
     sleep 5
-    while ! nc -zv 192.168.1.11 22 &> /dev/null; do
-      printf "\033[1;32m\n\nWaiting for host to reboot at 192.168.1.11\033[0m\n"
+    CHECK_IP=$(cat conf/inventory/$DEPLOY_TYPE | grep ansible | cut -d" " -f1)
+    while ! nc -zv $CHECK_IP 22 &> /dev/null; do
+      printf "\033[1;32m\n\nWaiting for host to reboot at $CHECK_IP\033[0m\n"
       sleep 1;
     done
 
@@ -124,8 +125,9 @@ case $DEPLOY_TYPE in
 
     echo "Reboot"
     sleep 5
-    while ! nc -zv 192.168.1.12 22 &> /dev/null; do
-      printf "\033[1;32m\n\nWaiting for host to reboot at 192.168.1.12\033[0m\n"
+    CHECK_IP=$(cat conf/inventory/$DEPLOY_TYPE | grep ansible | cut -d" " -f1)
+    while ! nc -zv $CHECK_IP 22 &> /dev/null; do
+      printf "\033[1;32m\n\nWaiting for host to reboot at $CHECK_IP\033[0m\n"
       sleep 1;
     done
 

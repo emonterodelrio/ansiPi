@@ -65,7 +65,7 @@ function setupDashAemetForecastPrediction() {
 
 cat >>$BASE_PATH/temp.json <<EOL
       {
-        "content": "<iframe id=\"forecast_embed\" frameborder=\"0\" src=\"//forecast.io/embed/#lat=40.3232129&lon=-3.8676291&name=M&oacute;stoles&color=#2222ff&text-color=#cccccc&font=Georgia&units=ca\" style=\"margin: 1% 0 0 0; padding: 0; border: none; width:100%; height:100%;\"></iframe>",
+        "content": "<iframe src=\"http://{{ pi.network.ip }}:8000/index.html\" style=\"margin: 1% 0 0 0; padding: 0; border: none; width:100%; height:100%;\"></iframe>",
         "gridPos": {
           "h": 10,
           "w": 8,

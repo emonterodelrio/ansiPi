@@ -10,6 +10,7 @@
     - nginx
     - influxdb
     - metricsCollector
+    - piCam
     - grafana
     - dht22
     - createMeteopiDash_Dht22
